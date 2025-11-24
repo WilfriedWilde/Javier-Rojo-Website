@@ -52,7 +52,7 @@ barba.init({
             await drawSelectors(true);
             await initPage(page, next.container)
 
-            if (page === 'home') resizeImageToScreenSize();
+            if (page === 'index') resizeImageToScreenSize();
         }
     }],
 
@@ -81,7 +81,7 @@ barba.init({
         },
 
         enter({ current }) {
-            if (current.container.dataset.namespace === 'home') {
+            if (current.container.dataset.namespace === 'index') {
                 destroyPressCarousel();
                 window.scrollTo(0, 0);
             }
@@ -172,7 +172,7 @@ function attachNavbarListeners() {
 --------------------------------------------------------- */
 function initFooter(page) {
     const footer = document.getElementById("footer");
-    if (page === "home") {
+    if (page === "index") {
         footer.style.display = "none";
     } else {
         footer.style.display = "flex";
@@ -204,7 +204,7 @@ function handlePageSelection(page) {
 
 function highlightNavbarPage() {
     const pages = document.querySelectorAll("[data-page]");
-    const selected = localStorage.getItem("page") || "home";
+    const selected = localStorage.getItem("page") || "index";
 
     pages.forEach(el => {
         el.classList.toggle("selected-page", el.dataset.page === selected);
