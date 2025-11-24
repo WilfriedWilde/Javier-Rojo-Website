@@ -63,6 +63,8 @@ async function fetchDocsData(url) {
         const doc = parser.parseFromString(html, 'text/html');
         const content = doc.querySelector('#contents');
 
+        doc.querySelectorAll('meta').forEach(tag => tag.remove());
+
         if (!content) {
             console.error('No #contents found in Google Doc!');
             return;
