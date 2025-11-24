@@ -1,0 +1,25 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  font-size: 30px;
+  font-family: monospace;
+  font-weight: 100;
+  overflow-x: hidden;
+}
+
+div {
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}

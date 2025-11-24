@@ -1,0 +1,117 @@
+:root {
+    --insta-anim-speed: 0.3s;
+    --insta-anim-easing: ease-in-out;
+    --gray: hsl(211, 27%, 67%);
+}
+
+@keyframes insta-anim-in-one {
+  0% {
+    stop-color: var(--color-black);
+  }
+
+  100% {
+    stop-color: #e09b3d;
+  }
+}
+
+@keyframes insta-anim-in-two {
+  0% {
+    stop-color: var(--color-black);
+  }
+
+  100% {
+    stop-color: #c74c4d;
+  }
+}
+
+@keyframes insta-anim-in-three {
+  0% {
+    stop-color: var(--color-black);
+  }
+
+  100% {
+    stop-color: #c21975;
+  }
+}
+
+@keyframes insta-anim-in-four {
+  0% {
+    stop-color: var(--color-black);
+  }
+
+  100% {
+    stop-color: #7024c4;
+  }
+}
+
+.instagram-color.one.insta-anim-in-one {
+  animation: insta-anim-in-one var(--insta-anim-speed) var(--insta-anim-easing) forwards;
+}
+
+.instagram-color.two.insta-anim-in-two {
+  animation: insta-anim-in-two var(--insta-anim-speed) var(--insta-anim-easing) forwards;
+}
+
+.instagram-color.three.insta-anim-in-three {
+  animation: insta-anim-in-three var(--insta-anim-speed) var(--insta-anim-easing) forwards;
+}
+
+.instagram-color.four.insta-anim-in-four {
+  animation: insta-anim-in-four var(--insta-anim-speed) var(--insta-anim-easing) forwards;
+}
+
+@keyframes insta-anim-out-one {
+  0% {
+    stop-color: #e09b3d;
+  }
+
+  100% {
+    stop-color: var(--color-black);
+  }
+}
+
+@keyframes insta-anim-out-two {
+  0% {
+    stop-color: #c74c4d;
+  }
+
+  100% {
+    stop-color: var(--color-black);
+  }
+}
+
+@keyframes insta-anim-out-three {
+  0% {
+    stop-color: #c21975;
+  }
+
+  100% {
+    stop-color: var(--color-black);
+  }
+}
+
+@keyframes insta-anim-out-four {
+  0% {
+    stop-color: #7024c4;
+  }
+
+  100% {
+    stop-color: var(--color-black);
+  }
+}
+
+.instagram-color.one.insta-anim-out-one {
+  animation: insta-anim-out-one var(--insta-anim-speed) var(--insta-anim-easing) forwards;
+}
+
+.instagram-color.two.insta-anim-out-two {
+  animation: insta-anim-out-two var(--insta-anim-speed) var(--insta-anim-easing) forwards;
+}
+
+.instagram-color.three.insta-anim-out-three {
+  animation: insta-anim-out-three var(--insta-anim-speed) var(--insta-anim-easing) forwards;
+}
+
+.instagram-color.four.insta-anim-out-four {
+  animation: insta-anim-out-four var(--insta-anim-speed) var(--insta-anim-easing) forwards;
+}

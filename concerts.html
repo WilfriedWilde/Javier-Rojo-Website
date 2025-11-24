@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="instagram.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Overpass:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+    <title>Javier Rojo - Concerts</title>
+</head>
+
+<body data-barba="wrapper">
+    <div id="transition-overlay" data-transition="page"></div>
+    <navbar id="navbar"></navbar>
+    <div data-barba="container" data-namespace="concerts">
+        <main class="main">
+            <div class="section-title-container">
+                <div>
+                    <p data-selector="title" data-translation="title" class="section-title"></p>
+                </div>
+            </div>
+            <div id="concerts-container">
+                <p id="no-concerts-message" class="no-data-message"></p>
+                <div id="concerts-menu">
+                    <p id="upcoming-concerts-option" data-translation="menu"
+                        class="concerts-list-option selected-concerts-list-option"></p>
+                    <span>|</span>
+                    <p id="past-concerts-option" data-translation="menu" class="concerts-list-option"></p>
+                    <div id="concerts-list-option-selector"></div>
+                </div>
+                <div id="upcoming-concerts-list" class="concerts-list selected-concerts-list"></div>
+                <div id="past-concerts-list" class="concerts-list"></div>
+            </div>
+        </main>
+    </div>
+    <footer id="footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollSmoother.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/TextPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.10.0"></script>
+    <script src="./js/main.js" type="module"></script>
+</body>
