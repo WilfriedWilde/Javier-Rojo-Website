@@ -64,7 +64,7 @@ async function fetchDocsData(url) {
         const content = doc.querySelector('#contents');
 
         doc.querySelectorAll('meta').forEach(tag => tag.remove());
-
+        console.log(doc)
         if (!content) {
             console.error('No #contents found in Google Doc!');
             return;
@@ -185,7 +185,7 @@ export function formatDate(date, format) {
 }
 
 async function fetchCalendarSVG() {
-    const svg = await fetch('../icons/calendar.svg');
+    const svg = await fetch('./icons/calendar.svg');
     return svg.text();
 }
 
