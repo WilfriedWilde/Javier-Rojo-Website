@@ -464,26 +464,28 @@ ul {
   color: var(--color-white);
   font-weight: 100;
   margin-bottom: var(--spacing-3);
-  z-index: -1;
-
 }
 
 #concerts-list-option-selector {
   position: absolute;
-  width: 0;
+  width: 1px;
   height: 100%;
-  top: 100%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--color-blue);
   transition: 0.3s var(--easing-hover);
   z-index: -1;
-  border-radius: var(--spacing-2);
+  border-radius: var(--spacing-1);
+  z-index: -1;
+  padding: var(--spacing-1);
 }
 
 .concerts-list-option {
+  position: relative;
   font-weight: 100;
   transition: 0.3s var(--easing-hover);
+  z-index: 1;
 }
 
 .concerts-list-option:hover {

@@ -13,7 +13,7 @@ export default async function initConcerts(barbaContainer) {
 
     if (concertsData.length > 0) {
         displayEmptyConcertsListMessage();
-        handleConcertsListsSelection();
+        displaySelectedConcertsLists();
     }
 }
 
@@ -197,20 +197,21 @@ export function getTranslationEmptyConcertsListMessage(list) {
     return messages[listName][language];
 }
 
-function handleConcertsListsSelection() {
-    attachConcertsListListeners();
+function displaySelectedConcertsLists() {
+    attachConcertsMenuListeners();
 }
 
-function attachConcertsListListeners() {
-    concertsMenu.addEventListener('click', displaySelectedConcertsList);
+function attachConcertsMenuListeners() {
+    concertsMenu.addEventListener('click', handleConcertsListSelection);
 }
 
-function displaySelectedConcertsList(event) {
+function handleConcertsListSelection(event) {
     const listOptions = Array.from(event.currentTarget.querySelectorAll('.concerts-list-option'));
     const selectedOption = listOptions.find(option => option === event.target) || '';
     if (!selectedOption) return;
 
     updateConcertsListsClassNames(selectedOption, listOptions);
+    animateConcertsListSelector(selectedOption);
 }
 
 function updateConcertsListsClassNames(selectedOption, listOptions) {
@@ -223,5 +224,15 @@ function updateConcertsListsClassNames(selectedOption, listOptions) {
             list.classList.remove('selected-concerts-list');
             option.classList.remove('selected-concerts-list-option');
         }
+    })
+}
+
+function animateConcertsListSelector(selectedOption) {
+    const concertsListSelector = document.getElementById('concerts-list-option-selector');
+    const selectedOptionRects = selectedOption.getBoundingClientRect();
+
+    gsap.to(concertsListSelector, {
+        left: selectedOptionRects.left,
+        duration: 0.3
     })
 }
