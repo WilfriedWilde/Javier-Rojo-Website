@@ -2,7 +2,7 @@ let lastY = 0, navbarHidden = false;
 
 export default function initNavbar(navbar, page) {
     destroyNavbarDisplay();
-    if (page === 'home') initHomeNavbar(navbar);
+    if (page === 'index') initHomeNavbar(navbar);
     else initNotHomeNavbar(navbar);
     resetNavbarState();
 }

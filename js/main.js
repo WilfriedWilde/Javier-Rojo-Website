@@ -14,7 +14,7 @@ import { destroyPressCarousel } from "./press.js";
    INIT PAGE
 --------------------------------------------------------- */
 const pageInits = {
-    home: initHome,
+    index: initHome,
     news: initNews,
     medias: initMedias,
     concerts: initConcerts,

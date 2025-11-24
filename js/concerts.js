@@ -229,10 +229,25 @@ function updateConcertsListsClassNames(selectedOption, listOptions) {
 
 function animateConcertsListSelector(selectedOption) {
     const concertsListSelector = document.getElementById('concerts-list-option-selector');
+    const selectorRects = concertsListSelector.getBoundingClientRect();
     const selectedOptionRects = selectedOption.getBoundingClientRect();
-
+    const operator = getOperator(selectedOptionRects);
+    const distance = getDistance(selectorRects, selectedOptionRects);
+    console.log(distance)
     gsap.to(concertsListSelector, {
-        left: selectedOptionRects.left,
+        x: `${operator}=${distance}`,
         duration: 0.3
     })
+}
+
+function getOperator(rects) {
+    const screenCenter = window.innerWidth / 2;
+    if (rects.left > screenCenter) return '+';
+    else return '-';
+}
+
+function getDistance(selectorRects, selectedOptionRects) {
+    const screenCenter = Math.floor(window.innerWidth / 2);
+    if (Math.floor(selectorRects.x + (selectorRects.width / 2)) !== screenCenter) return  selectedOptionRects.width * 2;
+    else return selectedOptionRects.width;
 }
