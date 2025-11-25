@@ -185,7 +185,7 @@ export function formatDate(date, format) {
 }
 
 async function fetchCalendarSVG() {
-    const svg = await fetch('./icons/calendar.svg');
+    const svg = await fetch('./icons/calendar.svg');console.log('calendar:', svg.text())
     return svg.text();
 }
 
