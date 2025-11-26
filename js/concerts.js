@@ -1,14 +1,16 @@
-import { fetchSheetsData, formatDate } from "./news.js";
+import { fetchSheetsData, formatDate, parseDDMMYYYY } from "./news.js";
 import { getSelectedLanguage } from "./translation.js";
 
 const concertsSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=722645748&single=true&output=csv';
-let concertsMenu, upcomingConcertsList, pastConcertsList;
+let concertsMenu, concertsListSelector, upcomingConcertsList, pastConcertsList;
 
 export default async function initConcerts(barbaContainer) {
+    concertsMenu = barbaContainer.querySelector('#concerts-menu');
+    concertsListSelector = barbaContainer.querySelector('#concerts-list-option-selector');
     upcomingConcertsList = barbaContainer.querySelector('#upcoming-concerts-list');
     pastConcertsList = barbaContainer.querySelector('#past-concerts-list');
-    concertsMenu = barbaContainer.querySelector('#concerts-menu');
-    const concertsData = await getConcertsData(); console.log('data:', concertsData)
+
+    const concertsData = await getConcertsData();
     await populateConcertsLists(concertsData);
 
     if (concertsData.length > 0) {
@@ -28,7 +30,7 @@ async function getConcertsData() {
 }
 
 function getChronologicallySortedData(data) {
-    return [...data].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    return [...data].sort((a, b) => parseDDMMYYYY(a.date) - parseDDMMYYYY(b.date));
 }
 
 export function displayNoConcertsMessage() {
@@ -117,7 +119,7 @@ async function appendPastConcert(data, index) {
 
 function getFormatedConcertDate(date) {
     let concertDate = {};
-    const splitDate = date.split('/');
+    const splitDate = date.split('-');
     concertDate.day = splitDate[0].trim();
     concertDate.month = getMonthName(splitDate[1].trim());
     concertDate.year = splitDate[2].trim();
@@ -198,7 +200,13 @@ export function getTranslationEmptyConcertsListMessage(list) {
 }
 
 function displaySelectedConcertsLists() {
+    initConcertsListSelector();
     attachConcertsMenuListeners();
+}
+
+function initConcertsListSelector() {
+    const upcomingOption = Array.from(concertsMenu.children).find(child => child.id.includes('upcoming')).getBoundingClientRect();
+    gsap.set(concertsListSelector, { x: `-=${upcomingOption.width}`, opacity: 1 });
 }
 
 function attachConcertsMenuListeners() {
@@ -220,7 +228,7 @@ function updateConcertsListsClassNames(selectedOption, listOptions) {
         if (option === selectedOption) {
             list.classList.add('selected-concerts-list');
             option.classList.add('selected-concerts-list-option');
-        } else {console.log(list)
+        } else {
             list.classList.remove('selected-concerts-list');
             option.classList.remove('selected-concerts-list-option');
         }
@@ -228,12 +236,11 @@ function updateConcertsListsClassNames(selectedOption, listOptions) {
 }
 
 function animateConcertsListSelector(selectedOption) {
-    const concertsListSelector = document.getElementById('concerts-list-option-selector');
     const selectorRects = concertsListSelector.getBoundingClientRect();
     const selectedOptionRects = selectedOption.getBoundingClientRect();
     const operator = getOperator(selectedOptionRects);
     const distance = getDistance(selectorRects, selectedOptionRects);
-    console.log(distance)
+
     gsap.to(concertsListSelector, {
         x: `${operator}=${distance}`,
         duration: 0.3
@@ -248,6 +255,6 @@ function getOperator(rects) {
 
 function getDistance(selectorRects, selectedOptionRects) {
     const screenCenter = Math.floor(window.innerWidth / 2);
-    if (Math.floor(selectorRects.x + (selectorRects.width / 2)) !== screenCenter) return  selectedOptionRects.width * 2;
+    if (Math.floor(selectorRects.x + (selectorRects.width / 2)) !== screenCenter) return selectedOptionRects.width * 2;
     else return selectedOptionRects.width;
 }

@@ -89,6 +89,7 @@ barba.init({
         },
 
         async afterEnter({ next }) {
+            window.scrollTo(0, 0);
             const unDrawOverlay = gsap.timeline();
             unDrawOverlay
                 .to('#transition-overlay-svg-path', {

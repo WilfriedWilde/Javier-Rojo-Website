@@ -360,13 +360,12 @@ ul {
 
 .news-date-container {
   display: flex;
-  gap: var(--spacing-2);
+  gap: var(--spacing-1);
 }
 
 .icon-calendar-container {
   position: relative;
-  width: 30px;
-  height: 30px;
+  width: var(--spacing-2);
 }
 
 .icon-calendar {
@@ -461,20 +460,22 @@ ul {
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   font-family: var(--font-subheader);
+  font-size: var(--spacing-1);
   color: var(--color-white);
   font-weight: 100;
-  margin-bottom: var(--spacing-3);
+  margin-bottom: var(--spacing-5);
 }
 
 #concerts-list-option-selector {
   position: absolute;
-  width: var(--spacing-1);
+  width: 10%;
   height: 3px;
   top: 100%;
   background-color: var(--color-blue-flashy);
   transition: 0.3s var(--easing-hover);
   border-radius: var(--spacing-1);
   z-index: -1;
+  opacity: 0;
 }
 
 .concerts-menu-children {
@@ -496,14 +497,6 @@ ul {
 
 .selected-concerts-list-option {
   font-weight: 500;
-}
-
-#upcoming-concerts-option {
-  justify-self: end;
-}
-
-#past-concerts-option {
-  justify-self: start;
 }
 
 .concerts-list {
@@ -565,7 +558,7 @@ ul {
 }
 
 .concert-image {
-  width: var(--height-concert-mobile);
+  flex: 0.5;
   height: 100%;
   object-fit: cover;
   object-position: center;
@@ -803,16 +796,37 @@ ul {
     font-size: var(--spacing-4);
   }
 
+  #news-list {
+    gap: var(--spacing-8);
+  }
+
   .news {
     width: var(--width-news-desktop);
   }
 
+  .news-date-container {
+    gap: var(--spacing-2);
+  }
+
+  .icon-calendar-container {
+    width: var(--spacing-4);
+  }
+
+  .news-date {
+    font-size: var(--spacing-4);
+  }
+
   .news-header-image {
-    max-height: calc(var(--width-news-mobile) / var(--golden-ratio));
+    max-height: calc(var(--width-news-desktop) / var(--golden-ratio));
   }
 
   .news-title {
     font-size: var(--spacing-4);
+  }
+
+  #concerts-menu {
+    margin-bottom: var(--spacing-7);
+    font-size: var(--spacing-3);
   }
 
   .concerts-list {

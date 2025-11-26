@@ -5,7 +5,7 @@ let newsList;
 
 export default async function initNews(barbaContainer) {
     newsList = barbaContainer.querySelector('#news-list');
-    const newsData = await getNewsData();
+    const newsData = await getNewsData(); console.log('news data:', newsData)
     await populateNewsList(newsData);
 }
 
@@ -20,7 +20,12 @@ async function getNewsData() {
 }
 
 function getReverseChronologicallySortedData(data) {
-    return [...data].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return [...data].sort((a, b) => parseDDMMYYYY(b.date) - parseDDMMYYYY(a.date));
+}
+
+export function parseDDMMYYYY(dateStr) {
+    const [day, month, year] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day);
 }
 
 export async function fetchSheetsData(url) {
@@ -64,7 +69,7 @@ async function fetchDocsData(url) {
         const content = doc.querySelector('#contents');
 
         doc.querySelectorAll('meta').forEach(tag => tag.remove());
-        console.log(doc)
+
         if (!content) {
             console.error('No #contents found in Google Doc!');
             return;
@@ -180,12 +185,12 @@ export function formatDate(date, format) {
         return date.split('-')[0].length < 4 ? date.split('-').reverse().join('-') : date;
     }
     else if (format === 'eu') {
-        return date.split('-')[0].length === 4 ? date.split('-').reverse().join('.') : date;
+        return date.split('-')[0].length === 4 ? date.split('-').reverse().join('.') : date.split('-').join('.');
     }
 }
 
 async function fetchCalendarSVG() {
-    const svg = await fetch('./icons/calendar.svg');console.log('calendar:', svg.text())
+    const svg = await fetch('./icons/calendar.svg');
     return svg.text();
 }
 
