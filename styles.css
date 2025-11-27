@@ -31,7 +31,7 @@
   --home-image-height: auto;
   --home-image-width: 100%;
   --breakpoint-phone: 576px;
-  --width-news-desktop: 60vw;
+  --width-news-desktop: 55vw;
   --width-news-mobile: 85vw;
   --height-concert-mobile: 100px;
   --height-concert-desktop: 250px;
@@ -103,9 +103,28 @@ ul {
   position: absolute;
   width: 100%;
   top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+#transition-icon-container {
+  display: none;
+  position: absolute;
+  width: 30vw;
+  height: 30vw;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 0;
+  z-index: -10;
+}
+
+.transition-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.transition-icon-path {
+  fill: var(--color-white);
 }
 
 .main {
@@ -142,7 +161,7 @@ ul {
 #navbar {
   position: fixed;
   width: 100%;
-  z-index: 10;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -337,7 +356,7 @@ ul {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: var(--spacing-6);
+  gap: var(--spacing-5);
 }
 
 .news {
@@ -345,7 +364,7 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-4);
+  gap: var(--spacing-2);
   overflow: hidden;
   width: var(--width-news-mobile);
 }
@@ -354,6 +373,7 @@ ul {
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--spacing-1);
   width: 100%;
 }
@@ -389,7 +409,7 @@ ul {
   position: relative;
   object-fit: cover;
   object-position: center;
-  width: 100%;
+  width: 85%;
   max-height: calc(var(--width-news-mobile) / var(--golden-ratio));
   border-radius: var(--spacing-1);
   z-index: 0;
@@ -797,10 +817,11 @@ ul {
   }
 
   #news-list {
-    gap: var(--spacing-8);
+    gap: var(--spacing-7);
   }
 
   .news {
+    gap: var(--spacing-4);
     width: var(--width-news-desktop);
   }
 
@@ -809,14 +830,15 @@ ul {
   }
 
   .icon-calendar-container {
-    width: var(--spacing-4);
+    width: var(--spacing-3);
   }
 
   .news-date {
-    font-size: var(--spacing-4);
+    font-size: var(--spacing-3);
   }
 
   .news-header-image {
+    width: 75%;
     max-height: calc(var(--width-news-desktop) / var(--golden-ratio));
   }
 

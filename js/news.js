@@ -5,7 +5,7 @@ let newsList;
 
 export default async function initNews(barbaContainer) {
     newsList = barbaContainer.querySelector('#news-list');
-    const newsData = await getNewsData(); console.log('news data:', newsData)
+    const newsData = await getNewsData();
     await populateNewsList(newsData);
 }
 

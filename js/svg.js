@@ -101,7 +101,7 @@ async function appendLink(index, container) {
     container.appendChild(listOption);
 }
 
-async function fetchSVG(url) {
+export async function fetchSVG(url) {
     const response = await fetch(url);
     const svg = await response.text();
     return svg;

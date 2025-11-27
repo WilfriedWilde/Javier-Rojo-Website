@@ -220,6 +220,7 @@ function handleConcertsListSelection(event) {
 
     updateConcertsListsClassNames(selectedOption, listOptions);
     animateConcertsListSelector(selectedOption);
+    animateConcertsList(selectedOption);
 }
 
 function updateConcertsListsClassNames(selectedOption, listOptions) {
@@ -257,4 +258,9 @@ function getDistance(selectorRects, selectedOptionRects) {
     const screenCenter = Math.floor(window.innerWidth / 2);
     if (Math.floor(selectorRects.x + (selectorRects.width / 2)) !== screenCenter) return selectedOptionRects.width * 2;
     else return selectedOptionRects.width;
+}
+
+function animateConcertsList(selectedOption) {
+    const selectedList = selectedOption.id.includes('upcoming') ? upcomingConcertsList : pastConcertsList;
+    gsap.from(selectedList, { opacity: 0, duration: 0.6, ease: 'power1.inOut' })
 }

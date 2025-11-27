@@ -8,6 +8,7 @@ import { getSelectedLanguage, handleLanguageSelection, translateTextsInPage } fr
 import { appendAllTransitionsSVGs, appendAllSelectors, drawSelectors, appendSocialMediaIcons, handleInstagramHover } from "./svg.js";
 import { injectHTML } from "./inject_html.js";
 import { destroyPressCarousel } from "./press.js";
+import { initTransition, animateTransition } from "./transition-page.js";
 
 
 /* ---------------------------------------------------------
@@ -67,17 +68,16 @@ barba.init({
             await drawSelectors();
         },
 
-        leave() {
-            const drawOverlay = gsap.timeline();
-            drawOverlay
-                .set('#transition-overlay', { zIndex: 20 })
-                .set('#transition-overlay-svg', { opacity: 1 })
-                .from('#transition-overlay-svg-path', {
-                    drawSVG: 0,
-                    duration: 1.5,
-                })
+        async beforeLeave({ trigger}) {
+            if (trigger) {
+                const namespace = trigger.dataset.barbaNamespaceTarget 
+                    || trigger.getAttribute('href').split('.')[0].replace('/', '');
+                await initTransition(namespace);
+            }
+        },
 
-            return drawOverlay;
+        leave() {
+            animateTransition.in();
         },
 
         enter({ current }) {
@@ -90,35 +90,7 @@ barba.init({
 
         async afterEnter({ next }) {
             window.scrollTo(0, 0);
-            const unDrawOverlay = gsap.timeline();
-            unDrawOverlay
-                .to('#transition-overlay-svg-path', {
-                    drawSVG: '100% 100%',
-                    duration: 1.5,
-                })
-                .set('#transition-overlay', { zIndex: -10 })
-                .set('#transition-overlay-svg', { opacity: 0 })
-
-            const title = next.container.querySelector('.section-title') || '';
-            if (title) {
-                let split = SplitText.create(title, { type: 'chars', mask: 'chars' });
-                const path = title.parentNode.querySelector('path');
-                const selector = title.parentNode.querySelector('.selector');
-
-                unDrawOverlay
-                    .from(split.chars, {
-                        yPercent: -100,
-                        stagger: {
-                            amount: 0.1,
-                            from: 'random'
-                        },
-                        ease: 'back.out(2)'
-                    }, '-=0.8')
-                    .set(selector, { opacity: 1 }, '-=0.5')
-                    .from(path, { drawSVG: 0, duration: 0.5 }, '-=0.5');
-            };
-
-            await unDrawOverlay;
+            await animateTransition.out(next);
             await appendAllTransitionsSVGs();
         }
     }]
