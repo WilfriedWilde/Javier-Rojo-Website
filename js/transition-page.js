@@ -16,6 +16,7 @@ export const animateTransition = {
 }
 
 export function animateTransitionIn() {
+    window.scrollTo(0, 0);
     const transitionIn = gsap.timeline();
     transitionIn
         .set('#transition-overlay', { zIndex: 20 })

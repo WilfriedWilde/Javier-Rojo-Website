@@ -71,7 +71,7 @@ barba.init({
         async beforeLeave({ trigger}) {
             if (trigger) {
                 const namespace = trigger.dataset.barbaNamespaceTarget 
-                    || trigger.getAttribute('href').split('.')[1].replace('/', '');
+                    || trigger.getAttribute('href').split('.')[0];
                 await initTransition(namespace);
             }
         },
@@ -89,7 +89,6 @@ barba.init({
         },
 
         async afterEnter({ next }) {
-            window.scrollTo(0, 0);
             await animateTransition.out(next);
             await appendAllTransitionsSVGs();
         }
