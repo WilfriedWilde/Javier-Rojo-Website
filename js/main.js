@@ -71,7 +71,7 @@ barba.init({
         async beforeLeave({ trigger}) {
             if (trigger) {
                 const namespace = trigger.dataset.barbaNamespaceTarget 
-                    || trigger.getAttribute('href').split('.')[0].replace('/', '');
+                    || trigger.getAttribute('href').split('.')[1].replace('/', '');
                 await initTransition(namespace);
             }
         },
