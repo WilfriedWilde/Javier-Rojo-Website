@@ -1,5 +1,6 @@
-const svgSelectors = ['circle', 'line', 'background', 'title', 'dot'];
-const svgTransitions = ['page']
+const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title', 'dot'];
+const svgTransitions = ['page'];
+let isStrokeColorLight = false;
 
 const svgInfos = {
     selectorsURLs: Object.fromEntries(
@@ -65,7 +66,7 @@ async function removeExistingSelectors() {
 
 async function appendSelector(selector, target) {
     const targetWidth = target.getBoundingClientRect().width;
-    const selectorWidthRatio = selector === 'background' ? 1.5 : 1.5;
+    const selectorWidthRatio = selector === 'home-title' ? 1.5 : 1.5;
     const container = target.parentNode;
     const selectorContainer = document.createElement('div');
     const svg = await fetchSVG(svgInfos.selectorsURLs[selector]);
@@ -77,6 +78,15 @@ async function appendSelector(selector, target) {
     if (['static', ''].includes(getComputedStyle(container).position))
         container.style.position = 'relative';
     container.appendChild(selectorContainer);
+
+    if (['home-title', 'circle'].includes(selector)) assignSelectorColor(selectorContainer);
+}
+
+function assignSelectorColor(container) {
+    const svgPath = container.querySelector('path');
+    const color = isStrokeColorLight ? 'light' : 'dark';
+    svgPath.classList.add(`svg-stroke-${color}`);
+    isStrokeColorLight = !isStrokeColorLight;
 }
 
 // social media icons
@@ -143,7 +153,7 @@ function handleColorTransition(animNumber, instagramColors) {
 
 export async function drawSelectors(isTransition) {
     const targets = Array.from(document.querySelectorAll('[data-selector]'));
-    
+
     targets.forEach(target => {
         const path = target.parentNode.querySelector('path');
         const selector = target.parentNode.querySelector('.selector');
@@ -151,16 +161,17 @@ export async function drawSelectors(isTransition) {
         const isSelectedLanguage = target.classList.contains('selected-language');
         const isSelectedPage = target.classList.contains('selected-page');
         const isSectionTitle = target.classList.contains('section-title');
+        const isHomeTitle = target.classList.contains('home-title');
         const isLanguageOption = target.dataset.language !== undefined;
 
-        if (isLanguageOption && !isSelectedLanguage && !isSectionTitle) return;
+        if (isLanguageOption && !isSelectedLanguage && !isSectionTitle && !isHomeTitle) return;
 
         if (isSectionTitle) {
             if (!isTransition) {
                 gsap.set(selector, { opacity: 1 });
                 gsap.from(path, { drawSVG: 0, duration: 0.5 });
             }
-        } else if (!isSelectedPage && !isSelectedLanguage) {
+        } else if (!isSelectedPage && !isSelectedLanguage && !isHomeTitle) {
             const draw = gsap.timeline({ paused: true });
             draw.set(selector, { opacity: 1 })
                 .from(path, { drawSVG: 0, duration: 0.5 });
@@ -169,12 +180,14 @@ export async function drawSelectors(isTransition) {
             target.addEventListener('mouseleave', () => draw.reverse());
 
         } else {
-            let drawDuration = 1;
-            if (isSelectedLanguage) drawDuration = 0.5;
-            else if (isSelectedPage) drawDuration = 0.3;
-
             gsap.set(selector, { opacity: 1 });
-            gsap.from(path, { drawSVG: 0, duration: drawDuration });
+            if (!isTransition && !isHomeTitle) {
+                let drawDuration = 1;
+                if (isSelectedLanguage) drawDuration = 0.5;
+                else if (isSelectedPage) drawDuration = 0.3;
+
+                gsap.from(path, { drawSVG: 0, duration: drawDuration });
+            }
         }
     });
 }

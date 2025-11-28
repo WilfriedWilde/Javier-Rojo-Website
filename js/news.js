@@ -220,7 +220,7 @@ function formatContentLinks(content) {
     for (const link of links) {
         link.parentNode.style.textDecoration = 'none';
 
-        const linkColor = getComputedStyle(document.documentElement).getPropertyValue('--color-blue-flashy');
+        const linkColor = getComputedStyle(document.documentElement).getPropertyValue('--color-dark-orange');
         link.style.color = linkColor;
     }
 }

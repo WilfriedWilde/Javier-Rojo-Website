@@ -26,7 +26,7 @@ export function initPressCarousel() {
         const pressReview = getRandomDifferentReview(i);
         appendPressReview(pressReview);
     }
-    setCarouselAnimations();
+    initCarouselAnimations();
 }
 
 function getRandomDifferentReview(index) {
@@ -62,62 +62,41 @@ function appendPressReview(pressReview) {
 }
 
 /* ANIMATIONS */
-let homeScrollHandler = null;
+let homeClickHandler = null;
 let homeSmoother = null;
 let homeScrollTriggers = [];
 
-export function setCarouselAnimations() {
+function initCarouselAnimations() {
+    const homeTitle = document.getElementById("home-title-container");
     const pressCarousel = document.getElementById("press-carousel");
     const homeOverlay = document.getElementById("home-image-overlay");
     const homeImages = document.querySelectorAll(".home-image");
     const sections = gsap.utils.toArray(".press-review-container");
-    const navbarListSections = document.getElementById('navbar-list-sections');
+    const navbar = document.getElementById('navbar');
 
     if (!pressCarousel || !homeOverlay || homeImages.length === 0) return;
 
-    let lastY = 0, isNavbarDisplayed = true;
+    let isCarouselDisplayed = false;
+    const carouselTimeline = gsap.timeline({ paused: true });
+    carouselTimeline
+        .to(homeTitle.children, { yPercent: -600, zIndex: -1, stagger: { amount: 0.1, from: 'start' }, ease: 'back.in(1.3)' })
+        .to(homeOverlay, { backdropFilter: "blur(5px) brightness(0.1)", duration: 0.4, overwrite: true }, 0.5)
+        .to(homeImages, { transform: "translate(-50%, -48%) scale(1.05)", duration: 0.5, overwrite: true }, 0.5)
+        .to(pressCarousel, { opacity: 1, duration: 0.4, overwrite: true }, 0.5)
+        .to(navbar, { opacity: 1, stagger: { amount: 0.2 } }, 0.5)
 
-    // Store scroll listener
-    homeScrollHandler = () => {
-        if (lastY > window.scrollY) {
-
-
-            gsap.to(homeOverlay, { backdropFilter: "blur(0px) brightness(1)", duration: 0.5, overwrite: true });
-            gsap.to(homeImages, { transform: "translate(-50%, -50%) scale(1)", scale: 1, duration: 0.3, overwrite: true });
-            gsap.to(pressCarousel, { opacity: 0, duration: 0.2, overwrite: true });
-
-            if (!isNavbarDisplayed) {
-                isNavbarDisplayed = true;
-
-                gsap.to(navbarListSections.children, {
-                    opacity: 0,
-                    stagger: {
-                        amount: 0.1,
-                    }
-                })
-            }
-
+    homeClickHandler = (event) => {
+        if (event.target.closest('li')) return;
+        
+        if (!isCarouselDisplayed) {
+            carouselTimeline.play()
         } else {
-            gsap.to(homeOverlay, { backdropFilter: "blur(5px) brightness(0.1)", duration: 0.4, overwrite: true });
-            gsap.to(homeImages, { transform: "translate(-50%, -48%) scale(1.05)", duration: 0.5, overwrite: true });
-            gsap.to(pressCarousel, { opacity: 1, duration: 0.4, overwrite: true });
-
-            if (isNavbarDisplayed) {
-                isNavbarDisplayed = false;
-
-                gsap.to(navbarListSections.children, {
-                    opacity: 1,
-                    stagger: {
-                        amount: 0.2,
-                    }
-                })
-            }
+            carouselTimeline.reverse();
         }
-
-        lastY = window.scrollY;
+        isCarouselDisplayed = !isCarouselDisplayed;
     };
 
-    window.addEventListener("scroll", homeScrollHandler);
+    window.addEventListener("click", homeClickHandler);
 
     // Store smoother
     homeSmoother = ScrollSmoother.create({
@@ -141,7 +120,6 @@ export function setCarouselAnimations() {
     });
     homeScrollTriggers.push(horizontalScroll.scrollTrigger);
 
-    // Per-section timelines
     sections.forEach(section => {
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -161,30 +139,26 @@ export function setCarouselAnimations() {
 
 
 export function destroyPressCarousel() {
-    // Remove scroll listener
-    if (homeScrollHandler) {
-        window.removeEventListener("scroll", homeScrollHandler);
-        homeScrollHandler = null;
+    if (homeClickHandler) {
+        window.removeEventListener("click", homeClickHandler);
+        homeClickHandler = null;
     }
 
-    // Kill ScrollTrigger instances
     homeScrollTriggers.forEach(st => st.kill());
     homeScrollTriggers = [];
 
-    // Kill ScrollSmoother
     if (homeSmoother) {
         homeSmoother.kill();
         homeSmoother = null;
     }
 
-    // Reset home elements (overlay, images, carousel)
     const overlay = document.getElementById('home-image-overlay');
     const images = document.querySelectorAll('.home-image');
     const carousel = document.getElementById('press-carousel');
 
     gsap.set([overlay, ...images, carousel], {
         opacity: 0,
-        clearProps: "all", // removes transforms, scale, translate, etc.
+        clearProps: "all",
         pointerEvents: "none"
     });
 }

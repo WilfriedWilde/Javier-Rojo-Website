@@ -104,7 +104,7 @@ async function appendArticle(articleData, index, container) {
             for (const link of links) {
                 link.parentNode.style.textDecoration = 'none';
 
-                const linkColor = getComputedStyle(document.documentElement).getPropertyValue('--color-blue-flashy');
+                const linkColor = getComputedStyle(document.documentElement).getPropertyValue('--color-dark-orange');
                 link.style.color = linkColor;
             }
         }
@@ -138,7 +138,7 @@ export function displaySelectedNews(index, data) {
         for (const link of links) {
             link.parentNode.style.textDecoration = 'none';
 
-            const linkColor = getComputedStyle(document.documentElement).getPropertyValue('--color-blue-flashy');
+            const linkColor = getComputedStyle(document.documentElement).getPropertyValue('--color-dark-orange');
             link.style.color = linkColor;
         }
     }

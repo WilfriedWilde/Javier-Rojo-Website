@@ -25,8 +25,8 @@ function resetNavbarState() {
     lastY = 0;
     navbarHidden = false;
 
-    const navbarListSections = document.getElementById('navbar-list-sections');
-    gsap.set(navbarListSections.children, { opacity: 0 });
+    const navbar = document.getElementById('navbar');
+    gsap.set(navbar, { opacity: 0 });
 }
 
 function handleNavbarDisplayOnScroll() {
@@ -49,7 +49,5 @@ function showNavbar() {
     navbarHidden = false;
 
     const navbar = document.getElementById('navbar');
-    const navbarListSections = document.getElementById('navbar-list-sections');
-    gsap.to(navbar, { yPercent: 0, duration: 0.5 })
-    gsap.to(navbarListSections.children, { opacity: 1, duration: 0.4 });
+    gsap.to(navbar, { yPercent: 0, opacity: 1, duration: 0.5 })
 }

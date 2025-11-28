@@ -1,5 +1,5 @@
 import initNavbar from "./navbar.js";
-import initHome, { resizeImageToScreenSize } from "./home.js";
+import initHome, { introHomeAnimation } from "./home.js";
 import initNews from "./news.js";
 import initMedias from "./medias.js";
 import initConcerts from "./concerts.js";
@@ -52,12 +52,11 @@ barba.init({
             await initUI(page, next.container);
             await drawSelectors(true);
             await initPage(page, next.container)
-
-            if (page === 'index') resizeImageToScreenSize();
         }
     }],
 
     transitions: [{
+        debug: true,
         name: "page-transition",
         async once() {
             const container = document.querySelector("[data-barba='container']");
@@ -66,25 +65,25 @@ barba.init({
             await initUI(page, container);
             await appendAllTransitionsSVGs();
             await drawSelectors();
+
+            if (page === 'index') introHomeAnimation();
         },
 
-        async beforeLeave({ trigger}) {
+        async beforeLeave({ trigger }) {
             if (trigger) {
-                const namespace = trigger.dataset.barbaNamespaceTarget 
+                const namespace = trigger.dataset.barbaNamespaceTarget
                     || trigger.getAttribute('href').split('.')[0];
                 await initTransition(namespace);
             }
         },
 
-        leave() {
-            animateTransition.in();
+        async leave() {
+            await animateTransition.in();
         },
 
         enter({ current }) {
-            if (current.container.dataset.namespace === 'index') {
-                destroyPressCarousel();
-                window.scrollTo(0, 0);
-            }
+            if (current.container.dataset.namespace === 'index') destroyPressCarousel();
+
             current.container.style.position = 'absolute';
         },
 

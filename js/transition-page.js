@@ -1,6 +1,6 @@
 import { fetchSVG } from "./svg.js";
 
-export async function initTransition(nextNamespace) {console.log('name:', nextNamespace)
+export async function initTransition(nextNamespace) {
     const icon = await fetchSVG(`./icons/${nextNamespace}.svg`);
     appendTransitionIcon(icon);
 }

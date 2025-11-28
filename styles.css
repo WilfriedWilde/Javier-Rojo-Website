@@ -7,16 +7,15 @@
 }
 
 :root {
-  --font-header: "Dosis", sans-serif;
-  --font-subheader: "Overpass", sans-serif;
-  --font-main: "Rubik", sans-serif;
-  --color-blue: hsl(211, 27%, 67%);
-  --color-blue-flashy: hsl(209, 89.4%, 60.6%);
-  --color-blue-flashy-transparent: hsla(209, 89.4%, 60.6%, 0.7);
-  --color-black: hsl(200, 19%, 6%);
-  --color-black-transparent: hsla(202, 17%, 21%, 0.4);
-  --color-gray: hsl(216, 0%, 91.4%);
-  --color-white: hsl(0, 0%, 100%);
+  --font-header: "Source Sans 3", sans-serif;
+  --font-subheader: "Carme", sans-serif;
+  --font-main: "Libre Franklin", sans-serif;
+  --color-light-orange: hsl(41, 94%, 56%);
+  --color-dark-orange: hsl(17, 68%, 48%);
+  --color-yellow: hsl(52, 95%, 69%);
+  --color-black: hsl(231, 53%, 7%);
+  --color-black-transparent: hsla(253, 38%, 18%, 0.4);
+  --color-white: hsl(60, 50%, 97%);
   --spacing-1: 12px;
   --spacing-2: 19px;
   --spacing-3: 31px;
@@ -28,8 +27,6 @@
   --golden-ratio: 1.618;
   --easing-news: cubic-bezier(0.36, 0, 0.64, 1);
   --easing-hover: cubic-bezier(0.5, 1, 0.89, 1);
-  --home-image-height: auto;
-  --home-image-width: 100%;
   --breakpoint-phone: 576px;
   --width-news-desktop: 55vw;
   --width-news-mobile: 85vw;
@@ -54,6 +51,7 @@ body::-webkit-scrollbar {
 
 body {
   min-height: 100vh;
+  background-color: var(--color-black);
 }
 
 a {
@@ -91,6 +89,14 @@ ul {
   opacity: 0;
 }
 
+.svg-stroke-dark {
+  stroke: var(--color-dark-orange);
+}
+
+.svg-stroke-light {
+  stroke: var(--color-light-orange);
+}
+
 .selector-container {
   position: absolute;
   top: 50%;
@@ -105,6 +111,15 @@ ul {
   top: 50%;
   transform: translateY(-50%);
   opacity: 0;
+}
+
+.selector-home-title {
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  path {
+    stroke-width: calc(var(--spacing-4) / var(--golden-ratio));
+  }
 }
 
 #transition-icon-container {
@@ -146,12 +161,12 @@ ul {
 .section-title-container {
   display: flex;
   justify-content: center;
-  padding: var(--spacing-6) 0;
+  padding: var(--spacing-6) 0 var(--spacing-2) 0;
 }
 
 .section-title {
   font-family: var(--font-header);
-  font-weight: 600;
+  font-weight: 400;
   font-size: var(--spacing-3);
   color: var(--color-white);
   text-transform: uppercase;
@@ -237,11 +252,11 @@ ul {
 
 .home-image {
   position: fixed;
+  height: 100%;
+  width: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1);
-  height: var(--home-image-height);
-  width: var(--home-image-width);
 }
 
 #home-image-background {
@@ -257,7 +272,40 @@ ul {
 }
 
 #home-image-foreground {
+  z-index: 4;
+}
+
+#home-title-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   z-index: 3;
+  width: 100%;
+  height: 50vh;
+  top: 6vh;
+  font-family: var(--font-header);
+  font-size: var(--spacing-5);
+  text-transform: uppercase;
+  font-weight: 900;
+  color: var(--color-white);
+  text-align: center;
+}
+
+.home-title {
+  height: fit-content;
+  line-height: 0.7;
+}
+
+#title-javier,
+#title-rojo {
+  height: fit-content;
+  width:fit-content;
+}
+
+#title-rojo {
+  transform: rotate(8deg);
 }
 
 /* ==> PRESS CAROUSEL <== */
@@ -322,7 +370,7 @@ ul {
 }
 
 .source-container {
-  color: var(--color-blue);
+  color: var(--color-yellow);
   font-family: var(--font-header);
   font-weight: 800;
   font-size: clamp(var(--spacing-2), 2.5vw, var(--spacing-3));
@@ -452,14 +500,14 @@ ul {
   }
 
   a {
-    color: var(--color-blue-flashy-transparent) !important;
+    color: var(--color-yellow) !important;
     font-weight: 700 !important;
     text-decoration: none !important;
     transition: 0.3s var(--easing-hover);
   }
 
   a:hover {
-    color: var(--color-blue-flashy) !important;
+    color: var(--color-light-orange) !important;
   }
 }
 
@@ -491,7 +539,7 @@ ul {
   width: 10%;
   height: 3px;
   top: 100%;
-  background-color: var(--color-blue-flashy);
+  background-color: var(--color-yellow);
   transition: 0.3s var(--easing-hover);
   border-radius: var(--spacing-1);
   z-index: -1;
@@ -619,7 +667,7 @@ ul {
   }
 
   a:hover {
-    color: var(--color-blue-flashy);
+    color: var(--color-dark-orange);
   }
 }
 
@@ -627,6 +675,7 @@ ul {
   font-size: var(--spacing-1);
   font-weight: 250;
   text-align: center;
+  font-family: var(--font-main);
 }
 
 .concert-lineup {
@@ -636,6 +685,7 @@ ul {
   align-items: center;
   font-size: calc(12px / 1.618);
   font-weight: 300;
+  font-family: var(--font-main);
 }
 
 .concert-musician {
@@ -651,14 +701,14 @@ ul {
   font-family: var(--font-header);
   font-size: var(--spacing-1);
   padding: calc(var(--spacing-1) / 2);
-  background-color: var(--color-blue);
+  background-color: var(--color-light-orange);
   height: fit-content;
   border-radius: calc(var(--spacing-1) / 2);
   transition: 0.3s var(--easing-hover);
 }
 
 .concert-ticket:hover {
-  background-color: var(--color-blue-flashy);
+  background-color: var(--color-dark-orange);
 }
 
 /* ===> FOOTER <=== */
@@ -682,7 +732,7 @@ ul {
 }
 
 #footer a:hover {
-  color: var(--color-blue-flashy);
+  color: var(--color-dark-orange);
 }
 
 /* social media */
@@ -810,6 +860,20 @@ ul {
     position: relative;
     justify-content: center;
     gap: var(--spacing-2);
+  }
+
+  .home-image {
+    height: auto;
+    width: 100%;
+  }
+
+  #home-title-container {
+    font-size: var(--spacing-6);
+    top: 0;
+  }
+
+  .section-title-container {
+    padding: var(--spacing-6) 0 var(--spacing-4);
   }
 
   .section-title {
