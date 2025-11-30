@@ -1,6 +1,13 @@
-const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title', 'dot'];
+const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title', 'biography'];
 const svgTransitions = ['page'];
+const biographySelectorColors = [
+    getComputedStyle(document.documentElement).getPropertyValue('--color-blue'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-light-orange'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-dark-orange')
+];
+
 let isStrokeColorLight = false;
+let bioSelectorColorIndex = 0;
 
 const svgInfos = {
     selectorsURLs: Object.fromEntries(
@@ -77,16 +84,34 @@ async function appendSelector(selector, target) {
 
     if (['static', ''].includes(getComputedStyle(container).position))
         container.style.position = 'relative';
+
     container.appendChild(selectorContainer);
 
-    if (['home-title', 'circle'].includes(selector)) assignSelectorColor(selectorContainer);
+    if (['home-title', 'circle'].includes(selector)) assignSelectorOrangeColor(selectorContainer);
+    if (['biography'].includes(selector)) initBiographySelectors(selectorContainer, target);
 }
 
-function assignSelectorColor(container) {
+function initBiographySelectors(container, target) {
+    assignBiographySelectorColor(container);
+    rotateRandomlySelector(container, target);
+}
+
+function assignSelectorOrangeColor(container) {
     const svgPath = container.querySelector('path');
     const color = isStrokeColorLight ? 'light' : 'dark';
     svgPath.classList.add(`svg-stroke-${color}`);
     isStrokeColorLight = !isStrokeColorLight;
+}
+
+function assignBiographySelectorColor(container) {
+    const svgPath = container.querySelector('path');
+    const color = biographySelectorColors[bioSelectorColorIndex];
+    svgPath.style.stroke = color;
+    bioSelectorColorIndex = (bioSelectorColorIndex + 1) % biographySelectorColors.length;
+}
+
+function rotateRandomlySelector(container) {
+        container.style.transform = `translate(-50%, -50%) rotate(${Math.floor(Math.random() * 360)}deg)`;
 }
 
 // social media icons
@@ -162,16 +187,17 @@ export async function drawSelectors(isTransition) {
         const isSelectedPage = target.classList.contains('selected-page');
         const isSectionTitle = target.classList.contains('section-title');
         const isHomeTitle = target.classList.contains('home-title');
+        const isBiography = target.dataset.selector === 'biography';
         const isLanguageOption = target.dataset.language !== undefined;
 
-        if (isLanguageOption && !isSelectedLanguage && !isSectionTitle && !isHomeTitle) return;
+        if (isLanguageOption && !isSelectedLanguage && !isSectionTitle && !isHomeTitle && !isBiography) return;
 
         if (isSectionTitle) {
             if (!isTransition) {
                 gsap.set(selector, { opacity: 1 });
                 gsap.from(path, { drawSVG: 0, duration: 0.5 });
             }
-        } else if (!isSelectedPage && !isSelectedLanguage && !isHomeTitle) {
+        } else if (!isSelectedPage && !isSelectedLanguage && !isHomeTitle && !isBiography) {
             const draw = gsap.timeline({ paused: true });
             draw.set(selector, { opacity: 1 })
                 .from(path, { drawSVG: 0, duration: 0.5 });
@@ -181,7 +207,7 @@ export async function drawSelectors(isTransition) {
 
         } else {
             gsap.set(selector, { opacity: 1 });
-            if (!isTransition && !isHomeTitle) {
+            if (!isTransition && !isHomeTitle && !isBiography) {
                 let drawDuration = 1;
                 if (isSelectedLanguage) drawDuration = 0.5;
                 else if (isSelectedPage) drawDuration = 0.3;

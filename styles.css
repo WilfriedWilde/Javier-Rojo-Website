@@ -10,12 +10,13 @@
   --font-header: "Source Sans 3", sans-serif;
   --font-subheader: "Carme", sans-serif;
   --font-main: "Libre Franklin", sans-serif;
+  --color-black: hsl(231, 53%, 7%);
+  --color-black-transparent: hsla(31, 53%, 7%, 0.4);
+  --color-white: hsl(60, 50%, 97%);
   --color-light-orange: hsl(41, 94%, 56%);
   --color-dark-orange: hsl(17, 68%, 48%);
   --color-yellow: hsl(52, 95%, 69%);
-  --color-black: hsl(231, 53%, 7%);
-  --color-black-transparent: hsla(253, 38%, 18%, 0.4);
-  --color-white: hsl(60, 50%, 97%);
+  --color-blue: hsl(209, 89%, 61%);
   --spacing-1: 12px;
   --spacing-2: 19px;
   --spacing-3: 31px;
@@ -109,7 +110,8 @@ ul {
   position: absolute;
   width: 100%;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   opacity: 0;
 }
 
@@ -521,6 +523,7 @@ ul {
   width: 100%;
   padding: var(--spacing-3);
   font-family: var(--font-main);
+  text-shadow: 1px 1px 1px var(--color-black-transparent);
   color: var(--color-white);
 }
 
@@ -600,6 +603,10 @@ ul {
 }
 
 #biography-journey {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-1);
   font-size: var(--spacing-2);
   font-weight: 500;
   text-align: center;
@@ -654,10 +661,6 @@ ul {
     text-align: center;
   }
 
-  a {
-    width: 100%;
-  }
-
   a:hover img {
     cursor: pointer;
     transform: scale(1.01);
@@ -672,6 +675,27 @@ ul {
   :nth-child(5) {
     font-weight: 300;
   }
+}
+
+.biography-work-one {
+  padding-bottom: var(--spacing-3);
+}
+
+.biography-album-link {
+  width: 100%;
+}
+
+#biography-sextet-gallery {
+  position: relative;
+  width: 100%;
+  height: 1200px;
+  padding-top: var(--spacing-7);
+}
+
+.biography-gallery-image {
+  position: absolute;
+  width: 100%;
+  left: 50%;
 }
 
 #biography-sideman {
@@ -710,6 +734,7 @@ ul {
 }
 
 .bio-highlight-label {
+  display: block;
   font-style: italic;
   font-weight: 600 !important;
   transition: 0.3s var(--easing-hover);
@@ -1117,6 +1142,76 @@ ul {
 
   .news-title {
     font-size: var(--spacing-4);
+  }
+
+  #biography-container {
+    padding: var(--spacing-7);
+    gap: var(--spacing-8);
+  }
+
+  #biography-header {
+    gap: var(--spacing-4);
+  }
+
+  #biography-header-text-container {
+    font-size: var(--spacing-3);
+    text-align: center;
+    gap: var(--spacing-3);
+
+    p:nth-child(2) {
+      font-size: var(--spacing-4);
+    }
+  }
+
+  #biography-journey {
+    gap: var(--spacing-3);
+    font-size: var(--spacing-4);
+  }
+
+  #biography-studies {
+    text-align: center;
+  }
+
+  .studies {
+    gap: 0;
+    padding: 0 var(--spacing-6);
+
+    :nth-child(3) {
+      margin-top: var(--spacing-1);
+    }
+  }
+
+  #biography-work {
+    font-size: var(--spacing-3);
+    text-align: center;
+
+    :nth-child(2) {
+      font-weight: 300;
+      font-size: var(--spacing-4);
+      text-align: center;
+      line-height: 1;
+    }
+  }
+
+  .biography-work-one {
+    padding-bottom: var(--spacing-5);
+  }
+
+  #biography-sextet-gallery {
+    height: 3000px;
+  }
+
+  .biography-album-link {
+    width: 50%;
+  }
+
+  #biography-sideman {
+    font-size: var(--spacing-3);
+  }
+
+  .bio-highlight-album {
+    font-size: var(--spacing-5);
+    padding: var(--spacing-3) 0;
   }
 
   #concerts-menu {
