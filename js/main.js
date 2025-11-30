@@ -1,6 +1,7 @@
 import initNavbar from "./navbar.js";
 import initHome, { introHomeAnimation } from "./home.js";
 import initNews from "./news.js";
+import initBiography from "./biography.js";
 import initMedias from "./medias.js";
 import initConcerts from "./concerts.js";
 import initContact from "./contact.js";
@@ -10,13 +11,13 @@ import { injectHTML } from "./inject_html.js";
 import { destroyPressCarousel } from "./press.js";
 import { initTransition, animateTransition } from "./transition-page.js";
 
-
 /* ---------------------------------------------------------
    INIT PAGE
 --------------------------------------------------------- */
 const pageInits = {
     index: initHome,
     news: initNews,
+    biography: initBiography,
     medias: initMedias,
     concerts: initConcerts,
     contact: initContact

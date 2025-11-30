@@ -188,7 +188,7 @@ ul {
 }
 
 #navbar-title {
-  font-size: var(--spacing-4);
+  font-size: var(--spacing-3);
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -222,7 +222,7 @@ ul {
   position: absolute;
   top: 0;
   right: 0;
-  padding: var(--spacing-1);
+  padding: var(--spacing-2);
   gap: var(--spacing-1);
 
   p {
@@ -301,7 +301,7 @@ ul {
 #title-javier,
 #title-rojo {
   height: fit-content;
-  width:fit-content;
+  width: fit-content;
 }
 
 #title-rojo {
@@ -509,6 +509,214 @@ ul {
   a:hover {
     color: var(--color-light-orange) !important;
   }
+}
+
+/* ===> BIOGRAPHY <=== */
+#biography-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-6);
+  width: 100%;
+  padding: var(--spacing-3);
+  font-family: var(--font-main);
+  color: var(--color-white);
+}
+
+#biography-header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: var(--spacing-2);
+
+  img {
+    width: 100%;
+    border-radius: var(--spacing-1);
+  }
+}
+
+#biography-header-text-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2);
+  width: 100%;
+  padding: 0 var(--spacing-2);
+  text-align: justify;
+  font-size: var(--spacing-2);
+  font-weight: 100;
+
+  p:nth-child(2) {
+    font-size: var(--spacing-3);
+    font-weight: 400;
+    text-align: center;
+  }
+}
+
+#biography-highlights {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+  width: 100%;
+
+  img {
+    width: 100%;
+    border-radius: var(--spacing-1);
+  }
+}
+
+#biography-highlights-text-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-3);
+  width: 100%;
+  padding: 0 var(--spacing-2);
+}
+
+.biography-highlights-text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  font-size: var(--spacing-2);
+  font-weight: 100;
+
+  :nth-child(2) {
+    font-weight: 300;
+  }
+}
+
+#biography-journey {
+  font-size: var(--spacing-2);
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+}
+
+#biography-studies {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2);
+  width: 100%;
+  text-align: justify;
+  font-size: var(--spacing-2);
+
+  img {
+    width: 100%;
+    border-radius: var(--spacing-1);
+  }
+}
+
+.studies {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-weight: 100;
+
+  :nth-child(2) {
+    font-weight: 300;
+  }
+}
+
+#biography-work {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-3);
+  width: 100%;
+  text-align: justify;
+  font-weight: 100;
+  font-size: var(--spacing-2);
+
+  :nth-child(2) {
+    font-weight: 300;
+    font-size: var(--spacing-3);
+    text-align: center;
+  }
+
+  a {
+    width: 100%;
+  }
+
+  a:hover img {
+    cursor: pointer;
+    transform: scale(1.01);
+  }
+
+  img {
+    width: 100%;
+    border-radius: var(--spacing-1);
+    transition: 0.3s var(--easing-hover);
+  }
+
+  :nth-child(5) {
+    font-weight: 300;
+  }
+}
+
+#biography-sideman {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-1);
+  width: 100%;
+  font-size: var(--spacing-2);
+  font-weight: 100;
+  text-align: center;
+
+  :nth-child(2) {
+    font-weight: 300;
+  }
+}
+
+.bio-highlight-name {
+  font-weight: 300;
+}
+
+.bio-highlight-album {
+  color: var(--color-white);
+  font-weight: 500;
+  font-size: 40px;
+  display: block;
+  transition: 0.3s var(--easing-hover);
+  text-transform: uppercase;
+  padding: var(--spacing-1) 0;
+}
+
+.bio-highlight-album:hover {
+  color: var(--color-yellow);
+}
+
+.bio-highlight-label {
+  font-style: italic;
+  font-weight: 600 !important;
+  transition: 0.3s var(--easing-hover);
+}
+
+.bio-highlight-label:hover {
+  color: var(--color-light-orange);
 }
 
 /* ===> CONCERTS <=== */
@@ -860,6 +1068,7 @@ ul {
     position: relative;
     justify-content: center;
     gap: var(--spacing-2);
+    padding: 1;
   }
 
   .home-image {

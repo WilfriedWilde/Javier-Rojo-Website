@@ -1,5 +1,6 @@
 import { displayNoNewsMessage, getTimeAgo } from "./news.js";
 import { displayNoConcertsMessage, translateMonthName, getTicketTranslation, getTranslationEmptyConcertsListMessage } from "./concerts.js";
+import { displayBiographyTexts } from "./biography.js";
 
 // Object storing all the translations. It follows the structure 'language' => 'page' => 'section'.
 const translations = {
@@ -105,6 +106,10 @@ export function translateTextsInPage(textContainers, page) {
         
         const noNewsMessage = document.getElementById('no-news-message');
         if (noNewsMessage.innerText) displayNoNewsMessage();
+    } else if (page === 'biography') {
+        const biographyTexts = Array.from(document.querySelectorAll('[data-biography]'));
+        const biographyAnds = Array.from(document.querySelectorAll('.and'));
+        if (biographyAnds.some(and => and.innerText !== '')) displayBiographyTexts(biographyTexts ,biographyAnds);
     } else if (page === 'concerts') {
         const noConcertsMessage = document.getElementById('no-concerts-message');
         if (noConcertsMessage.innerText) displayNoConcertsMessage();
@@ -117,7 +122,7 @@ export function translateTextsInPage(textContainers, page) {
 
         const concertsListsEmptyMessage = document.querySelector('.concerts-list-empty-message') || '';
         if (concertsListsEmptyMessage) concertsListsEmptyMessage.innerText = getTranslationEmptyConcertsListMessage(concertsListsEmptyMessage.parentNode);
-    }
+    } 
 }
 
 function handleTimeAgoTranslation() {
@@ -134,7 +139,7 @@ export function getSelectedLanguage() {
     return selectedLanguage ? selectedLanguage : 'en';
 }
 
-function getTranslation(object, keys) {
+export function getTranslation(object, keys) {
     return keys.reduce((acc, key) => acc?.[key], object);
 }
 
