@@ -42,7 +42,7 @@ const biographyTexts = {
             four: 'y dentro de la escena española en festivales como los de:',
             five: 'y en salas como:'
         },
-        journey: `El viaje de Javier como músico y compositor es un reflejo de su dedicación inquebrantable y su humilde enfoque hacia la música.<br>Con cada paso que da en su carrera, busca explorar nuevos horizontes y refinar continuamente su arte.<br>Su compromiso con la excelencia y su genuina pasión por la música lo impulsan hacia adelante, llevándolo hacia un futuro prometedor lleno de emocionantes proyectos y nuevos descubrimientos musicales.`,
+        journey: `<p>El viaje de Javier como músico y compositor es un reflejo de su dedicación inquebrantable y su humilde enfoque hacia la música.</p><p>Con cada paso que da en su carrera, busca explorar nuevos horizontes y refinar continuamente su arte.</p><p>Su compromiso con la excelencia y su genuina pasión por la música lo impulsan hacia adelante, llevándolo hacia un futuro prometedor lleno de emocionantes proyectos y nuevos descubrimientos musicales.</p>`,
         studies: {
             one: `En agosto de 2024 Javier finalizó su Máster en Interpretación en el Jazzcampus de Basilea, bajo la tutela de <span class="bio-highlight-name">Mark Turner</span> y <span class="bio-highlight-name">Chris Cheek</span>, junto con otros artistas renombrados como:`,
             two: 'Previamente Javier vivió cinco años en Barcelona, donde tuvo como maestros a músicos de la talla de:',
