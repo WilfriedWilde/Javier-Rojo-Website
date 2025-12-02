@@ -205,6 +205,9 @@ export async function drawSelectors(isTransition) {
             target.addEventListener('mouseenter', () => draw.play());
             target.addEventListener('mouseleave', () => draw.reverse());
 
+        } else if (isBiography) {
+            gsap.set(selector, { opacity: 1 });
+            return;
         } else {
             gsap.set(selector, { opacity: 1 });
             if (!isTransition && !isHomeTitle && !isBiography) {

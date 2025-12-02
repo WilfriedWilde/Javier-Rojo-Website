@@ -65,7 +65,7 @@ const biographyGalleryURLS = [
 ];
 let gallery;
 
-export default function initBiography(barbaContainer) {
+export default async function initBiography(barbaContainer) {
     const texts = Array.from(barbaContainer.querySelectorAll('[data-biography]'));
     const ands = Array.from(barbaContainer.querySelectorAll('.and'));
     gallery = barbaContainer.querySelector('#biography-sextet-gallery');
@@ -129,4 +129,237 @@ function getImage(url, index) {
 function getRandomRotation() {
     const maxRotation = 10;
     return Math.floor(Math.random() * maxRotation);
+}
+
+export function initBiographyAnimations(container) {
+    document.fonts.ready.then(() => {
+        initHeaderAnim(container);
+        initHighlightsAnim(container);
+        initJourneyAnim(container);
+        initStudiesAnim(container);
+        initWorkAnim(container);
+        initSidemanAnim(container);
+    });
+}
+
+function initHeaderAnim(container) {
+    const imageHeader = container.querySelector('#biography-header img');
+    gsap.to(imageHeader, {
+        scrollTrigger: {
+            trigger: imageHeader,
+            start: '40% center',
+            scrub: 1,
+            pin: true,
+            pinSpacing: true
+        },
+        scale: 0.5,
+    })
+
+    const checkHeaderSelector = setInterval(() => {
+        const path = document.querySelector('#biography-header-text-container path');
+        if (path) {
+            clearInterval(checkHeaderSelector);
+
+            const instruments = container.querySelector('#biography-header-instruments');
+            const instrumentsWidth = instruments.getBoundingClientRect().width;
+            const selector = path.parentNode.parentNode;
+
+            gsap.set(selector, { width: instrumentsWidth });
+
+            const instrumentsTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: instruments,
+                    start: 'top 80%',
+                }
+            })
+            let split = SplitText.create(instruments, { type: 'words', mask: 'words' });
+
+            instrumentsTimeline
+                .from(split.words, {
+                    stagger: {
+                        amount: 0.5,
+                        ease: 'power1.in'
+                    },
+                    yPercent: -100,
+                })
+                .from(path, { drawSVG: 0, strokeWidth: 0, duration: 1, ease: 'power1.out' })
+        }
+    }, 50);
+}
+
+function initHighlightsAnim(container) {
+    const highlights = Array.from(container.querySelectorAll('.biography-highlights-text'));
+    highlights.forEach(highlight => {
+        const list = highlight.children[1];
+        const split = SplitText.create(list, { type: 'lines' });
+
+        gsap.from(split.lines, {
+            scrollTrigger: {
+                trigger: list,
+                start: 'top 70%'
+            },
+            stagger: {
+                amount: 1,
+                ease: 'power1.in'
+            },
+            opacity: 0
+        })
+    });
+
+    const imageHighlights = container.querySelector('#biography-highlights img');
+    gsap.to(imageHighlights, {
+        scrollTrigger: {
+            trigger: imageHighlights,
+            start: '40% center',
+            scrub: 1,
+            pin: true,
+            pinSpacing: true
+        },
+        scale: 0.5
+    })
+}
+
+function initJourneyAnim(container) {
+    const journeyParagraphs = Array.from(container.querySelectorAll('#biography-journey p'));
+    journeyParagraphs.forEach(paragraph => {
+        const split = SplitText.create(paragraph, { type: 'words' });
+
+        gsap.from(split.words, {
+            scrollTrigger: {
+                trigger: paragraph,
+                start: 'center center',
+                scrub: 1,
+                pin: true,
+                pinSpacing: true
+            },
+            stagger: {
+                each: 0.1
+            },
+            opacity: 0,
+        })
+    })
+}
+
+function initStudiesAnim(container) {
+    const studies = Array.from(container.querySelectorAll('.studies'));
+    studies.forEach(study => {
+        const list = study.children[1];
+        const split = SplitText.create(list, { type: 'lines' });
+
+        gsap.from(split.lines, {
+            scrollTrigger: {
+                trigger: list,
+                start: 'top 70%'
+            },
+            stagger: {
+                amount: 1,
+                ease: 'power1.in'
+            },
+            opacity: 0
+        })
+
+        const checkStudySelector = setInterval(() => {
+            const path = study.querySelector('path');
+            if (path) {
+                clearInterval(checkStudySelector);
+                gsap.from(path, {
+                    scrollTrigger: {
+                        trigger: study,
+                        start: 'top 80%',
+                    },
+                    drawSVG: 0,
+                    strokeWidth: 0,
+                    duration: 1,
+                    ease: 'power1.out'
+                })
+            }
+        }, 50);
+    });
+
+    const imageStudies = container.querySelector('#biography-studies img');
+    gsap.to(imageStudies, {
+        scrollTrigger: {
+            trigger: imageStudies,
+            start: '30% center',
+            scrub: 1,
+            pin: true,
+            pinSpacing: true
+        },
+        scale: 0.5
+    })
+
+}
+
+function initWorkAnim(container) {
+    const workParagraphs = Array.from(container.querySelectorAll('#biography-work p'));
+    workParagraphs.forEach(paragraph => {
+        if (paragraph.dataset.biography === 'work-two') {
+            const split = SplitText.create(paragraph, { type: 'words', masks: 'words' });
+            gsap.from(split.words, {
+                scrollTrigger: {
+                    trigger: paragraph,
+                    start: 'center center',
+                    pin: true,
+                    scrub: true,
+                    pinSpacing: true
+                },
+                stagger: {
+                    from: 'start',
+                    each: 0.5
+                },
+                opacity: 0
+            })
+        } else {
+            gsap.from(paragraph, {
+                scrollTrigger: {
+                    trigger: paragraph,
+                    start: 'top 80%'
+                },
+                opacity: 0,
+                duration: 1,
+                ease: 'power1.in'
+            })
+        }
+    })
+
+    const gallery = container.querySelector('#biography-sextet-gallery');
+    const checkGallery = setInterval(() => {
+        const images = Array.from(gallery.querySelectorAll('img'));
+        if (images.length > 0) {
+            clearInterval(checkGallery);
+            images.forEach((image, index) => {
+                const x = index % 2 === 0 ? -200 : 200;
+                const r = index % 2 === 0 ? -90 : 90;
+                gsap.from(image, {
+                    scrollTrigger: {
+                        trigger: image,
+                        start: 'top 70%',
+                    },
+                    xPercent: x,
+                    rotate: r,
+                    duration: 1,
+                    ease: 'back.out(1.5)'
+                })
+            })
+        }
+    }, 50);
+}
+
+function initSidemanAnim(container) {
+    const checkSidemanSelector = setInterval(() => {
+        const path = container.querySelector('#biography-sideman path');
+        if (path) {
+            clearInterval(checkSidemanSelector);
+            gsap.from(path, {
+                scrollTrigger: {
+                    trigger: path,
+                    start: 'top 80%',
+                },
+                drawSVG: 0,
+                strokeWidth: 0,
+                duration: 1,
+                ease: 'power1.out'
+            })
+        }
+    }, 50);
 }

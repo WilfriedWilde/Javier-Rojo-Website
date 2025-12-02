@@ -1,6 +1,6 @@
 import { displayNoNewsMessage, getTimeAgo } from "./news.js";
 import { displayNoConcertsMessage, translateMonthName, getTicketTranslation, getTranslationEmptyConcertsListMessage } from "./concerts.js";
-import { displayBiographyTexts } from "./biography.js";
+import { displayBiographyTexts, initBiographyAnimations } from "./biography.js";
 
 // Object storing all the translations. It follows the structure 'language' => 'page' => 'section'.
 const translations = {
@@ -109,7 +109,10 @@ export function translateTextsInPage(textContainers, page) {
     } else if (page === 'biography') {
         const biographyTexts = Array.from(document.querySelectorAll('[data-biography]'));
         const biographyAnds = Array.from(document.querySelectorAll('.and'));
-        if (biographyAnds.some(and => and.innerText !== '')) displayBiographyTexts(biographyTexts ,biographyAnds);
+        if (biographyAnds.some(and => and.innerText !== '')) {
+            displayBiographyTexts(biographyTexts ,biographyAnds);
+            ScrollTrigger.refresh();
+        }
     } else if (page === 'concerts') {
         const noConcertsMessage = document.getElementById('no-concerts-message');
         if (noConcertsMessage.innerText) displayNoConcertsMessage();

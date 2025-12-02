@@ -1,7 +1,7 @@
 import initNavbar from "./navbar.js";
 import initHome, { introHomeAnimation } from "./home.js";
 import initNews from "./news.js";
-import initBiography from "./biography.js";
+import initBiography, { initBiographyAnimations } from "./biography.js";
 import initMedias from "./medias.js";
 import initConcerts from "./concerts.js";
 import initContact from "./contact.js";
@@ -53,7 +53,10 @@ barba.init({
             await initUI(page, next.container);
             await drawSelectors(true);
             await initPage(page, next.container)
-        }
+        },
+        afterEnter({ next }) {
+            if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
+        },
     }],
 
     transitions: [{

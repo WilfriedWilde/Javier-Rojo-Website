@@ -1,10 +1,10 @@
-let lastY = 0, navbarHidden = false;
+let lastY = 0, isNavbarHidden = false;
 
 export default function initNavbar(navbar, page) {
     destroyNavbarDisplay();
     if (page === 'index') initHomeNavbar(navbar);
     else initNotHomeNavbar(navbar);
-    resetNavbarState();
+    resetNavbarState(page);
 }
 
 function destroyNavbarDisplay() {
@@ -21,12 +21,16 @@ function initNotHomeNavbar(navbar) {
     navbar.style.backgroundColor = color;
 }
 
-function resetNavbarState() {
-    lastY = 0;
-    navbarHidden = false;
+function resetNavbarState(page) {
+    lastY = window.scrollY;
+    isNavbarHidden = false;
 
     const navbar = document.getElementById('navbar');
-    gsap.set(navbar, { opacity: 0 });
+    if (page === 'index') {
+        gsap.set(navbar, { opacity: 0 });
+    } else {
+        gsap.set(navbar, { yPercent: 0, opacity: 1 });
+    }
 }
 
 function handleNavbarDisplayOnScroll() {
@@ -37,16 +41,16 @@ function handleNavbarDisplayOnScroll() {
 }
 
 function hideNavbar() {
-    if (navbarHidden) return;
-    navbarHidden = true;
+    if (isNavbarHidden) return;
+    isNavbarHidden = true;
 
     const navbar = document.getElementById('navbar');
     gsap.to(navbar, { yPercent: -100, duration: 0.4 })
 }
 
 function showNavbar() {
-    if (!navbarHidden) return;
-    navbarHidden = false;
+    if (!isNavbarHidden) return;
+    isNavbarHidden = false;
 
     const navbar = document.getElementById('navbar');
     gsap.to(navbar, { yPercent: 0, opacity: 1, duration: 0.5 })
