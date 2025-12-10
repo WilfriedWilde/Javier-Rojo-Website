@@ -254,8 +254,14 @@ function updateConcertsListsClassNames(selectedOption, listOptions) {
 function animateConcertsListSelector(selectedOption) {
     const selectorRects = concertsListSelector.getBoundingClientRect();
     const selectedOptionRects = selectedOption.getBoundingClientRect();
+    const screenCenter = window.innerWidth / 2;
     const operator = getOperator(selectedOptionRects);
     const distance = getDistance(selectorRects, selectedOptionRects);
+
+    if (((selectorRects.x + (selectorRects.width / 2)) > screenCenter && operator === '+')
+            || 
+        ((selectorRects.x + (selectorRects.width / 2)) < screenCenter && operator === '-'))
+        return;
 
     gsap.to(concertsListSelector, {
         x: `${operator}=${distance}`,
