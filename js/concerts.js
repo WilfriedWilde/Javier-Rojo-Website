@@ -2,7 +2,7 @@ import { fetchSheetsData, formatDate, parseDDMMYYYY } from "./news.js";
 import { getSelectedLanguage } from "./translation.js";
 
 const concertsSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=722645748&single=true&output=csv';
-let concertsMenu, concertsListSelector, upcomingConcertsList, pastConcertsList;
+let concertsMenu, concertsListSelector, upcomingConcertsList, pastConcertsList, upcomingConcertsData = [], pastConcertsData = [];
 
 export default async function initConcerts(barbaContainer) {
     concertsMenu = barbaContainer.querySelector('#concerts-menu');
@@ -26,11 +26,7 @@ async function getConcertsData() {
         return;
     }
 
-    return getChronologicallySortedData(data);
-}
-
-function getChronologicallySortedData(data) {
-    return [...data].sort((a, b) => parseDDMMYYYY(a.date) - parseDDMMYYYY(b.date));
+    return data;
 }
 
 export function displayNoConcertsMessage() {
@@ -53,9 +49,28 @@ async function populateConcertsLists(data) {
     if (!data) return;
 
     for (let i = 0; i < data.length; i++) {
-        if (isConcertUpcoming(data, i)) await appendUpcomingConcert(data, i);
-        else await appendPastConcert(data, i);
+        if (isConcertUpcoming(data, i)) upcomingConcertsData.push(data[i]);
+        else pastConcertsData.push(data[i]);
     }
+
+    upcomingConcertsData = getChronologicallySortedData(upcomingConcertsData);
+    pastConcertsData = getChronologicallyReversedSortedData(pastConcertsData);
+
+    for (let i = 0; i < upcomingConcertsData.length; i++) {
+        await appendUpcomingConcert(upcomingConcertsData, i);
+    }
+
+    for(let i = 0; i < pastConcertsData.length; i++) {
+        await appendPastConcert(pastConcertsData, i);
+    }
+}
+
+function getChronologicallySortedData(data) {
+    return [...data].sort((a, b) => parseDDMMYYYY(a.date) - parseDDMMYYYY(b.date));
+}
+
+function getChronologicallyReversedSortedData(data) {
+    return [...data].sort((a, b) => parseDDMMYYYY(b.date) - parseDDMMYYYY(a.date));
 }
 
 function isConcertUpcoming(data, index) {
