@@ -827,7 +827,7 @@ ul {
   display: flex;
   align-items: center;
   width: 100%;
-  height: var(--height-concert-mobile);
+  height: fit-content;
   color: var(--color-white);
   padding: 0 var(--spacing-2);
 }
@@ -859,8 +859,9 @@ ul {
 }
 
 .concert-image {
-  flex: 0.5;
+  flex: 1;
   height: 100%;
+  max-width: 35vw;
   object-fit: cover;
   object-position: center;
   border-radius: var(--spacing-1);
