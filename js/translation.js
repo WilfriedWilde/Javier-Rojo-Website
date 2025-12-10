@@ -103,14 +103,14 @@ export function translateTextsInPage(textContainers, page) {
 
     if (page === 'news') {
         handleTimeAgoTranslation();
-        
+
         const noNewsMessage = document.getElementById('no-news-message');
         if (noNewsMessage.innerText) displayNoNewsMessage();
     } else if (page === 'biography') {
         const biographyTexts = Array.from(document.querySelectorAll('[data-biography]'));
         const biographyAnds = Array.from(document.querySelectorAll('.and'));
         if (biographyAnds.some(and => and.innerText !== '')) {
-            displayBiographyTexts(biographyTexts ,biographyAnds);
+            displayBiographyTexts(biographyTexts, biographyAnds);
             ScrollTrigger.refresh();
         }
     } else if (page === 'concerts') {
@@ -121,11 +121,11 @@ export function translateTextsInPage(textContainers, page) {
         tickets.forEach(ticket => ticket.innerText = getTicketTranslation());
 
         const concertMonths = Array.from(document.querySelectorAll('.concert-month'));
-        if (concertMonths.length !== 0) concertMonths.forEach(month => translateMonthName(month.innerText));
+        if (concertMonths.length !== 0) concertMonths.forEach(month => month.innerText = translateMonthName(month.innerText.toLowerCase()));
 
         const concertsListsEmptyMessage = document.querySelector('.concerts-list-empty-message') || '';
         if (concertsListsEmptyMessage) concertsListsEmptyMessage.innerText = getTranslationEmptyConcertsListMessage(concertsListsEmptyMessage.parentNode);
-    } 
+    }
 }
 
 function handleTimeAgoTranslation() {
@@ -149,6 +149,5 @@ export function getTranslation(object, keys) {
 function replaceOriginalWithTranslation(container, translation) {
     container.textContent = translation;
 }
-
 
 

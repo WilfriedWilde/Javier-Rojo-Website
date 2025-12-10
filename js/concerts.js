@@ -182,9 +182,14 @@ export function getTicketTranslation() {
 }
 
 export function translateMonthName(monthName) {
-    const language = getSelectedLanguage();
-    const months = getMonthsTranslation(language);
-    return months[months.indexOf(monthName)];
+    const to = getSelectedLanguage();
+    const from = to === 'en' ? 'es' : 'en';
+    let nameIndex = getMonthsTranslation(from).indexOf(monthName);
+
+    if (nameIndex === -1) nameIndex = getMonthsTranslation(to).indexOf(monthName);
+
+    const months = getMonthsTranslation(to);
+    return months[nameIndex];
 }
 
 function displayEmptyConcertsListMessage() {
