@@ -148,11 +148,10 @@ function initHeaderAnim(container) {
         scrollTrigger: {
             trigger: imageHeader,
             start: '40% center',
-            scrub: 1,
-            pin: true,
-            pinSpacing: true
+            toggleActions: 'play none reverse none',
         },
         scale: 0.5,
+        duration: 1
     })
 
     const checkHeaderSelector = setInterval(() => {
@@ -211,11 +210,10 @@ function initHighlightsAnim(container) {
         scrollTrigger: {
             trigger: imageHighlights,
             start: '40% center',
-            scrub: 1,
-            pin: true,
-            pinSpacing: true
+            toggleActions: 'play none reverse none',
         },
-        scale: 0.5
+        scale: 0.5,
+        duration: 1
     })
 }
 
@@ -281,11 +279,10 @@ function initStudiesAnim(container) {
         scrollTrigger: {
             trigger: imageStudies,
             start: '30% center',
-            scrub: 1,
-            pin: true,
-            pinSpacing: true
+            toggleActions: 'play none reverse none',
         },
-        scale: 0.5
+        scale: 0.5,
+        duration: 1
     })
 
 }
