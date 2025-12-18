@@ -54,9 +54,6 @@ barba.init({
             await initUI(page, next.container);
             await drawSelectors(true);
             await initPage(page, next.container);
-
-            
-            //current.container.style.position = 'absolute';
         },
         afterEnter({ next }) {
             if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
@@ -66,7 +63,6 @@ barba.init({
     transitions: [{
         debug: true,
         name: "page-transition",
-        sync: true,
 
         async once() {
             const container = document.querySelector("[data-barba='container']");
@@ -81,6 +77,7 @@ barba.init({
         async enter({ current, next }) {
             if (current.container.dataset.namespace === 'index') destroyPressCarousel();
 
+            current.container.style.position = 'absolute';
             //transitionPage(current, next);
         }
     }]
