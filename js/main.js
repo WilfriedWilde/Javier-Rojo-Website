@@ -74,11 +74,14 @@ barba.init({
             if (page === 'index') introHomeAnimation();
         },
 
-        async enter({ current, next }) {
+        async enter({ current }) {
             if (current.container.dataset.namespace === 'index') destroyPressCarousel();
 
             current.container.style.position = 'absolute';
-            transitionPage(next);
+        },
+
+        async afterEnter({next}) {
+            await transitionPage(next);
         }
     }]
 });

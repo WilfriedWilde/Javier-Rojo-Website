@@ -1,4 +1,4 @@
-export default function transitionPage(next) {
+export default async function transitionPage(next) {
     const title = next.container.querySelector('.section-title');console.log(title)
     const tl = gsap.timeline();
 
