@@ -17,7 +17,6 @@ const svgInfos = {
     ),
 
     socialMedias: [
-        { url: './logos/social_medias/facebook.svg', id: 'facebook', href: 'https://www.facebook.com/javier.sanchezrojo.9' },
         { url: './logos/social_medias/instagram.svg', id: 'instagram', href: 'https://www.instagram.com/javiersrojo/' },
         { url: './logos/social_medias/spotify.svg', id: 'spotify', href: 'https://open.spotify.com/intl-fr/artist/4Mg2B60aGou7zXTRlbAmeH?si=yEht4fvUSbi2bO2alAGLng' },
         { url: './logos/social_medias/apple.svg', id: 'apple', href: 'https://music.apple.com/es/artist/javier-rojo/1478744089' },
