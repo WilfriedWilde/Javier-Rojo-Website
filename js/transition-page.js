@@ -14,7 +14,7 @@ export const animateTransition = {
     in: animateTransitionIn,
     out: async (next) => animateTransitionOut(next)
 }
-
+// TODO: remove transitions
 export function animateTransitionIn() {
     window.scrollTo(0, 0);
     const transitionIn = gsap.timeline();
