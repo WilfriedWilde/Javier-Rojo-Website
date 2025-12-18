@@ -45,21 +45,6 @@ document.addEventListener("click", (e) => {
 });
 
 barba.init({
-    views: [{
-        namespace: null,
-        async beforeEnter({ current, next }) {
-            //window.scrollTo(0, 0);
-            const page = next.container.dataset.namespace;
-
-            await initUI(page, next.container);
-            await drawSelectors(true);
-            await initPage(page, next.container);
-        },
-        afterEnter({ next }) {
-            if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
-        },
-    }],
-
     transitions: [{
         debug: true,
         name: "page-transition",
@@ -70,18 +55,31 @@ barba.init({
 
             await initUI(page, container);
             await drawSelectors();
+            await initPage(page, container);
 
             if (page === 'index') introHomeAnimation();
         },
 
-        async enter({ current }) {
+        async beforeEnter({ next }) {
+            const page = next.container.dataset.namespace;
+
+            await initUI(page, next.container);
+            await drawSelectors(true);
+            await initPage(page, next.container);
+        },
+
+        enter({ current }) {
             if (current.container.dataset.namespace === 'index') destroyPressCarousel();
 
             current.container.style.position = 'absolute';
         },
 
-        async afterEnter({next}) {
-            await transitionPage(next);
+        afterEnter({ next }) {
+            if (next.container.dataset.namespace === 'biography') {
+                initBiographyAnimations(next.container);
+            }
+        
+            return transitionPage(next);
         }
     }]
 });
