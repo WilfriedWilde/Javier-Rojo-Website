@@ -67,33 +67,34 @@ barba.init({
             const page = container.dataset.namespace;
 
             await initUI(page, container);
-            await appendAllTransitionsSVGs();
+            //await appendAllTransitionsSVGs();
             await drawSelectors();
 
             if (page === 'index') introHomeAnimation();
         },
 
         async beforeLeave({ trigger }) {
-            if (trigger) {
+            /*if (trigger) {
                 const namespace = trigger.dataset.barbaNamespaceTarget
                     || trigger.getAttribute('href').split('.')[0];
                 await initTransition(namespace);
-            }
+            }*/
         },
 
         async leave() {
-            await animateTransition.in();
+            //await animateTransition.in();
         },
 
         enter({ current }) {
             if (current.container.dataset.namespace === 'index') destroyPressCarousel();
 
+            window.scrollTo(0, 0);
             current.container.style.position = 'absolute';
         },
 
         async afterEnter({ next }) {
-            await animateTransition.out(next);
-            await appendAllTransitionsSVGs();
+            /*await animateTransition.out(next);
+            await appendAllTransitionsSVGs();*/
         }
     }]
 });
