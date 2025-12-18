@@ -78,7 +78,7 @@ barba.init({
             if (current.container.dataset.namespace === 'index') destroyPressCarousel();
 
             current.container.style.position = 'absolute';
-            //transitionPage(current, next);
+            transitionPage(next);
         }
     }]
 });
