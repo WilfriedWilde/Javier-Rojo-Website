@@ -6,10 +6,10 @@ import initMedias from "./medias.js";
 import initConcerts from "./concerts.js";
 import initContact from "./contact.js";
 import { getSelectedLanguage, handleLanguageSelection, translateTextsInPage } from "./translation.js";
-import { appendAllTransitionsSVGs, appendAllSelectors, drawSelectors, appendSocialMediaIcons, handleInstagramHover } from "./svg.js";
+import { appendAllSelectors, drawSelectors, appendSocialMediaIcons, handleInstagramHover } from "./svg.js";
 import { injectHTML } from "./inject_html.js";
 import { destroyPressCarousel } from "./press.js";
-import { initTransition, animateTransition } from "./transition-page.js";
+import transitionPage from "./transition-page.js";
 
 /* ---------------------------------------------------------
    INIT PAGE
@@ -47,12 +47,16 @@ document.addEventListener("click", (e) => {
 barba.init({
     views: [{
         namespace: null,
-        async beforeEnter({ next }) {
+        async beforeEnter({ current, next }) {
+            //window.scrollTo(0, 0);
             const page = next.container.dataset.namespace;
 
             await initUI(page, next.container);
             await drawSelectors(true);
-            await initPage(page, next.container)
+            await initPage(page, next.container);
+
+            
+            //current.container.style.position = 'absolute';
         },
         afterEnter({ next }) {
             if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
@@ -62,39 +66,22 @@ barba.init({
     transitions: [{
         debug: true,
         name: "page-transition",
+        sync: true,
+
         async once() {
             const container = document.querySelector("[data-barba='container']");
             const page = container.dataset.namespace;
 
             await initUI(page, container);
-            //await appendAllTransitionsSVGs();
             await drawSelectors();
 
             if (page === 'index') introHomeAnimation();
         },
 
-        async beforeLeave({ trigger }) {
-            /*if (trigger) {
-                const namespace = trigger.dataset.barbaNamespaceTarget
-                    || trigger.getAttribute('href').split('.')[0];
-                await initTransition(namespace);
-            }*/
-        },
-
-        async leave() {
-            //await animateTransition.in();
-        },
-
-        enter({ current }) {
+        async enter({ current, next }) {
             if (current.container.dataset.namespace === 'index') destroyPressCarousel();
 
-            window.scrollTo(0, 0);
-            current.container.style.position = 'absolute';
-        },
-
-        async afterEnter({ next }) {
-            /*await animateTransition.out(next);
-            await appendAllTransitionsSVGs();*/
+            //transitionPage(current, next);
         }
     }]
 });

@@ -1,5 +1,4 @@
 const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title', 'biography'];
-const svgTransitions = ['page'];
 const biographySelectorColors = [
     getComputedStyle(document.documentElement).getPropertyValue('--color-blue'),
     getComputedStyle(document.documentElement).getPropertyValue('--color-light-orange'),
@@ -21,32 +20,8 @@ const svgInfos = {
         { url: './logos/social_medias/spotify.svg', id: 'spotify', href: 'https://open.spotify.com/intl-fr/artist/4Mg2B60aGou7zXTRlbAmeH?si=yEht4fvUSbi2bO2alAGLng' },
         { url: './logos/social_medias/apple.svg', id: 'apple', href: 'https://music.apple.com/es/artist/javier-rojo/1478744089' },
         { url: './logos/social_medias/tidal.svg', id: 'tidal', href: 'https://tidal.com/artist/16729922/' }
-    ],
-
-    transitions: Object.fromEntries(
-        svgTransitions.map(transition => {
-            return [transition, `./svg/transition-${transition}.svg`];
-        })
-    )
+    ]
 };
-
-// svg transitions
-export async function appendAllTransitionsSVGs() {
-    const transitionTargets = Array.from(document.querySelectorAll('[data-transition]'));
-
-    for (let i = 0; i < svgTransitions.length; i++) {
-        for (const target of transitionTargets) {
-            if (target.dataset.transition === svgTransitions[i]) {
-                await appendTransitionSVG(svgTransitions[i], target);
-            }
-        }
-    }
-}
-
-async function appendTransitionSVG(transition, target) {
-    const svg = await fetchSVG(svgInfos.transitions[transition]);
-    target.innerHTML = svg;
-}
 
 // svg selectors
 export async function appendAllSelectors() {
