@@ -44,6 +44,11 @@ document.addEventListener("click", (e) => {
 
 barba.init({
     preventRunning: true,
+    views: [{
+        afterEnter({ next }) {
+            if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
+        }
+    }],
     transitions: [{
         debug: true,
         name: "page-transition",

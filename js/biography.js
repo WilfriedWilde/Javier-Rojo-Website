@@ -227,27 +227,23 @@ export function initHighlightsAnim(container) {
 // -----------------------------
 // JOURNEY
 // -----------------------------
-export function initJourneyAnim(container) {
-    const paragraphs = Array.from(container.querySelectorAll('#biography-journey p'));
-
-    paragraphs.forEach(p => {
-        const split = SplitText.create(p, { type: 'lines' });
-
-        gsap.from(split.lines, {
+function initJourneyAnim(container) {
+    const journeyParagraphs = Array.from(container.querySelectorAll('#biography-journey p'));
+    journeyParagraphs.forEach(paragraph => {
+        const split = SplitText.create(paragraph, { type: 'words' });
+        gsap.from(split.words, {
             scrollTrigger: {
-                trigger: p,
+                trigger: paragraph,
                 start: 'center center',
                 scrub: 1,
                 pin: true,
-                pinSpacing: true,
-                markers: true
+                pinSpacing: true
             },
             stagger: { each: 0.1 },
             opacity: 0,
-        });
-    });
+        })
+    })
 }
-
 
 // -----------------------------
 // STUDIES
