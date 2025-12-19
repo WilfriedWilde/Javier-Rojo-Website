@@ -95,7 +95,7 @@ barba.init({
         },
 
         afterEnter({ next }) {
-            gsap.set(next.container, { clearProps: 'position,top,left,width' });
+            gsap.set(next.container, { xPercent: 0, position: 'relative', clearProps: 'all' });
 
             if (next.container.dataset.namespace === 'biography') {
                 initBiographyAnimations(next.container);
