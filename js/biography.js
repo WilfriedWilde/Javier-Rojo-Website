@@ -132,6 +132,7 @@ function getRandomRotation() {
 }
 
 export function initBiographyAnimations(container) {
+    clearBiographyAnimations();
     document.fonts.ready.then(() => {
         initHeaderAnim(container);
         initHighlightsAnim(container);
@@ -142,8 +143,32 @@ export function initBiographyAnimations(container) {
     });
 }
 
-function initHeaderAnim(container) {
+function waitForSelector(container, selector) {
+    return new Promise(resolve => {
+        const el = container.querySelector(selector);
+        if (el) return resolve(el);
+
+        const observer = new MutationObserver(() => {
+            const found = container.querySelector(selector);
+            if (found) {
+                observer.disconnect();
+                resolve(found);
+            }
+        });
+        observer.observe(container, { childList: true, subtree: true });
+    });
+}
+
+export function clearBiographyAnimations() {
+    ScrollTrigger.getAll().forEach(st => st.kill());
+}
+
+// -----------------------------
+// HEADER
+// -----------------------------
+export async function initHeaderAnim(container) {
     const imageHeader = container.querySelector('#biography-header img');
+
     gsap.to(imageHeader, {
         scrollTrigger: {
             trigger: imageHeader,
@@ -152,57 +177,39 @@ function initHeaderAnim(container) {
         },
         scale: 0.5,
         duration: 1
-    })
+    });
 
-    const checkHeaderSelector = setInterval(() => {
-        const path = document.querySelector('#biography-header-text-container path');
-        if (path) {
-            clearInterval(checkHeaderSelector);
+    const path = await waitForSelector(container, '#biography-header-text-container path');
+    const instruments = container.querySelector('#biography-header-instruments');
+    const instrumentsWidth = instruments.getBoundingClientRect().width;
+    const selector = path.parentNode.parentNode;
+    gsap.set(selector, { width: instrumentsWidth });
 
-            const instruments = container.querySelector('#biography-header-instruments');
-            const instrumentsWidth = instruments.getBoundingClientRect().width;
-            const selector = path.parentNode.parentNode;
-
-            gsap.set(selector, { width: instrumentsWidth });
-
-            const instrumentsTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: instruments,
-                    start: 'top 80%',
-                }
-            })
-            let split = SplitText.create(instruments, { type: 'words', mask: 'words' });
-
-            instrumentsTimeline
-                .from(split.words, {
-                    stagger: {
-                        amount: 0.5,
-                        ease: 'power1.in'
-                    },
-                    yPercent: -100,
-                })
-                .from(path, { drawSVG: 0, strokeWidth: 0, duration: 1, ease: 'power1.out' })
+    const split = SplitText.create(instruments, { type: 'words', mask: 'words' });
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: instruments,
+            start: 'top 80%',
         }
-    }, 50);
+    });
+    tl.from(split.words, { stagger: { amount: 0.5, ease: 'power1.in' }, yPercent: -100 })
+        .from(path, { drawSVG: 0, strokeWidth: 0, duration: 1, ease: 'power1.out' });
 }
 
-function initHighlightsAnim(container) {
+// -----------------------------
+// HIGHLIGHTS
+// -----------------------------
+export function initHighlightsAnim(container) {
     const highlights = Array.from(container.querySelectorAll('.biography-highlights-text'));
     highlights.forEach(highlight => {
         const list = highlight.children[1];
         const split = SplitText.create(list, { type: 'lines' });
 
         gsap.from(split.lines, {
-            scrollTrigger: {
-                trigger: list,
-                start: 'top 70%'
-            },
-            stagger: {
-                amount: 1,
-                ease: 'power1.in'
-            },
+            scrollTrigger: { trigger: list, start: 'top 70%' },
+            stagger: { amount: 1, ease: 'power1.in' },
             opacity: 0
-        })
+        });
     });
 
     const imageHighlights = container.querySelector('#biography-highlights img');
@@ -214,149 +221,114 @@ function initHighlightsAnim(container) {
         },
         scale: 0.5,
         duration: 1
-    })
+    });
 }
 
-function initJourneyAnim(container) {
-    const journeyParagraphs = Array.from(container.querySelectorAll('#biography-journey p'));
-    journeyParagraphs.forEach(paragraph => {
-        const split = SplitText.create(paragraph, { type: 'words' });
+// -----------------------------
+// JOURNEY
+// -----------------------------
+export function initJourneyAnim(container) {
+    const paragraphs = Array.from(container.querySelectorAll('#biography-journey p'));
 
-        gsap.from(split.words, {
-            scrollTrigger: {
-                trigger: paragraph,
-                start: 'center center',
-                scrub: 1,
-                pin: true,
-                pinSpacing: true
-            },
-            stagger: {
-                each: 0.1
-            },
-            opacity: 0,
-        })
-    })
-}
-
-function initStudiesAnim(container) {
-    const studies = Array.from(container.querySelectorAll('.studies'));
-    studies.forEach(study => {
-        const list = study.children[1];
-        const split = SplitText.create(list, { type: 'lines' });
+    paragraphs.forEach(p => {
+        const split = SplitText.create(p, { type: 'lines' });
 
         gsap.from(split.lines, {
             scrollTrigger: {
-                trigger: list,
-                start: 'top 70%'
+                trigger: p,
+                start: 'center center',
+                scrub: 1,
+                pin: true,
+                pinSpacing: true,
+                markers: true
             },
-            stagger: {
-                amount: 1,
-                ease: 'power1.in'
-            },
-            opacity: 0
-        })
-
-        const checkStudySelector = setInterval(() => {
-            const path = study.querySelector('path');
-            if (path) {
-                clearInterval(checkStudySelector);
-                gsap.from(path, {
-                    scrollTrigger: {
-                        trigger: study,
-                        start: 'top 80%',
-                    },
-                    drawSVG: 0,
-                    strokeWidth: 0,
-                    duration: 1,
-                    ease: 'power1.out'
-                })
-            }
-        }, 50);
+            stagger: { each: 0.1 },
+            opacity: 0,
+        });
     });
+}
+
+
+// -----------------------------
+// STUDIES
+// -----------------------------
+export async function initStudiesAnim(container) {
+    const studies = Array.from(container.querySelectorAll('.studies'));
+    for (let study of studies) {
+        const list = study.children[1];
+        const split = SplitText.create(list, { type: 'lines' });
+        gsap.from(split.lines, {
+            scrollTrigger: { trigger: list, start: 'top 70%' },
+            stagger: { amount: 1, ease: 'power1.in' },
+            opacity: 0
+        });
+
+        const path = await waitForSelector(study, 'path');
+        gsap.from(path, {
+            scrollTrigger: { trigger: study, start: 'top 80%' },
+            drawSVG: 0,
+            strokeWidth: 0,
+            duration: 1,
+            ease: 'power1.out'
+        });
+    }
 
     const imageStudies = container.querySelector('#biography-studies img');
     gsap.to(imageStudies, {
-        scrollTrigger: {
-            trigger: imageStudies,
-            start: '30% center',
-            toggleActions: 'play none reverse none',
-        },
+        scrollTrigger: { trigger: imageStudies, start: '30% center', toggleActions: 'play none reverse none' },
         scale: 0.5,
         duration: 1
-    })
-
+    });
 }
 
-function initWorkAnim(container) {
-    const workParagraphs = Array.from(container.querySelectorAll('#biography-work p'));
-    workParagraphs.forEach(paragraph => {
-        if (paragraph.dataset.biography === 'work-two') {
-            const split = SplitText.create(paragraph, { type: 'words', masks: 'words' });
+// -----------------------------
+// WORK
+// -----------------------------
+export async function initWorkAnim(container) {
+    const paragraphs = Array.from(container.querySelectorAll('#biography-work p'));
+    paragraphs.forEach(p => {
+        if (p.dataset.biography === 'work-two') {
+            const split = SplitText.create(p, { type: 'words', masks: 'words' });
             gsap.from(split.words, {
-                scrollTrigger: {
-                    trigger: paragraph,
-                    start: 'center center',
-                    pin: true,
-                    scrub: true,
-                    pinSpacing: true
-                },
-                stagger: {
-                    from: 'start',
-                    each: 0.5
-                },
+                scrollTrigger: { trigger: p, start: 'center center', pin: true, scrub: true, pinSpacing: true },
+                stagger: { from: 'start', each: 0.5 },
                 opacity: 0
-            })
+            });
         } else {
-            gsap.from(paragraph, {
-                scrollTrigger: {
-                    trigger: paragraph,
-                    start: 'top 80%'
-                },
+            gsap.from(p, {
+                scrollTrigger: { trigger: p, start: 'top 80%' },
                 opacity: 0,
                 duration: 1,
                 ease: 'power1.in'
-            })
+            });
         }
-    })
+    });
 
     const gallery = container.querySelector('#biography-sextet-gallery');
-    const checkGallery = setInterval(() => {
-        const images = Array.from(gallery.querySelectorAll('img'));
-        if (images.length > 0) {
-            clearInterval(checkGallery);
-            images.forEach((image, index) => {
-                const x = index % 2 === 0 ? -200 : 200;
-                const r = index % 2 === 0 ? -90 : 90;
-                gsap.from(image, {
-                    scrollTrigger: {
-                        trigger: image,
-                        start: 'top 70%',
-                    },
-                    xPercent: x,
-                    rotate: r,
-                    duration: 1,
-                    ease: 'back.out(1.5)'
-                })
-            })
-        }
-    }, 50);
+    const images = Array.from(gallery.querySelectorAll('img'));
+    images.forEach((img, i) => {
+        const x = i % 2 === 0 ? -200 : 200;
+        const r = i % 2 === 0 ? -90 : 90;
+        gsap.from(img, {
+            scrollTrigger: { trigger: img, start: 'top 70%' },
+            xPercent: x,
+            rotate: r,
+            duration: 1,
+            ease: 'back.out(1.5)'
+        });
+    });
 }
 
-function initSidemanAnim(container) {
-    const checkSidemanSelector = setInterval(() => {
-        const path = container.querySelector('#biography-sideman path');
-        if (path) {
-            clearInterval(checkSidemanSelector);
-            gsap.from(path, {
-                scrollTrigger: {
-                    trigger: path,
-                    start: 'top 80%',
-                },
-                drawSVG: 0,
-                strokeWidth: 0,
-                duration: 1,
-                ease: 'power1.out'
-            })
-        }
-    }, 50);
+// -----------------------------
+// SIDEMAN
+// -----------------------------
+export async function initSidemanAnim(container) {
+    const path = await waitForSelector(container, '#biography-sideman path');
+    gsap.from(path, {
+        scrollTrigger: { trigger: path, start: 'top 80%' },
+        drawSVG: 0,
+        strokeWidth: 0,
+        duration: 1,
+        ease: 'power1.out'
+    });
 }

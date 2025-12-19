@@ -30,7 +30,6 @@ async function initPage(page, container) {
 /* ---------------------------------------------------------
    BARBA TRANSITIONS
 --------------------------------------------------------- */
-// Prevent transitions when clicking the link to the current page
 document.addEventListener("click", (e) => {
     const link = e.target.closest("a[href]");
     if (!link) return;
@@ -40,11 +39,11 @@ document.addEventListener("click", (e) => {
 
     if (currentUrl === targetUrl) {
         e.preventDefault();
-        return;
     }
 });
 
 barba.init({
+    preventRunning: true,
     transitions: [{
         debug: true,
         name: "page-transition",
@@ -60,26 +59,42 @@ barba.init({
             if (page === 'index') introHomeAnimation();
         },
 
+        leave({ current }) {
+            ScrollTrigger.getAll().forEach(st => st.kill());
+
+            let tl = gsap.timeline();
+
+            if (current.container.dataset.namespace === 'index') {
+                tl.to(current.container.querySelectorAll('.home-image'), {
+                    opacity: 0,
+                    duration: 0.3
+                });
+            }
+
+            return tl;
+        },
+
         async beforeEnter({ next }) {
             const page = next.container.dataset.namespace;
 
             await initUI(page, next.container);
             await drawSelectors(true);
             await initPage(page, next.container);
+
+            if (page !== 'index') return gsap.set(next.container, { xPercent: 100, position: 'absolute', top: 0, left: 0, width: '100%' });
         },
 
-        enter({ current }) {
+        enter({ current, next }) {
             if (current.container.dataset.namespace === 'index') destroyPressCarousel();
-
-            current.container.style.position = 'absolute';
+            return transitionPage(next);
         },
 
         afterEnter({ next }) {
+            gsap.set(next.container, { clearProps: 'position,top,left,width' });
+
             if (next.container.dataset.namespace === 'biography') {
                 initBiographyAnimations(next.container);
             }
-        
-            return transitionPage(next);
         }
     }]
 });

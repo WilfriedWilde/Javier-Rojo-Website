@@ -153,9 +153,8 @@ ul {
 }
 
 #main-home {
-  background-color: transparent;
-  min-height: 0;
-  height: 100%;
+  background-color: var(--color-black);
+  min-height: 100vh;
   position: relative;
   overflow: hidden;
 }
@@ -177,7 +176,7 @@ ul {
 /* ===> NAVBAR <=== */
 #navbar {
   position: fixed;
-  width: 100%;
+  width: 100vw;
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -259,6 +258,7 @@ ul {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
 }
 
 #home-image-background {
@@ -302,12 +302,9 @@ ul {
 
 #title-javier,
 #title-rojo {
+  transform: translateY(-600%);
   height: fit-content;
   width: fit-content;
-}
-
-#title-rojo {
-  transform: rotate(8deg);
 }
 
 /* ==> PRESS CAROUSEL <== */
