@@ -64,6 +64,7 @@ let homeScrollTriggers = [];
 
 function initCarouselAnimations() {
     const homeTitle = document.getElementById("home-title-container");
+    const smoothWrapper = document.getElementById("smooth-wrapper");
     const pressCarousel = document.getElementById("press-carousel");
     const homeOverlay = document.getElementById("home-image-overlay");
     const homeImages = document.querySelectorAll(".home-image");
@@ -75,12 +76,13 @@ function initCarouselAnimations() {
     let isCarouselDisplayed = false;
     const carouselTimeline = gsap.timeline({ paused: true });
     carouselTimeline
+        .to(smoothWrapper, { zIndex: 5, duration: 0 })
         .to(homeTitle.children, { yPercent: -600, zIndex: -1, stagger: { amount: 0.1, from: 'start' }, ease: 'back.in(1.3)' })
         .to(homeOverlay, { backdropFilter: "blur(5px) brightness(0.1)", duration: 0.4, overwrite: true }, 0.5)
         .to(homeImages, { transform: "translate(-50%, -48%) scale(1.05)", duration: 0.5, overwrite: true }, 0.5)
         .to(pressCarousel, { opacity: 1, duration: 0.4, overwrite: true }, 0.5)
         .to(navbar, { opacity: 1, stagger: { amount: 0.2 } }, 0.5)
-
+        
     homeClickHandler = (event) => {
         if (event.target.closest('li')) return;
 
