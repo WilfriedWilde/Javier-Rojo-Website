@@ -87,7 +87,7 @@ export function getReviewText(id) {
     else return `"${translatedReview}"`;
 }
 
-function getTranslatedReview(id) {console.log(id)
+function getTranslatedReview(id) {
     const language = getSelectedLanguage();
     const currentReview = reviews.find(review => review.id === id);
 

@@ -49,13 +49,13 @@ async function populateConcertsLists(data) {
     if (!data) return;
 
     for (let i = 0; i < data.length; i++) {
-        if (isConcertUpcoming(data, i)) upcomingConcertsData.push(data[i]);
+        if (isConcertUpcoming(data[i])) upcomingConcertsData.push(data[i]);
         else pastConcertsData.push(data[i]);
     }
 
     upcomingConcertsData = getChronologicallySortedData(upcomingConcertsData);
     pastConcertsData = getChronologicallyReversedSortedData(pastConcertsData);
-
+    
     for (let i = 0; i < upcomingConcertsData.length; i++) {
         await appendUpcomingConcert(upcomingConcertsData, i);
     }
@@ -73,11 +73,21 @@ function getChronologicallyReversedSortedData(data) {
     return [...data].sort((a, b) => parseDDMMYYYY(b.date) - parseDDMMYYYY(a.date));
 }
 
-function isConcertUpcoming(data, index) {
-    const concertDate = new Date(formatDate(data[index].date, 'us')).getTime();
-    const now = Date.now();
-    return concertDate > now;
-};
+function isConcertUpcoming(concert) {
+    const concertDateTime = parseLocalDateTime(
+        concert.date,
+        concert.time ?? "23:59"
+    );
+
+    return concertDateTime.getTime() > Date.now();
+}
+
+function parseLocalDateTime(date, time = "23:59") {
+    const [day, month, year] = date.split('-').map(Number);
+    const [hours, minutes] = time.split(':').map(Number);
+
+    return new Date(year, month - 1, day, hours, minutes, 0, 0);
+}
 
 async function appendUpcomingConcert(data, index) {
     const { band, city, country, date, image, lineup, ticket, venue, venueurl } = data[index];
