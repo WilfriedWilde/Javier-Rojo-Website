@@ -1,3 +1,4 @@
+import { getReviewText } from "./press.js";
 import { displayNoNewsMessage, getTimeAgo } from "./news.js";
 import { displayNoConcertsMessage, translateMonthName, getTicketTranslation, getTranslationEmptyConcertsListMessage } from "./concerts.js";
 import { displayBiographyTexts, initBiographyAnimations } from "./biography.js";
@@ -101,7 +102,12 @@ export function translateTextsInPage(textContainers, page) {
         current.index++;
     });
 
-    if (page === 'news') {
+    if (page === 'index') {
+        const reviewContainers = Array.from(document.querySelectorAll('.review-container'));
+        if (reviewContainers.length !== 0) {
+            reviewContainers.forEach(container => container.innerText = getReviewText(container.dataset.reviewId));
+        } else return;
+    } else if (page === 'news') {
         handleTimeAgoTranslation();
 
         const noNewsMessage = document.getElementById('no-news-message');
