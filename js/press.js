@@ -4,60 +4,56 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 const reviews = [
-    { source: 'Jazz Magazine (FR)', review: 'Revelation!' },
-    { source: 'Jazz Weekly (US)', review: 'Brings fresh ideas to the post bop genre.' },
-    { source: 'Jazzwise (UK)', review: 'Rojo may be in his mid-twenties but already he is in his element with maturity and purpose.' },
-    { source: 'NRW Jazz (DE)', review: "A fine, contemporary jazz record… the swing is relaxed, the boppy passages are driving, the ballads are tender and emotional - Rojo's own compositions have a lot to offer." },
-    { source: 'Jazzmania (BE)', review: "Jordi Pujol, head of the Fresh Sound New Talent label, knows damn well who to give a chance to. With this Javier Rojo and his sextet, it's clearly a successful move." },
-    { source: 'Jazzflits (NL)', review: 'Energetic, playful, and pleasantly sentimental' },
-    { source: 'PJ Portrait in Jazz (JP)', review: 'Straight-ahead energy characteristic of young musicians, making it a refreshing listen.' },
-    { source: 'Esensja (PL)', review: 'Javier Rojo – remember this artist!' },
-    { source: 'Jazz Views (UK)', review: 'These guys are having real musical conversations.' },
-    { source: 'Blue in Green (UK)', review: "The musical embodiment of wearing one's heart on their sleeve." },
-    { source: 'Era Jazzu (PL)', review: 'A perfect showcase for the young European jazz scene.' },
+    { source: 'Jazz Magazine (FR)', review: 'Revelation!', link: 'https://drive.google.com/file/d/1-A1xVIa7CMxQFaIXzhZU-fxbTJZVKLLk/view' },
+    { source: 'Jazz Weekly (US)', review: 'Brings fresh ideas to the post bop genre.', link: 'https://jazzweekly.com/2025/03/javier-rojo-musica-para-amansar-fieras-fuel/' },
+    { source: 'Jazzwise (UK)', review: 'Rojo may be in his mid-twenties but already he is in his element with maturity and purpose.', link: '' },
+    { source: 'NRW Jazz (DE)', review: "A fine, contemporary jazz record… the swing is relaxed, the boppy passages are driving, the ballads are tender and emotional - Rojo's own compositions have a lot to offer.", link: 'https://nrwjazz.net/rezensionen/neues-aus-der-cd-welt-christoph-gieses-schnelldurchlauf-vol-66' },
+    { source: 'Jazzmania (BE)', review: "Jordi Pujol, head of the Fresh Sound New Talent label, knows damn well who to give a chance to. With this Javier Rojo and his sextet, it's clearly a successful move.", link: 'https://jazzmania.be/javier-rojo-musica-para-amansar-fieras/' },
+    { source: 'Jazzflits (NL)', review: 'Energetic, playful, and pleasantly sentimental', link: '' },
+    { source: 'PJ Portrait in Jazz (JP)', review: 'Straight-ahead energy characteristic of young musicians, making it a refreshing listen.', link: 'https://pjportraitinjazz.com/playlists/20250128_8832/' },
+    { source: 'Esensja (PL)', review: 'Javier Rojo – remember this artist!', link: 'https://esensja.pl/muzyka/recenzje/tekst.html?id=36044' },
+    { source: 'Jazz Views (UK)', review: 'These guys are having real musical conversations.', link: 'https://jazzviews.net/javier-rojo-musica-para-amansar-fieras/' },
+    { source: 'Blue in Green (UK)', review: "The musical embodiment of wearing one's heart on their sleeve.", link: 'http://www.blueingreenradio.com/2025/01/musica-para-amansar-fieras-by-javier.html' },
+    { source: 'Era Jazzu (PL)', review: 'A perfect showcase for the young European jazz scene.', link: 'https://jazz.pl/javier-rojo-musica-para-amansar-fieras-fresh-sound-new-talent/' },
 ];
 
-let previousReview = null;
-
 export function initPressCarousel() {
-    if (document.getElementById('press-carousel').children.length > 1) return;
+    const pressCarousel = document.getElementById('press-carousel');
+    if (pressCarousel.children.length > 1) return;
 
-    for (let i = 0; i < reviews.length; i++) {
-        const pressReview = getRandomDifferentReview(i);
-        appendPressReview(pressReview);
-    }
+    const shuffledReviews = shuffle(reviews);
+
+    shuffledReviews.forEach((review, index) => {
+        appendPressReview(review, index);
+    });
+
     initCarouselAnimations();
 }
 
-function getRandomDifferentReview(index) {
-    let review;
-
-    if (!previousReview) {
-        review = reviews[Math.floor(Math.random() * reviews.length)];
+function shuffle(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-    else {
-        do {
-            review = reviews[Math.floor(Math.random() * reviews.length)];
-        } while (review === previousReview || review === reviews[index]);
-    }
-
-    previousReview = review;
-    return review;
+    return arr;
 }
 
-function appendPressReview(pressReview) {
+function appendPressReview(pressReview, index) {
+    const { source, review, link } = pressReview;
     const pressCarousel = document.getElementById('press-carousel');
+    const side = index % 2 === 0 ? 'start' : 'end';
     const template = `
     <div class="review-content">
-        <p class="review-container">"${pressReview.review}"</p>
-        <p class="source-container">&mdash; ${pressReview.source}</p>
+        <p class="review-container">"${review}"</p>
+        <a class="source-container" href="${link}">&mdash; ${source}</a>
     </div>
     `;
 
     const pressReviewContainer = document.createElement('div');
     pressReviewContainer.classList.add('press-review-container');
     pressReviewContainer.innerHTML = template;
-
+    pressReviewContainer.style.justifyContent = side;
     pressCarousel.appendChild(pressReviewContainer);
 }
 
@@ -87,7 +83,7 @@ function initCarouselAnimations() {
 
     homeClickHandler = (event) => {
         if (event.target.closest('li')) return;
-        
+
         if (!isCarouselDisplayed) {
             carouselTimeline.play()
         } else {
@@ -98,7 +94,6 @@ function initCarouselAnimations() {
 
     window.addEventListener("click", homeClickHandler);
 
-    // Store smoother
     homeSmoother = ScrollSmoother.create({
         smooth: 2,
         smoothTouch: 0.1,
@@ -106,35 +101,22 @@ function initCarouselAnimations() {
         content: "#smooth-content"
     });
 
-    // Horizontal scroll animation
-    const horizontalScroll = gsap.to(sections, {
-        xPercent: i => -100 * (sections.length - 1),
+    const container = document.querySelector("#press-carousel-container");
+    const verticalScroll = gsap.to(sections, {
+        y: () => -150 * (sections.length - 1),
         ease: "none",
+        stagger: {
+            each: 0.015
+        },
         scrollTrigger: {
-            trigger: "#press-carousel-container",
+            trigger: container,
             pin: true,
             scrub: 1,
-            start: "top top",
-            end: `+=${pressCarousel.offsetWidth}`,
+            start: "top 20%",
+            end: () => "+=" + window.innerHeight * (sections.length - 1) / 5
         }
     });
-    homeScrollTriggers.push(horizontalScroll.scrollTrigger);
-
-    sections.forEach(section => {
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: section,
-                containerAnimation: horizontalScroll,
-                scrub: true,
-                start: 'left right',
-                end: 'right left'
-            }
-        });
-        homeScrollTriggers.push(tl.scrollTrigger);
-
-        tl.to(section, { scale: 1, opacity: 1, ease: "none" })
-            .to(section, { scale: 0.9, opacity: 0.5, ease: "none" });
-    });
+    homeScrollTriggers.push(verticalScroll.scrollTrigger);
 }
 
 

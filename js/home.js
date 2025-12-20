@@ -10,7 +10,6 @@ export function introHomeAnimation() {
 
     const introTimeline = gsap.timeline();
     introTimeline
-        .set('#navbar', { opacity: 0 })
         .to(titleRojo, {rotate: 0, duration: 0, transformOrigin: '0% 100%'})
         .to(titleJavier, { yPercent: 600, duration: 1, ease: 'elastic.out(1, 0.6)' }, 1)
         .to(titleRojo, { yPercent: 600, duration: 1, ease: 'elastic.out(1, 0.5)' }, '<0.3')

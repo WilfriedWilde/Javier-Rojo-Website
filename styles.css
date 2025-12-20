@@ -186,6 +186,7 @@ ul {
   padding: var(--spacing-3);
   color: var(--color-white);
   height: var(--spacing-6);
+  opacity: 0;
 }
 
 #navbar-title {
@@ -312,7 +313,7 @@ ul {
   position: fixed;
   inset: 0;
   overflow: hidden;
-  z-index: 2;
+  z-index: 5;
 }
 
 #smooth-content {
@@ -322,37 +323,39 @@ ul {
 
 #press-carousel-container {
   position: relative;
-  height: 18rem;
+  height: calc(100vh - var(--spacing-6));
   width: 100vw;
   overflow: hidden;
-  top: 30%;
+  top: var(--spacing-6);
 }
 
 #press-carousel {
-  display: flex;
   position: relative;
-  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  height: 100%;
-  width: max-content;
+  gap: var(--spacing-4);
+  height: max-content;
+  width: 100%;
   overflow: visible;
   opacity: 0;
+  z-index: -1;
+  padding-top: var(--spacing-4);
 }
 
 .press-review-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex: 0 0 100vw;
-  height: 100%;
+  height: var(--spacing-5);
+  width: 100%;
   position: relative;
   text-align: center;
-  transform: scale(0.9);
-  opacity: 0.5;
+  opacity: 1;
+  padding: 0 var(--spacing-3);
 }
 
 .review-content {
-  width: var(--spacing-8);
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -362,7 +365,7 @@ ul {
 .review-container {
   color: var(--color-white);
   font-family: var(--font-main);
-  font-weight: 100;
+  font-weight: 500;
   font-style: italic;
   font-size: clamp(var(--spacing-1), 2.5vw, var(--spacing-2));
   position: relative;
@@ -371,10 +374,14 @@ ul {
 .source-container {
   color: var(--color-yellow);
   font-family: var(--font-header);
-  font-weight: 800;
-  font-size: clamp(var(--spacing-2), 2.5vw, var(--spacing-3));
+  font-weight: 900;
+  font-size: clamp(15px, 2.5vw, var(--spacing-3));
   position: relative;
   text-shadow: 1px 1px 1px var(--color-black);
+}
+
+.source-container:hover {
+  cursor: pointer;
 }
 
 /* ===> NEWS <=== */
@@ -1110,6 +1117,10 @@ ul {
 
   .section-title {
     font-size: var(--spacing-4);
+  }
+
+  .review-content {
+    width: var(--spacing-8);
   }
 
   #news-list {
