@@ -1,4 +1,5 @@
 import { getSelectedLanguage } from "./translation.js";
+import { colorPalette } from "./svg.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
     gsap.registerPlugin(DrawSVGPlugin, ScrollTrigger, ScrollSmoother, SplitText, TextPlugin)
@@ -77,6 +78,9 @@ function appendPressReview(pressReview, index) {
     pressReviewContainer.classList.add('press-review-container');
     pressReviewContainer.innerHTML = template;
     pressReviewContainer.style.justifyContent = side;
+
+    const sourceContainer = pressReviewContainer.querySelector('.source-container');
+    sourceContainer.style.color = colorPalette[Math.floor(Math.random() * colorPalette.length - 1)];
     pressCarousel.appendChild(pressReviewContainer);
 }
 

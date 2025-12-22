@@ -1,5 +1,5 @@
 const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title', 'biography'];
-const biographySelectorColors = [
+export const colorPalette = [
     getComputedStyle(document.documentElement).getPropertyValue('--color-blue'),
     getComputedStyle(document.documentElement).getPropertyValue('--color-light-orange'),
     getComputedStyle(document.documentElement).getPropertyValue('--color-dark-orange')
@@ -79,9 +79,9 @@ function assignSelectorOrangeColor(container) {
 
 function assignBiographySelectorColor(container) {
     const svgPath = container.querySelector('path');
-    const color = biographySelectorColors[bioSelectorColorIndex];
+    const color = colorPalette[bioSelectorColorIndex];
     svgPath.style.stroke = color;
-    bioSelectorColorIndex = (bioSelectorColorIndex + 1) % biographySelectorColors.length;
+    bioSelectorColorIndex = (bioSelectorColorIndex + 1) % colorPalette.length;
 }
 
 function rotateRandomlySelector(container) {
