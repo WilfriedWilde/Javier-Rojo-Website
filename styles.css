@@ -324,19 +324,6 @@ ul {
   width: fit-content;
 }
 
-/* ==> PRESS CAROUSEL <== */
-#smooth-wrapper {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  z-index: 0;
-}
-
-#smooth-content {
-  position: relative;
-  will-change: transform;
-}
-
 /* ===> NEWS <=== */
 #news-container {
   min-height: 100vh;
