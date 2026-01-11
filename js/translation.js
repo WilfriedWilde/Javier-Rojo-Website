@@ -2,6 +2,7 @@ import { getReviewText } from "./press.js";
 import { displayNoNewsMessage, getTimeAgo } from "./news.js";
 import { displayNoConcertsMessage, translateMonthName, getTicketTranslation, getTranslationEmptyConcertsListMessage } from "./concerts.js";
 import { displayBiographyTexts } from "./biography.js";
+import { displayContactTexts } from "./contact.js";
 
 // Object storing all the translations. It follows the structure 'language' => 'page' => 'section'.
 const translations = {
@@ -131,6 +132,12 @@ export function translateTextsInPage(textContainers, page) {
 
         const concertsListsEmptyMessage = document.querySelector('.concerts-list-empty-message') || '';
         if (concertsListsEmptyMessage) concertsListsEmptyMessage.innerText = getTranslationEmptyConcertsListMessage(concertsListsEmptyMessage.parentNode);
+    } else if (page === 'contact') {
+        const contactTexts = Array.from(document.querySelectorAll('[data-contact]'));
+        if (contactTexts.some(text => text.innerText !== '')) {
+            displayContactTexts(contactTexts);
+            ScrollTrigger.refresh();
+        }
     }
 }
 

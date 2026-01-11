@@ -1,6 +1,6 @@
-import { fetchSheetsData } from "./news.js";
+import { fetchSheetsData } from "./home.js";
 
-const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=129671728&single=true&output=csv';
+export const mediasSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=129671728&single=true&output=csv';
 const platformParsers = {
     youtube: {
         template: `<iframe class="media-youtube" 
@@ -22,14 +22,33 @@ const platformParsers = {
     }
 };
 
+let sheetDataName;
 let audioList, videoList;
 
 export default async function initMedias(barbaContainer) {
+    sheetDataName = barbaContainer.dataset.namespace;
     audioList = barbaContainer.querySelector('[data-medias="audio"]');
     videoList = barbaContainer.querySelector('[data-medias="video"]');
 
-    const mediasData = await fetchSheetsData(sheetURL); console.log(mediasData)
+    audioList.innerHTML = '';
+    videoList.innerHTML = '';
+
+    const mediasData = await getMediasdata();
     await populateMediasLists(mediasData);
+}
+
+async function getMediasdata() {
+    const cacheKeys = {
+        cachedData: `cache_${sheetDataName}`,
+        cachedTime: `cache_time_${sheetDataName}}`
+    };
+    const data = await fetchSheetsData(mediasSheetURL, cacheKeys);
+
+    if (!data || data.length === 0) {
+        return [];
+    }
+
+    return data;
 }
 
 async function populateMediasLists(mediasData) {
@@ -47,7 +66,7 @@ function appendMedia(data) {
 }
 
 function getMediaElement(data) {
-    const { platform, link } = data;console.log(platform)
+    const { platform, link } = data;
     const template = platformParsers[platform].template;
     let mediaSrc;
 
@@ -58,7 +77,7 @@ function getMediaElement(data) {
     } else if (platform === 'bandcamp') {
         mediaSrc = `https://bandcamp.com/EmbeddedPlayer/${link.match(platformParsers[platform].regex)[0]}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`;
     }
-    console.log(mediaSrc)
+
     const parser = new DOMParser();
     const doc = parser.parseFromString(template, 'text/html');
     const iframe = doc.querySelector('iframe');

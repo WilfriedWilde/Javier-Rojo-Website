@@ -143,7 +143,7 @@ export function initBiographyAnimations(container) {
     });
 }
 
-function waitForSelector(container, selector) {
+export function waitForSelector(container, selector) {
     return new Promise(resolve => {
         const el = container.querySelector(selector);
         if (el) return resolve(el);

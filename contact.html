@@ -25,6 +25,43 @@
                     <p data-selector="title" data-translation="title" class="section-title"></p>
                 </div>
             </div>
+            <div id="form-container" data-selector="contact">
+                <div id="form-header">
+                    <p data-contact="header-one"></p>
+                    <p data-contact="header-two"></p>
+                    <div id="svg-start"></div>
+                </div>
+                <div id="form-content">
+                    <form action="https://formspree.io/f/mykglogv" method="POST">
+                        <div class="form-section">
+                            <label for="name" data-contact="label-one"></label>
+                            <input type="text" id="name" name="name" data-contact="placeholder-one" required>
+                        </div>
+                        <div class="form-section">
+                            <label for="email" data-contact="label-two"></label>
+                            <input type="email" id="email" name="email" data-contact="placeholder-two" required>
+                        </div>
+                        <div class="form-section">
+                            <label for="subject" data-contact="label-three"></label>
+                            <select id="subject" name="subject" required>
+                                <option value="" data-contact="option-one"></option>
+                                <option value="booking" data-contact="option-two"></option>
+                                <option value="teaching" data-contact="option-three"></option>
+                                <option value="collaboration" data-contact="option-four"></option>
+                                <option value="press" data-contact="option-five"></option>
+                                <option value="other" data-contact="option-six"></option>
+                            </select>
+                        </div>
+                        <div class="form-section">
+                            <label for="message" data-contact="label-four"></label>
+                            <textarea id="message" name="message" data-contact="placeholder-three" required></textarea>
+                        </div>
+                        <button type="submit" data-contact="button"></button>
+                    </form>
+                    <img src="images/javi/wall_horizontal_RESIZED.webp">
+                </div>
+            </div>
+            
         </main>
     </div>
     <footer id="footer"></footer>

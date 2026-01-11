@@ -4,7 +4,7 @@ import initNews from "./news.js";
 import initBiography, { initBiographyAnimations } from "./biography.js";
 import initMedias from "./medias.js";
 import initConcerts from "./concerts.js";
-import initContact from "./contact.js";
+import initContact, { initContactAnimations, initSVGAnim } from "./contact.js";
 import { getSelectedLanguage, handleLanguageSelection, translateTextsInPage } from "./translation.js";
 import { appendAllSelectors, drawSelectors, appendSocialMediaIcons, handleInstagramHover } from "./svg.js";
 import { injectHTML } from "./inject_html.js";
@@ -47,6 +47,7 @@ barba.init({
     views: [{
         afterEnter({ next }) {
             if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
+            else if (next.container.dataset.namespace === 'contact') initContactAnimations(next.container);
         }
     }],
     transitions: [{
@@ -62,6 +63,7 @@ barba.init({
             await initPage(page, container);
 
             if (page === 'index') introHomeAnimation();
+            else if (page === 'contact') initSVGAnim(container);
         },
 
         leave({ current }) {
@@ -97,9 +99,8 @@ barba.init({
         afterEnter({ next }) {
             gsap.set(next.container, { xPercent: 0, position: 'relative', clearProps: 'all' });
 
-            if (next.container.dataset.namespace === 'biography') {
-                initBiographyAnimations(next.container);
-            }
+            if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
+            else if (next.container.dataset.namespace === 'contact') initContactAnimations(next.container);
         }
     }]
 });

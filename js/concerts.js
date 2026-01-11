@@ -1,15 +1,23 @@
-import { fetchSheetsData, formatDate, parseDDMMYYYY } from "./news.js";
+import { parseDDMMYYYY } from "./news.js";
 import { getSelectedLanguage } from "./translation.js";
+import { fetchSheetsData } from "./home.js";
 
-const concertsSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=722645748&single=true&output=csv';
+export const concertsSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=722645748&single=true&output=csv';
 let concertsMenu, concertsListSelector, upcomingConcertsList, pastConcertsList, upcomingConcertsData = [], pastConcertsData = [];
+let sheetDataName;
 
 export default async function initConcerts(barbaContainer) {
+    sheetDataName = barbaContainer.dataset.namespace;
     concertsMenu = barbaContainer.querySelector('#concerts-menu');
     concertsListSelector = barbaContainer.querySelector('#concerts-list-option-selector');
     upcomingConcertsList = barbaContainer.querySelector('#upcoming-concerts-list');
     pastConcertsList = barbaContainer.querySelector('#past-concerts-list');
 
+    upcomingConcertsList.innerHTML = '';
+    pastConcertsList.innerHTML = '';
+    upcomingConcertsData = [];
+    pastConcertsData = [];
+    
     const concertsData = await getConcertsData();
     await populateConcertsLists(concertsData);
 
@@ -20,10 +28,14 @@ export default async function initConcerts(barbaContainer) {
 }
 
 async function getConcertsData() {
-    const data = await fetchSheetsData(concertsSheetURL);
+    const cacheKeys = {
+        cachedData: `cache_${sheetDataName}`,
+        cachedTime: `cache_time_${sheetDataName}}`
+    };
+    const data = await fetchSheetsData(concertsSheetURL, cacheKeys);
     if (!data || data.length === 0) {
         displayNoConcertsMessage();
-        return;
+        return [];
     }
 
     return data;

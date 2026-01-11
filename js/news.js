@@ -1,22 +1,32 @@
 import { getSelectedLanguage } from "./translation.js";
+import { fetchSheetsData, TIMER } from "./home.js";
 
-const newsSheetsURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=0&single=true&output=csv';
+let sheetDataName;
+
+export const newsSheetsURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=0&single=true&output=csv';
 let newsList;
 
 export default async function initNews(barbaContainer) {
+    sheetDataName = barbaContainer.dataset.namespace;
     newsList = barbaContainer.querySelector('#news-list');
+
+    newsList.innerHTML = '';
+
     const newsData = await getNewsData();
-    await populateNewsList(newsData);
+    await populateNewsList(getReverseChronologicallySortedData(newsData));
 }
 
 async function getNewsData() {
-    const data = await fetchSheetsData(newsSheetsURL);
+    const cacheKeys = {
+        cachedData: `cache_${sheetDataName}`,
+        cachedTime: `cache_time_${sheetDataName}`
+    };
+    const data = await fetchSheetsData(newsSheetsURL, cacheKeys);
     if (!data || data.length === 0) {
         displayNoNewsMessage();
-        return;
+        return [];
     }
-    const fullData = await addGoogleDocsData(data);
-    return getReverseChronologicallySortedData(fullData);
+    return await addGoogleDocsData(data);
 }
 
 function getReverseChronologicallySortedData(data) {
@@ -28,27 +38,7 @@ export function parseDDMMYYYY(dateStr) {
     return new Date(year, month - 1, day);
 }
 
-export async function fetchSheetsData(url) {
-    try {
-        const response = await fetch(url);
-        const text = await response.text();
-        const rows = text.split(/\r?\n/).map(row => row.split(","));
-        const headers = rows[0];
-
-        return rows.slice(1).map(row => {
-            return Object.fromEntries(
-                headers.map((header, i) => {
-                    const cell = row[i];
-                    return [header.toLowerCase().split(' ')[0], cell];
-                }))
-        });
-    } catch (error) {
-        console.log('Error fetching sheets data', error);
-        return [];
-    }
-};
-
-async function addGoogleDocsData(data) {
+export async function addGoogleDocsData(data) {
     try {
         return await Promise.all(data.map(async d => ({
             ...d,
@@ -61,6 +51,21 @@ async function addGoogleDocsData(data) {
 }
 
 async function fetchDocsData(url) {
+    const id = btoa(url);
+    const cachedData = `cache_doc_${id}`;
+    const cachedTime = `cache_doc_time_${id}`;
+
+    const cached = sessionStorage.getItem(cachedData);
+    const timestamp = Number(sessionStorage.getItem(cachedTime));
+
+    const isFresh = cached && timestamp && (Date.now() - timestamp) < TIMER;console.log(isFresh)
+
+    if (isFresh) {
+        const node = document.createElement('div');
+        node.innerHTML = cached;
+        return node;
+    }
+
     try {
         const response = await fetch(url);
         const html = await response.text();
@@ -74,6 +79,10 @@ async function fetchDocsData(url) {
             console.error('No #contents found in Google Doc!');
             return;
         }
+
+        sessionStorage.setItem(cachedData, content.innerHTML);
+        sessionStorage.setItem(cachedTime, Date.now().toString());
+console.log(content)
         return content;
     } catch (error) {
         console.log('Error fetching docs data', error);
