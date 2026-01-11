@@ -58,7 +58,7 @@ async function fetchDocsData(url) {
     const cached = sessionStorage.getItem(cachedData);
     const timestamp = Number(sessionStorage.getItem(cachedTime));
 
-    const isFresh = cached && timestamp && (Date.now() - timestamp) < TIMER;console.log(isFresh)
+    const isFresh = cached && timestamp && (Date.now() - timestamp) < TIMER;
 
     if (isFresh) {
         const node = document.createElement('div');
@@ -82,7 +82,7 @@ async function fetchDocsData(url) {
 
         sessionStorage.setItem(cachedData, content.innerHTML);
         sessionStorage.setItem(cachedTime, Date.now().toString());
-console.log(content)
+
         return content;
     } catch (error) {
         console.log('Error fetching docs data', error);

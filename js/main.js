@@ -8,7 +8,6 @@ import initContact, { initContactAnimations, initSVGAnim } from "./contact.js";
 import { getSelectedLanguage, handleLanguageSelection, translateTextsInPage } from "./translation.js";
 import { appendAllSelectors, drawSelectors, appendSocialMediaIcons, handleInstagramHover } from "./svg.js";
 import { injectHTML } from "./inject_html.js";
-import { destroyPressCarousel } from "./press.js";
 import transitionPage from "./transition-page.js";
 
 /* ---------------------------------------------------------
@@ -91,8 +90,7 @@ barba.init({
             if (page !== 'index') return gsap.set(next.container, { xPercent: 100, position: 'absolute', top: 0, left: 0, width: '100%' });
         },
 
-        enter({ current, next }) {
-            if (current.container.dataset.namespace === 'index') destroyPressCarousel();
+        enter({ next }) {
             return transitionPage(next);
         },
 

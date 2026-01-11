@@ -7,9 +7,9 @@
 }
 
 :root {
-  --font-header: "Source Sans 3", sans-serif;
-  --font-subheader: "Carme", sans-serif;
-  --font-main: "Libre Franklin", sans-serif;
+  --font-header: "Alegreya Sans", sans-serif;
+  --font-subheader: "Overlock", sans-serif;
+  --font-main: "Mukta Vaani", sans-serif;
   --color-black: hsl(231, 53%, 3%);
   --color-black-transparent: hsla(31, 53%, 7%, 0.4);
   --color-white: hsl(60, 50%, 97%);
@@ -17,6 +17,7 @@
   --color-dark-orange: hsl(17, 68%, 48%);
   --color-yellow: hsl(52, 95%, 69%);
   --color-blue: hsl(209, 89%, 61%);
+  --color-gradient-blue: hsl(209, 89%, 61%), hsl(209, 100%, 37%);
   --spacing-1: 12px;
   --spacing-2: 19px;
   --spacing-3: 31px;
@@ -182,7 +183,7 @@ ul {
 
 .section-title {
   font-family: var(--font-header);
-  font-weight: 400;
+  font-weight: 300;
   font-size: var(--spacing-3);
   color: var(--color-white);
   text-transform: uppercase;
@@ -336,69 +337,6 @@ ul {
   will-change: transform;
 }
 
-#press-carousel-container {
-  position: relative;
-  height: calc(100vh - var(--spacing-6));
-  width: 100vw;
-  overflow: hidden;
-  top: var(--spacing-6);
-}
-
-#press-carousel {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-4);
-  height: max-content;
-  width: 100%;
-  overflow: visible;
-  opacity: 0;
-  z-index: -1;
-  padding-top: var(--spacing-4);
-}
-
-.press-review-container {
-  display: flex;
-  align-items: center;
-  height: var(--spacing-5);
-  width: 100%;
-  position: relative;
-  text-align: center;
-  opacity: 1;
-  padding: 0 var(--spacing-3);
-}
-
-.review-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.review-container {
-  color: var(--color-white);
-  font-family: var(--font-main);
-  font-weight: 500;
-  font-style: italic;
-  font-size: clamp(var(--spacing-1), 2.5vw, var(--spacing-2));
-  position: relative;
-}
-
-.source-container {
-  color: var(--color-yellow);
-  font-family: var(--font-header);
-  font-weight: 900;
-  font-size: clamp(15px, 2.5vw, var(--spacing-3));
-  position: relative;
-  text-shadow: 1px 1px 1px var(--color-black);
-}
-
-.source-container:hover {
-  cursor: pointer;
-}
-
 /* ===> NEWS <=== */
 #news-container {
   min-height: 100vh;
@@ -540,227 +478,105 @@ ul {
   align-items: center;
   gap: var(--spacing-6);
   width: 100%;
-  padding: var(--spacing-3);
+  padding: var(--spacing-4) var(--spacing-3);
   font-family: var(--font-main);
-  text-shadow: 1px 1px 1px var(--color-black-transparent);
+  font-weight: 250;
   color: var(--color-white);
 }
 
-#biography-header {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: var(--spacing-2);
-
-  img {
-    width: 100%;
-    border-radius: var(--spacing-1);
-  }
-}
-
-#biography-header-text-container {
-  position: relative;
+.biography-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: var(--spacing-2);
-  width: 100%;
-  padding: 0 var(--spacing-2);
-  text-align: justify;
-  font-size: var(--spacing-2);
-  font-weight: 100;
-
-  p:nth-child(2) {
-    font-size: var(--spacing-3);
-    font-weight: 400;
-    text-align: center;
-  }
-}
-
-#biography-highlights {
-  position: relative;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   gap: var(--spacing-4);
   width: 100%;
 
   img {
     width: 100%;
-    border-radius: var(--spacing-1);
+    object-fit: cover;
+    border-radius: 3px;
   }
 }
 
-#biography-highlights-text-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--spacing-3);
-  width: 100%;
-  padding: 0 var(--spacing-2);
-}
-
-.biography-highlights-text {
-  position: relative;
+.biography-subsection {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: var(--spacing-6);
   width: 100%;
-  text-align: center;
-  font-size: var(--spacing-2);
-  font-weight: 100;
-
-  :nth-child(2) {
-    font-weight: 300;
-  }
 }
 
-#biography-journey {
+.biography-text-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--spacing-1);
-  font-size: var(--spacing-2);
+  align-items: center;
+  gap: var(--spacing-4);
+  width: 100%;
+}
+
+[data-biography] {
+  opacity: 0;
+}
+
+#button-reviews {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-subheader);
   font-weight: 500;
-  text-align: center;
-  width: 100%;
-}
-
-#biography-studies {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-2);
-  width: 100%;
-  text-align: justify;
   font-size: var(--spacing-2);
-
-  img {
-    width: 100%;
-    border-radius: var(--spacing-1);
-  }
-}
-
-.studies {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-1);
-  font-weight: 100;
-
-  :nth-child(2) {
-    font-weight: 300;
-  }
-}
-
-#biography-work {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-3);
-  width: 100%;
-  text-align: justify;
-  font-weight: 100;
-  font-size: var(--spacing-2);
-
-  :nth-child(2) {
-    font-weight: 300;
-    font-size: var(--spacing-3);
-    text-align: center;
-  }
-
-  a:hover img {
-    cursor: pointer;
-    transform: scale(1.01);
-  }
-
-  img {
-    width: 100%;
-    border-radius: var(--spacing-1);
-    transition: 0.3s var(--easing-hover);
-  }
-
-  :nth-child(5) {
-    font-weight: 300;
-  }
-}
-
-.biography-work-one {
-  padding-bottom: var(--spacing-3);
-}
-
-.biography-album-link {
-  width: 100%;
-}
-
-#biography-sextet-gallery {
-  position: relative;
-  width: 100%;
-  height: 1200px;
-  padding-top: var(--spacing-7);
-}
-
-.biography-gallery-image {
-  position: absolute;
-  width: 100%;
-  left: 50%;
-}
-
-#biography-sideman {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-1);
-  width: 100%;
-  font-size: var(--spacing-2);
-  font-weight: 100;
-  text-align: center;
-
-  :nth-child(2) {
-    font-weight: 300;
-  }
-}
-
-.bio-highlight-name {
-  font-weight: 300;
-}
-
-.bio-highlight-album {
-  color: var(--color-white);
-  font-weight: 500;
-  font-size: 40px;
-  display: block;
-  transition: 0.3s var(--easing-hover);
   text-transform: uppercase;
-  padding: var(--spacing-1) 0;
+  color: var(--color-white);
+  padding: var(--spacing-2) var(--spacing-3);
+  background: linear-gradient(var(--color-gradient-blue));
+  border-radius: var(--spacing-1);
+  text-shadow: 1px 1px var(--color-black);
 }
 
-.bio-highlight-album:hover {
-  color: var(--color-yellow);
+.text-review-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  opacity: 1;
+  padding: 0 var(--spacing-3);
 }
 
-.bio-highlight-label {
-  display: block;
-  font-style: italic;
-  font-weight: 600 !important;
-  transition: 0.3s var(--easing-hover);
+.review-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-1);
+  opacity: 0;
 }
 
-.bio-highlight-label:hover {
-  color: var(--color-light-orange);
+.review-container {
+  color: var(--color-white);
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: clamp(var(--spacing-2), 2.5vw, var(--spacing-3));
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.source-container {
+  color: var(--color-white);
+  font-family: var(--font-header);
+  font-weight: 300;
+  font-size: clamp(15px, 2.5vw, var(--spacing-3));
+  position: relative;
+  text-shadow: 1px 1px 1px var(--color-black);
+  letter-spacing: 3px;
+}
+
+.source-container:hover {
+  cursor: pointer;
 }
 
 /* ===> CONCERTS <=== */
@@ -858,6 +674,7 @@ ul {
   justify-content: center;
   align-items: center;
   font-family: var(--font-header);
+  margin-right: var(--spacing-1);
 }
 
 .concert-month {
@@ -878,12 +695,10 @@ ul {
 }
 
 .concert-image {
-  flex: 1;
-  height: 100%;
-  max-width: 35vw;
+  width: 30%;
   object-fit: cover;
-  object-position: center;
-  border-radius: var(--spacing-1);
+  border-radius: 3px;
+  aspect-ratio: 4 / 5;
 }
 
 .concert-text {
@@ -939,6 +754,7 @@ ul {
   font-size: calc(12px / 1.618);
   font-weight: 300;
   font-family: var(--font-main);
+  line-height: 1.2;
 }
 
 .concert-musician {
@@ -1317,71 +1133,6 @@ form {
     gap: var(--spacing-8);
   }
 
-  #biography-header {
-    gap: var(--spacing-4);
-  }
-
-  #biography-header-text-container {
-    font-size: var(--spacing-3);
-    text-align: center;
-    gap: var(--spacing-3);
-
-    p:nth-child(2) {
-      font-size: var(--spacing-4);
-    }
-  }
-
-  #biography-journey {
-    gap: var(--spacing-3);
-    font-size: var(--spacing-4);
-  }
-
-  #biography-studies {
-    text-align: center;
-  }
-
-  .studies {
-    gap: 0;
-    padding: 0 var(--spacing-6);
-
-    :nth-child(3) {
-      margin-top: var(--spacing-1);
-    }
-  }
-
-  #biography-work {
-    font-size: var(--spacing-3);
-    text-align: center;
-
-    :nth-child(2) {
-      font-weight: 300;
-      font-size: var(--spacing-4);
-      text-align: center;
-      line-height: 1;
-    }
-  }
-
-  .biography-work-one {
-    padding-bottom: var(--spacing-5);
-  }
-
-  #biography-sextet-gallery {
-    height: 3000px;
-  }
-
-  .biography-album-link {
-    width: 50%;
-  }
-
-  #biography-sideman {
-    font-size: var(--spacing-3);
-  }
-
-  .bio-highlight-album {
-    font-size: var(--spacing-5);
-    padding: var(--spacing-3) 0;
-  }
-
   #concerts-menu {
     margin-bottom: var(--spacing-7);
     font-size: var(--spacing-3);
@@ -1457,13 +1208,13 @@ form {
     padding: var(--spacing-6) var(--spacing-5);
     gap: calc(var(--spacing-8) * 1.618);
   }
-  
+
   #form-header {
     :nth-child(1) {
       font-weight: 400;
       font-size: var(--spacing-4);
     }
-  
+
     :nth-child(2) {
       font-weight: 700;
       font-size: var(--spacing-5);
@@ -1475,16 +1226,16 @@ form {
     inset: 5% 0 0 22%;
     transform: none;
   }
-  
+
   #form-content {
     flex-direction: row-reverse;
     gap: var(--spacing-3);
     padding: 0 var(--spacing-3);
   }
-  
+
   form {
     gap: var(--spacing-4);
-  
+
     button {
       font-size: var(--spacing-3);
       padding: var(--spacing-2) var(--spacing-3);
@@ -1495,23 +1246,23 @@ form {
       color: var(--color-blue);
     }
   }
-  
+
   .form-section {
     gap: var(--spacing-2);
-  
+
     label {
       font-size: var(--spacing-3);
     }
-  
+
     input,
     select,
     textarea {
       font-size: var(--spacing-2);
       padding: var(--spacing-2) var(--spacing-3);
     }
-  
+
     textarea {
       min-height: var(--spacing-8);
     }
-  }  
+  }
 }

@@ -103,23 +103,22 @@ export function translateTextsInPage(textContainers, page) {
         current.index++;
     });
 
-    if (page === 'index') {
-        const reviewContainers = Array.from(document.querySelectorAll('.review-container'));
-        if (reviewContainers.length !== 0) {
-            reviewContainers.forEach(container => container.innerText = getReviewText(container.dataset.reviewId));
-        } else return;
-    } else if (page === 'news') {
+    if (page === 'news') {
         handleTimeAgoTranslation();
 
         const noNewsMessage = document.getElementById('no-news-message');
         if (noNewsMessage.innerText) displayNoNewsMessage();
     } else if (page === 'biography') {
         const biographyTexts = Array.from(document.querySelectorAll('[data-biography]'));
-        const biographyAnds = Array.from(document.querySelectorAll('.and'));
-        if (biographyAnds.some(and => and.innerText !== '')) {
-            displayBiographyTexts(biographyTexts, biographyAnds);
+        if (biographyTexts.some(text => text.innerText !== '')) {
+            displayBiographyTexts(biographyTexts);
             ScrollTrigger.refresh();
         }
+
+        const reviewContainers = Array.from(document.querySelectorAll('.review-container'));
+        if (reviewContainers.length !== 0) {
+            reviewContainers.forEach(container => container.innerText = getReviewText(container.dataset.reviewId));
+        } else return;
     } else if (page === 'concerts') {
         const noConcertsMessage = document.getElementById('no-concerts-message');
         if (noConcertsMessage.innerText) displayNoConcertsMessage();

@@ -1,4 +1,3 @@
-import { initPressCarousel } from './press.js';
 import { newsSheetsURL, addGoogleDocsData } from './news.js';
 import { mediasSheetURL } from './medias.js';
 import { concertsSheetURL } from './concerts.js';
@@ -6,7 +5,6 @@ import { concertsSheetURL } from './concerts.js';
 export const TIMER = 5 * 60 * 1000;
 
 export default async function initHome() {
-    initPressCarousel();
     await fetchAllData();
 }
 
@@ -38,7 +36,7 @@ async function fetchAllData() {
         const data = await fetchSheetsData(sheetUrls[name], cacheKeys);
         
         if (name === 'news') {
-            const fullData = await addGoogleDocsData(data);console.log(name, ':', fullData)
+            await addGoogleDocsData(data);
         }
     }
 }

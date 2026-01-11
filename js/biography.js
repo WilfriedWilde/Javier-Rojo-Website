@@ -1,145 +1,49 @@
 import { getSelectedLanguage, getTranslation } from "./translation.js";
+import { appendTextReviews } from "./press.js";
 
 const biographyTexts = {
     en: {
-        header: {
-            one: 'Born in Guadalajara in 1999 and currently based in Basel (Switzerland), Javier is a young and talented...',
-            two: 'saxophonist',
-            three: 'clarinetist',
-            four: 'composer'
-        },
-        highlights: {
-            one: 'Despite his young age, Javier has shared the stage with renowned artists such as:',
-            two: 'performing at festivals in:',
-            three: 'Switzerland, Austria, Canada',
-            four: 'and across the Spanish scene, including festivals in:',
-            five: 'as well as venues such as:'
-        },
-        journey: `<p>Javier’s journey as a musician and composer reflects his unwavering dedication and humble approach to music.</p><p>With every step he takes in his career, he strives to explore new horizons and continuously refine his craft.</p><p>His commitment to excellence and genuine passion for music propel him forward toward a promising future full of exciting projects and new musical discoveries.</p>`,
-        studies: {
-            one: `In August 2024, Javier completed his Master’s degree in Performance at Jazzcampus in Basel, studying under <span class="bio-highlight-name">Mark Turner</span> and <span class="bio-highlight-name">Chris Cheek</span>, along with other renowned artists such as:`,
-            two: 'Previously, he lived in Barcelona for five years, where he studied with prominent musicians including:',
-            three: `Since September 2024, he has been pursuing a Master’s degree in Composition under the guidance of <span class="bio-highlight-name">Guillermo Klein</span> at Jazzcampus.`,
-        },
-        work: {
-            one: 'With exceptional interpretative skills and tireless creativity, Javier decided to forge his own path and lead his own musical projects...',
-            two: `In 2025, he released his debut album as a bandleader<a href="https://tidal.com/album/396369024" class="bio-highlight-album">Música Para Amansar Fieras</a>under the prestigious <a href="https://www.freshsoundrecords.com/javier-rojo-albums/57428-musica-para-amansar-fieras.html" class="bio-highlight-label">Fresh Sound Records</a> label.`,
-            three: 'He is currently immersed in a creative process focused on composition while continuing to grow as a performer, writing music for large ensembles, big bands, orchestral formations with strings, and film scores, while continuing to lead his own groups such as his quintet and sextet, with which he plans to record his second album in early 2026.',
-        },
-        sideman: 'Rojo also performs as a sideman in projects such as:'
+        one: 'Born in Guadalajara (Spain) in 1999, Javier began studying classical clarinet at the age of six with Enrique Pérez, soloist of the Spanish National Orchestra. At 17, he moved to Barcelona to study jazz and switched to tenor saxophone, training with teachers such as Joan Albert Amargós, Lluís Vidal, Santi de la Rubia, and Perico Sambeat. In 2022, he relocated to Basel to pursue a Master’s degree in Performance and subsequently another in Composition at the Jazzcampus, where he studied with musicians including Mark Turner, Guillermo Klein, Chris Cheek, Brad Mehldau, Larry Grenadier, Jorge Rossy, Ambrose Akinmusire, and Jeff Ballard.',
+        two: 'Despite his young age, Javier has shared the stage with artists such as Lionel Loueke, Aaron Parks, Chano Domínguez, Jim McNeely, and Carles Benavent, and has performed at festivals and clubs across Spain, Switzerland, Germany, Austria, and Canada. These include festivals such as the Madrid Jazz Festival, Cádiz Jazz Festival, BigBasel Fest (Basel), Jazz Montez (Frankfurt), Córdoba Jazz Festival, Mas i Mas (Barcelona), and Elche Jazz Festival, as well as venues like ZWE (Vienna), Bird’s Eye Jazz Club (Basel), Jamboree (Barcelona), Jimmy Glass (Valencia), Nova Jazz Cava (Terrassa), AsseJazz (Seville), Altxerri (San Sebastián), Rvbicón (Santander), and Meidinerz (Gijón), among others.',
+        three: 'He also works as a sideman in projects such as Yossi Itskovich 5et, Paul Janoschka 4et, Nepumuk, Nikolai Olshansky 5et, Ryuji Uchida 5et, Basel Jazz Orchestra, Martin Otero 5et, Perramon-Rojo 5et, Knuets-Rojo 5et, and Ensemble Revuelo.',
+        four: 'With exceptional interpretive ability and tireless creativity, Javier decided to lead his own musical projects with the release of his debut album as a leader, Música Para Amansar Fieras (Fresh Sound Records, 2025). He is currently immersed in the creative process of his second album, scheduled for release in autumn 2026.',
+        five: 'press reviews'
     },
     es: {
-        header: {
-            one: 'Nacido en Guadalajara en 1999 y actualmente residiendo en Basilea (Suiza), Javier es un joven talentoso...',
-            two: 'saxofonista',
-            three: 'clarinetista',
-            four: 'compositor'
-        },
-        highlights: {
-            one: 'A pesar de su corta edad, Javier ha compartido escenario con artistas de renombre como:',
-            two: 'actuando en festivales en:',
-            three: 'Suiza, Austria, Canadá',
-            four: 'y dentro de la escena española en festivales como los de:',
-            five: 'y en salas como:'
-        },
-        journey: `<p>El viaje de Javier como músico y compositor es un reflejo de su dedicación inquebrantable y su humilde enfoque hacia la música.</p><p>Con cada paso que da en su carrera, busca explorar nuevos horizontes y refinar continuamente su arte.</p><p>Su compromiso con la excelencia y su genuina pasión por la música lo impulsan hacia adelante, llevándolo hacia un futuro prometedor lleno de emocionantes proyectos y nuevos descubrimientos musicales.</p>`,
-        studies: {
-            one: `En agosto de 2024 Javier finalizó su Máster en Interpretación en el Jazzcampus de Basilea, bajo la tutela de <span class="bio-highlight-name">Mark Turner</span> y <span class="bio-highlight-name">Chris Cheek</span>, junto con otros artistas renombrados como:`,
-            two: 'Previamente Javier vivió cinco años en Barcelona, donde tuvo como maestros a músicos de la talla de:',
-            three: `Desde septiembre de 2024, se encuentra sumergido en el Máster de Composición bajo la tutela de <span class="bio-highlight-name">Guillermo Klein</span> en el Jazzcampus.`,
-        },
-        work: {
-            one: 'Con unas habilidades interpretativas excepcionales y una creatividad incansable, Javier decidió forjar su propio camino y liderar sus propios proyectos musicales...',
-            two: `En 2025, lanzó su primer álbum como líder<a href="https://tidal.com/album/396369024" class="bio-highlight-album">Música Para Amansar Fieras</a>con el reconocido sello <a href="https://www.freshsoundrecords.com/javier-rojo-albums/57428-musica-para-amansar-fieras.html" class="bio-highlight-label">Fresh Sound Records.</a>`,
-            three: 'Actualmente se encuentra inmerso en un proceso creativo centrado en la composición a la vez que se desarrolla como intérprete, escribiendo música para grandes ensembles, big band, formaciones orquestales con cuerdas y bandas sonoras de cine, mientras continúa liderando sus propios grupos como el quinteto y el sexteto, con quién grabará su segundo álbum a principios de 2026.',
-        },
-        sideman: 'Rojo actúa como sideman en proyectos como:'
+        one: 'Nacido en Guadalajara (ES) en 1999, Javier comenzó clarinete clásico a los seis años con Enrique Pérez, solista de la Orquesta Nacional de España. A los 17 se trasladó a Barcelona para estudiar jazz y pasó al saxofón tenor, formándose con maestros como Joan Albert Amargós, Lluís Vidal, Santi de la Rubia y Perico Sambeat. En 2022 se mudó a Basilea para realizar un Máster en Interpretación y otro después en Composición en el Jazzcampus, donde estudió con músicos como Mark Turner, Guillermo Klein, Chris Cheek, Brad Mehldau, Larry Grenadier, Jorge Rossy, Ambrose Akinmusire y Jeff Ballard.',
+        two: 'A pesar de su juventud, Javier ha compartido escenario con artistas como Lionel Loueke, Aaron Parks, Chano Domínguez, Jim McNeely o Carles Benavent, y ha actuado en festivales y clubs de España, Suiza, Alemania, Austria y Canadá, incluyendo festivales como el Festival de Jazz de Madrid, Festival Jazz Cádiz, BigBasel Fest (Basel), Jazz Montez (Frankfurt), Córdoba, Mas i Mas (Barcelona), Elche o clubes como el ZWE (Viena), Bird’s Eye Jazz Club (Basilea), Jamboree (Barcelona), Jimmy Glass (Valencia), Nova Jazz Cava (Terrassa), AsseJazz (Sevilla), Altxerri (San Sebastián), Rvbicón (Santander) o Meidinerz (Gijón) entre otros.',
+        three: 'Además, participa como sideman en proyectos como Yossi Itskovich 5et, Paul Janoschka 4et, Nepumuk, Nikolai Olshansky 5et, Ryuji Uchida 5et, Basel Jazz Orchestra, Martin Otero 5et, Perramon-Rojo 5et, Knuets-Rojo 5et o Ensemble Revuelo.',
+        four: 'Con una capacidad interpretativa excepcional y una creatividad incansable, Javier decidió liderar sus propios proyectos musicales con el lanzamiento de su primer álbum como líder Música Para Amansar Fieras, (Fresh Sound Records, 2025). Actualmente está inmerso en el proceso creativo de su segundo álbum, el cuál saldrá a la luz en Otoño de 2026.',
+        five: 'críticas de prensa'
     }
 }
 
-const biographyGalleryURLS = [
-    './images/sextet/sextet_close.webp',
-    './images/sextet/sextet_far.webp',
-    './images/sextet/sextet_inside.webp',
-    './images/sextet/sextet_line.webp'
-];
-let gallery;
-
 export default async function initBiography(barbaContainer) {
     const texts = Array.from(barbaContainer.querySelectorAll('[data-biography]'));
-    const ands = Array.from(barbaContainer.querySelectorAll('.and'));
-    gallery = barbaContainer.querySelector('#biography-sextet-gallery');
-
-    displayBiographyTexts(texts, ands);
-    initBiographyGallery();
+    displayBiographyTexts(texts);
+    appendTextReviews(barbaContainer);
 }
 
-export function displayBiographyTexts(texts, ands) {
-    displayBiographyCommonTexts(texts);
-    displayBiographyAnds(ands);
-}
-
-function displayBiographyCommonTexts(texts) {
+export function displayBiographyTexts(texts) {
     texts.forEach(text => displayText(text))
 }
 
 function displayText(text) {
-    const translatedText = translateCommonText(text);
+    const translatedText = translateText(text);
     text.innerHTML = translatedText;
 }
 
-function translateCommonText(text) {
+function translateText(text) {
     const language = getSelectedLanguage();
     const textData = [language, ...text.dataset.biography.split('-')] || [language, text.dataset.biography];
     return getTranslation(biographyTexts, textData);
 }
 
-function displayBiographyAnds(ands) {
-    ands.forEach(and => displayAnd(and))
-}
-
-function displayAnd(and) {
-    const language = getSelectedLanguage();
-    and.textContent = language === 'en' ? 'and' : 'y';
-}
-
-function initBiographyGallery() {
-    biographyGalleryURLS.forEach((url, i) => appendBiographyGalleryImage(url, i));
-}
-
-function appendBiographyGalleryImage(url, index) {
-    const image = getImage(url, index);
-    gallery.appendChild(image);
-}
-
-function getImage(url, index) {
-    const image = document.createElement('img');
-    image.classList.add('biography-gallery-image');
-    image.src = url;
-
-    const operator = index % 2 === 0 ? '+' : '-';
-    const distance = window.innerWidth / 2;
-    const rotation = getRandomRotation();
-
-    image.style.transform = `translate(-50%, ${index * distance}px) rotate(${operator}${rotation}deg)`;
-
-    return image;
-}
-
-function getRandomRotation() {
-    const maxRotation = 10;
-    return Math.floor(Math.random() * maxRotation);
-}
-
 export function initBiographyAnimations(container) {
     clearBiographyAnimations();
     document.fonts.ready.then(() => {
-        initHeaderAnim(container);
-        initHighlightsAnim(container);
-        initJourneyAnim(container);
-        initStudiesAnim(container);
-        initWorkAnim(container);
-        initSidemanAnim(container);
+        initTextAnim(container);
+        initReviewsAnim(container);
     });
 }
 
@@ -163,168 +67,149 @@ export function clearBiographyAnimations() {
     ScrollTrigger.getAll().forEach(st => st.kill());
 }
 
-// -----------------------------
-// HEADER
-// -----------------------------
-export async function initHeaderAnim(container) {
-    const imageHeader = container.querySelector('#biography-header img');
+export async function initTextAnim(container) {
+    const texts = container.querySelectorAll('[data-biography]');
 
-    gsap.to(imageHeader, {
-        scrollTrigger: {
-            trigger: imageHeader,
-            start: '40% center',
-            toggleActions: 'play none reverse none',
-        },
-        scale: 0.5,
-        duration: 1
+    texts.forEach(text => {
+        text._split?.revert();
+        text._split = SplitText.create(text, { type: "lines" });
+        gsap.set(text, { opacity: 1 });
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: text,
+                start: "top center",
+                once: true
+            }
+        });
+
+        tl.from(text._split.lines, {
+            duration: 1.3,
+            opacity: 0,
+            stagger: 0.02
+        });
+    });
+}
+
+export async function initReviewsAnim(container) {
+    const textReviews = container.querySelectorAll('.review-content');
+
+    textReviews.forEach(text => {
+        const review = text.querySelector('.review-container');
+        const source = text.querySelector('.source-container');
+
+        const reviewSplit = SplitText.create(review, { type: 'words' });
+        const sourceSplit = SplitText.create(source, { type: 'chars' });
+        gsap.set(text, { opacity: 1 });
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: text,
+                start: "top center",
+                once: true
+            }
+        });
+
+        tl
+            .from(reviewSplit.words, {
+                duration: 1,
+                opacity: 0,
+                stagger: 0.03
+            })
+            .from(sourceSplit.chars, {
+                duration: 0.5,
+                opacity: 0,
+                stagger: 0.05
+            }, '0')
+    });
+}
+
+
+
+////////////////////////////////////
+
+
+function initCarouselAnimations() {
+    const homeTitle = document.getElementById("home-title-container");
+    const smoothWrapper = document.getElementById("smooth-wrapper");
+    const pressCarousel = document.getElementById("press-carousel");
+    const homeOverlay = document.getElementById("home-image-overlay");
+    const homeImages = document.querySelectorAll(".home-image");
+    const sections = gsap.utils.toArray(".press-review-container");
+    const navbar = document.getElementById('navbar');
+
+    if (!pressCarousel || !homeOverlay || homeImages.length === 0) return;
+
+    let isCarouselDisplayed = false;
+    const carouselTimeline = gsap.timeline({ paused: true });
+    carouselTimeline
+        .to(smoothWrapper, { zIndex: 5, duration: 0 })
+        .to(homeTitle.children, { yPercent: -600, zIndex: -1, stagger: { amount: 0.1, from: 'start' }, ease: 'back.in(1.3)' })
+        .to(homeOverlay, { backdropFilter: "blur(5px) brightness(0.1)", duration: 0.4, overwrite: true }, 0.5)
+        .to(homeImages, { transform: "translate(-50%, -48%) scale(1.05)", duration: 0.5, overwrite: true }, 0.5)
+        .to(pressCarousel, { opacity: 1, duration: 0.4, overwrite: true }, 0.5)
+        .to(navbar, { opacity: 1, stagger: { amount: 0.2 } }, 0.5)
+
+    homeClickHandler = (event) => {
+        if (event.target.closest('li')) return;
+
+        if (!isCarouselDisplayed) {
+            carouselTimeline.play()
+        } else {
+            carouselTimeline.reverse();
+        }
+        isCarouselDisplayed = !isCarouselDisplayed;
+    };
+
+    window.addEventListener("click", homeClickHandler);
+
+    homeSmoother = ScrollSmoother.create({
+        smooth: 2,
+        smoothTouch: 0.1,
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content"
     });
 
-    const path = await waitForSelector(container, '#biography-header-text-container path');
-    const instruments = container.querySelector('#biography-header-instruments');
-    const instrumentsWidth = instruments.getBoundingClientRect().width;
-    const selector = path.parentNode.parentNode;
-    gsap.set(selector, { width: instrumentsWidth });
-
-    const split = SplitText.create(instruments, { type: 'words', mask: 'words' });
-    const tl = gsap.timeline({
+    const container = document.querySelector("#press-carousel-container");
+    const verticalScroll = gsap.to(sections, {
+        y: () => -150 * (sections.length - 1),
+        ease: "none",
+        stagger: {
+            each: 0.015
+        },
         scrollTrigger: {
-            trigger: instruments,
-            start: 'top 80%',
+            trigger: container,
+            pin: true,
+            scrub: 1,
+            start: "top 20%",
+            end: () => "+=" + window.innerHeight * (sections.length - 1) / 5
         }
     });
-    tl.from(split.words, { stagger: { amount: 0.5, ease: 'power1.in' }, yPercent: -100 })
-        .from(path, { drawSVG: 0, strokeWidth: 0, duration: 1, ease: 'power1.out' });
+    homeScrollTriggers.push(verticalScroll.scrollTrigger);
 }
 
-// -----------------------------
-// HIGHLIGHTS
-// -----------------------------
-export function initHighlightsAnim(container) {
-    const highlights = Array.from(container.querySelectorAll('.biography-highlights-text'));
-    highlights.forEach(highlight => {
-        const list = highlight.children[1];
-        const split = SplitText.create(list, { type: 'lines' });
 
-        gsap.from(split.lines, {
-            scrollTrigger: { trigger: list, start: 'top 70%' },
-            stagger: { amount: 1, ease: 'power1.in' },
-            opacity: 0
-        });
-    });
-
-    const imageHighlights = container.querySelector('#biography-highlights img');
-    gsap.to(imageHighlights, {
-        scrollTrigger: {
-            trigger: imageHighlights,
-            start: '40% center',
-            toggleActions: 'play none reverse none',
-        },
-        scale: 0.5,
-        duration: 1
-    });
-}
-
-// -----------------------------
-// JOURNEY
-// -----------------------------
-function initJourneyAnim(container) {
-    const journeyParagraphs = Array.from(container.querySelectorAll('#biography-journey p'));
-    journeyParagraphs.forEach(paragraph => {
-        const split = SplitText.create(paragraph, { type: 'words' });
-        gsap.from(split.words, {
-            scrollTrigger: {
-                trigger: paragraph,
-                start: 'center center',
-                scrub: 1,
-                pin: true,
-                pinSpacing: true
-            },
-            stagger: { each: 0.1 },
-            opacity: 0,
-        })
-    })
-}
-
-// -----------------------------
-// STUDIES
-// -----------------------------
-export async function initStudiesAnim(container) {
-    const studies = Array.from(container.querySelectorAll('.studies'));
-    for (let study of studies) {
-        const list = study.children[1];
-        const split = SplitText.create(list, { type: 'lines' });
-        gsap.from(split.lines, {
-            scrollTrigger: { trigger: list, start: 'top 70%' },
-            stagger: { amount: 1, ease: 'power1.in' },
-            opacity: 0
-        });
-
-        const path = await waitForSelector(study, 'path');
-        gsap.from(path, {
-            scrollTrigger: { trigger: study, start: 'top 80%' },
-            drawSVG: 0,
-            strokeWidth: 0,
-            duration: 1,
-            ease: 'power1.out'
-        });
+export function destroyPressCarousel() {
+    if (homeClickHandler) {
+        window.removeEventListener("click", homeClickHandler);
+        homeClickHandler = null;
     }
 
-    const imageStudies = container.querySelector('#biography-studies img');
-    gsap.to(imageStudies, {
-        scrollTrigger: { trigger: imageStudies, start: '30% center', toggleActions: 'play none reverse none' },
-        scale: 0.5,
-        duration: 1
-    });
-}
+    homeScrollTriggers.forEach(st => st.kill());
+    homeScrollTriggers = [];
 
-// -----------------------------
-// WORK
-// -----------------------------
-export async function initWorkAnim(container) {
-    const paragraphs = Array.from(container.querySelectorAll('#biography-work p'));
-    paragraphs.forEach(p => {
-        if (p.dataset.biography === 'work-two') {
-            const split = SplitText.create(p, { type: 'words', masks: 'words' });
-            gsap.from(split.words, {
-                scrollTrigger: { trigger: p, start: 'center center', pin: true, scrub: true, pinSpacing: true },
-                stagger: { from: 'start', each: 0.5 },
-                opacity: 0
-            });
-        } else {
-            gsap.from(p, {
-                scrollTrigger: { trigger: p, start: 'top 80%' },
-                opacity: 0,
-                duration: 1,
-                ease: 'power1.in'
-            });
-        }
-    });
+    if (homeSmoother) {
+        homeSmoother.kill();
+        homeSmoother = null;
+    }
 
-    const gallery = container.querySelector('#biography-sextet-gallery');
-    const images = Array.from(gallery.querySelectorAll('img'));
-    images.forEach((img, i) => {
-        const x = i % 2 === 0 ? -200 : 200;
-        const r = i % 2 === 0 ? -90 : 90;
-        gsap.from(img, {
-            scrollTrigger: { trigger: img, start: 'top 70%' },
-            xPercent: x,
-            rotate: r,
-            duration: 1,
-            ease: 'back.out(1.5)'
-        });
-    });
-}
+    const overlay = document.getElementById('home-image-overlay');
+    const images = document.querySelectorAll('.home-image');
+    const carousel = document.getElementById('press-carousel');
 
-// -----------------------------
-// SIDEMAN
-// -----------------------------
-export async function initSidemanAnim(container) {
-    const path = await waitForSelector(container, '#biography-sideman path');
-    gsap.from(path, {
-        scrollTrigger: { trigger: path, start: 'top 80%' },
-        drawSVG: 0,
-        strokeWidth: 0,
-        duration: 1,
-        ease: 'power1.out'
+    gsap.set([overlay, ...images, carousel], {
+        opacity: 0,
+        clearProps: "all",
+        pointerEvents: "none"
     });
 }
