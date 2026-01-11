@@ -468,6 +468,7 @@ ul {
   padding: var(--spacing-4) var(--spacing-3);
   font-family: var(--font-main);
   font-weight: 250;
+  font-size: var(--spacing-1);
   color: var(--color-white);
 }
 
@@ -1116,8 +1117,98 @@ form {
   }
 
   #biography-container {
-    padding: var(--spacing-7);
+    padding: var(--spacing-5);
     gap: var(--spacing-8);
+  }
+  
+  .biography-section {
+    flex-direction: row;
+    font-size: var(--spacing-2);
+    line-height: 1.2;
+  
+    img {
+      width: 50%;
+    }
+  }
+  
+  .biography-subsection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-6);
+    width: 100%;
+  }
+  
+  .biography-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-4);
+    width: 100%;
+  }
+  
+  [data-biography] {
+    opacity: 0;
+  }
+  
+  #button-reviews {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-subheader);
+    font-weight: 500;
+    font-size: var(--spacing-2);
+    text-transform: uppercase;
+    color: var(--color-white);
+    padding: var(--spacing-2) var(--spacing-3);
+    background: linear-gradient(var(--color-gradient-blue));
+    border-radius: var(--spacing-1);
+    text-shadow: 1px 1px var(--color-black);
+  }
+  
+  .text-review-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    opacity: 1;
+    padding: 0 var(--spacing-3);
+  }
+  
+  .review-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-1);
+    opacity: 0;
+  }
+  
+  .review-container {
+    color: var(--color-white);
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: clamp(var(--spacing-2), 2.5vw, var(--spacing-3));
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+  
+  .source-container {
+    color: var(--color-white);
+    font-family: var(--font-header);
+    font-weight: 300;
+    font-size: clamp(15px, 2.5vw, var(--spacing-3));
+    position: relative;
+    text-shadow: 1px 1px 1px var(--color-black);
+    letter-spacing: 3px;
+  }
+  
+  .source-container:hover {
+    cursor: pointer;
   }
 
   #concerts-menu {
