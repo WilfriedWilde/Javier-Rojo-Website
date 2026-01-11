@@ -112,8 +112,7 @@ export async function initSVGAnim(container) {
             trigger: start,
             start: "top center",
             end: '+=' + distance + 50,
-            scrub: 1,
-            markers: true
+            scrub: 1
         }
     });
 }
