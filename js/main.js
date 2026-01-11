@@ -1,5 +1,5 @@
 import initNavbar from "./navbar.js";
-import initHome, { introHomeAnimation } from "./home.js";
+import initHome, { introHomeAnimation, clearHomeAnimations } from "./home.js";
 import initNews from "./news.js";
 import initBiography, { initBiographyAnimations } from "./biography.js";
 import initMedias from "./medias.js";
@@ -90,7 +90,8 @@ barba.init({
             if (page !== 'index') return gsap.set(next.container, { xPercent: 100, position: 'absolute', top: 0, left: 0, width: '100%' });
         },
 
-        enter({ next }) {
+        enter({ current, next }) {
+            if (current.container.dataset.namespace === 'index') clearHomeAnimations();
             return transitionPage(next);
         },
 

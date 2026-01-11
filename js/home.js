@@ -3,6 +3,8 @@ import { mediasSheetURL } from './medias.js';
 import { concertsSheetURL } from './concerts.js';
 
 export const TIMER = 5 * 60 * 1000;
+const sheetDataNames = ['news', 'medias', 'concerts'];
+const sheetUrls = { news: newsSheetsURL, medias: mediasSheetURL, concerts: concertsSheetURL };
 
 export default async function initHome(barbaContainer) {
     fetchAllData();
@@ -64,7 +66,7 @@ function initHomeAnimations(container) {
     const homeTitle = container.querySelector('#home-title-container');
     const homeOverlay = container.querySelector('#home-image-overlay');
     const homeImages = container.querySelectorAll('.home-image');
-    const navbar = container.querySelector('#navbar');
+    const navbar = document.getElementById('navbar');
 
     if (!homeOverlay || homeImages.length === 0) return;
 
@@ -124,6 +126,3 @@ export function introHomeAnimation() {
         .from(titleRojo.querySelector('path'), { drawSVG: 0, duration: 0.5, ease: 'power1.inOut' }, '<0.3')
         .to('#home-image-background', { opacity: 1, duration: 2 }, '<1')
 }
-
-const sheetDataNames = ['news', 'medias', 'concerts'];
-const sheetUrls = { news: newsSheetsURL, medias: mediasSheetURL, concerts: concertsSheetURL };

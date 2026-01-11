@@ -78,7 +78,7 @@ export async function initTextAnim(container) {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: text,
-                start: "top center",
+                start: "top 80%",
                 once: true
             }
         });
@@ -105,8 +105,8 @@ export async function initReviewsAnim(container) {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: text,
-                start: "top center",
-                once: true
+                start: "top 80%",
+                once: true,
             }
         });
 
@@ -120,6 +120,6 @@ export async function initReviewsAnim(container) {
                 duration: 0.5,
                 opacity: 0,
                 stagger: 0.05
-            }, '0')
+            }, 0.3)
     });
 }
