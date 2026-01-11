@@ -58,6 +58,8 @@ export async function fetchSheetsData(url, cacheKeys) {
     }
 }
 
+let homeClickHandler = null;
+
 function initHomeAnimations(container) {
     const homeTitle = container.querySelector('#home-title-container');
     const homeOverlay = container.querySelector('#home-image-overlay');
@@ -86,41 +88,16 @@ function initHomeAnimations(container) {
     };
 
     window.addEventListener("click", homeClickHandler);
-
-    homeSmoother = ScrollSmoother.create({
-        smooth: 2,
-        smoothTouch: 0.1,
-        wrapper: "#smooth-wrapper",
-        content: "#smooth-content"
-    });
-
-    const container = document.querySelector("#press-carousel-container");
-    const verticalScroll = gsap.to(sections, {
-        y: () => -150 * (sections.length - 1),
-        ease: "none",
-        stagger: {
-            each: 0.015
-        },
-        scrollTrigger: {
-            trigger: container,
-            pin: true,
-            scrub: 1,
-            start: "top 20%",
-            end: () => "+=" + window.innerHeight * (sections.length - 1) / 5
-        }
-    });
-    homeScrollTriggers.push(verticalScroll.scrollTrigger);
 }
 
 
-export function destroyPressCarousel() {
+export function clearHomeAnimations() {
     if (homeClickHandler) {
         window.removeEventListener("click", homeClickHandler);
         homeClickHandler = null;
     }
 
-    homeScrollTriggers.forEach(st => st.kill());
-    homeScrollTriggers = [];
+    ScrollTrigger.getAll().forEach(st => st.kill());
 
     const overlay = document.getElementById('home-image-overlay');
     const images = document.querySelectorAll('.home-image');
