@@ -128,10 +128,10 @@ ul {
 .selector-home-title {
   left: 50%;
   transform: translate(-50%, -50%);
+}
 
-  path {
-    stroke-width: calc(var(--spacing-4) / var(--golden-ratio));
-  }
+.selector-home-title path {
+  stroke-width: calc(var(--spacing-4) / var(--golden-ratio));
 }
 
 .selector-contact {
@@ -217,15 +217,15 @@ ul {
   font-size: var(--spacing-1);
   justify-content: space-evenly;
   transform: scale(1);
+}
 
-  li a {
-    transition: 0.4s var(--easing-hover);
-    z-index: 1;
-  }
+.navbar-list li a {
+  transition: 0.4s var(--easing-hover);
+  z-index: 1;
+}
 
-  li a:hover {
-    cursor: pointer;
-  }
+.navbar-list li a:hover {
+  cursor: pointer;
 }
 
 #navbar-list-sections {
@@ -242,19 +242,19 @@ ul {
   right: 0;
   padding: var(--spacing-2);
   gap: var(--spacing-1);
+}
 
-  p {
-    transition: 0.3s var(--easing-hover);
-    z-index: 1;
-    position: absolute;
-    left: 0;
-    transform: translateX(-50%);
-  }
+#navbar-list-languages p {
+  transition: 0.3s var(--easing-hover);
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  transform: translateX(-50%);
+}
 
-  p:hover {
-    cursor: pointer;
-    font-weight: 600;
-  }
+#navbar-list-languages p:hover {
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .selected-language {
@@ -437,24 +437,23 @@ ul {
 }
 
 .news-content .doc-content {
-  width: 100%;
+  width: 100%; 
+}
 
-  span,
-  p {
-    color: var(--color-white) !important;
-    font-family: var(--font-main) !important;
-  }
+.news-content .doc-content span,
+.news-content .doc-content p {
+  color: var(--color-white) !important;
+  font-family: var(--font-main) !important;
+}
 
-  a {
-    color: var(--color-yellow) !important;
-    font-weight: 700 !important;
-    text-decoration: none !important;
-    transition: 0.3s var(--easing-hover);
-  }
-
-  a:hover {
-    color: var(--color-light-orange) !important;
-  }
+.news-content .doc-content a {
+  color: var(--color-yellow) !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  transition: 0.3s var(--easing-hover);
+}
+.news-content .doc-content a:hover {
+  color: var(--color-light-orange) !important;
 }
 
 /* ===> BIOGRAPHY <=== */
@@ -479,12 +478,12 @@ ul {
   align-items: center;
   gap: var(--spacing-4);
   width: 100%;
+}
 
-  img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: 3px;
-  }
+.biography-section img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 3px;
 }
 
 .biography-subsection {
@@ -775,15 +774,15 @@ ul {
   font-size: var(--spacing-1);
   font-weight: 100;
   text-align: center;
+}
 
-  a {
-    transition: 0.3s var(--easing-hover);
-    font-weight: 600;
-  }
+.concert-venue a {
+  transition: 0.3s var(--easing-hover);
+  font-weight: 600;
+}
 
-  a:hover {
-    color: var(--color-dark-orange);
-  }
+.concert-venue a:hover {
+  color: var(--color-dark-orange);
 }
 
 .concert-location {
@@ -876,22 +875,22 @@ ul {
   flex-direction: column;
   align-items: center;
   font-family: var(--font-header);
+}
 
-  :nth-child(1) {
-    font-weight: 400;
-    font-size: var(--spacing-3);
-    color: var(--color-white);
-    text-align: center;
-  }
+#form-header:nth-child(1) {
+  font-weight: 400;
+  font-size: var(--spacing-3);
+  color: var(--color-white);
+  text-align: center;
+}
 
-  :nth-child(2) {
-    font-weight: 700;
-    font-size: var(--spacing-4);
-    color: var(--color-yellow);
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 1;
-  }
+#form-header:nth-child(2) {
+  font-weight: 700;
+  font-size: var(--spacing-4);
+  color: var(--color-yellow);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
 }
 
 #svg-start {
@@ -904,14 +903,14 @@ ul {
   gap: var(--spacing-4);
   padding: 0 var(--spacing-3);
   width: 100%;
+}
 
-  img {
-    width: 100%;
-    min-width: 0;
-    border-radius: var(--spacing-1);
-    object-fit: cover;
-    object-position: left;
-  }
+#form-content img {
+  width: 100%;
+  min-width: 0;
+  border-radius: var(--spacing-1);
+  object-fit: cover;
+  object-position: left;
 }
 
 form {
@@ -920,21 +919,21 @@ form {
   align-items: center;
   gap: var(--spacing-3);
   width: 100%;
+}
 
-  button {
-    text-align: center;
-    width: fit-content;
-    transition: 0.3s ease;
-    font-family: var(--font-main);
-    font-size: var(--spacing-2);
-    font-weight: 400;
-    color: var(--color-white);
-    background-color: var(--color-light-orange);
-    border-radius: var(--spacing-4);
-    padding: var(--spacing-1) var(--spacing-2);
-    text-transform: uppercase;
-    border: none;
-  }
+form button {
+  text-align: center;
+  width: fit-content;
+  transition: 0.3s ease;
+  font-family: var(--font-main);
+  font-size: var(--spacing-2);
+  font-weight: 400;
+  color: var(--color-white);
+  background-color: var(--color-light-orange);
+  border-radius: var(--spacing-4);
+  padding: var(--spacing-1) var(--spacing-2);
+  text-transform: uppercase;
+  border: none;
 }
 
 .form-section {
@@ -942,34 +941,32 @@ form {
   flex-direction: column;
   gap: var(--spacing-1);
   width: 100%;
-
-  label {
-    font-family: var(--font-subheader);
-    font-size: var(--spacing-2);
-    font-weight: 400;
-    color: var(--color-white);
-  }
-
-  input,
-  select,
-  textarea {
-    font-family: var(--font-main);
-    font-size: var(--spacing-1);
-    width: 100%;
-    padding: var(--spacing-1) var(--spacing-2);
-    color: var(--color-black);
-    background-color: var(--color-white);
-    border: none;
-    outline: none;
-    border-radius: var(--spacing-1);
-  }
-
-  textarea {
-    min-height: var(--spacing-8);
-  }
 }
 
+.form-section label {
+  font-family: var(--font-subheader);
+  font-size: var(--spacing-2);
+  font-weight: 400;
+  color: var(--color-white);
+}
 
+.form-section input,
+.form-section select,
+.form-section textarea {
+  font-family: var(--font-main);
+  font-size: var(--spacing-1);
+  width: 100%;
+  padding: var(--spacing-1) var(--spacing-2);
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: none;
+  outline: none;
+  border-radius: var(--spacing-1);
+}
+
+.form-section textarea {
+  min-height: var(--spacing-8);
+}
 
 /* ===> FOOTER <=== */
 #footer {
@@ -1120,7 +1117,7 @@ form {
     position: relative;
     justify-content: center;
     gap: var(--spacing-2);
-    padding: 1;
+    padding: var(--spacing-1);
   }
 
   .home-image {
@@ -1184,10 +1181,10 @@ form {
     flex-direction: row;
     font-size: var(--spacing-2);
     line-height: 1.2;
+  }
 
-    img {
-      width: 50%;
-    }
+  .biography-section img {
+    width: 50%;
   }
 
   .biography-section:nth-of-type(2) {
@@ -1304,16 +1301,14 @@ form {
     gap: calc(var(--spacing-8) * 1.618);
   }
 
-  #form-header {
-    :nth-child(1) {
+  #form-header:nth-child(1) {
       font-weight: 400;
       font-size: var(--spacing-4);
     }
 
-    :nth-child(2) {
-      font-weight: 700;
-      font-size: var(--spacing-5);
-    }
+  #form-header:nth-child(2) {
+    font-weight: 700;
+    font-size: var(--spacing-5);
   }
 
   .selector-contact {
@@ -1329,35 +1324,35 @@ form {
   }
 
   form {
-    gap: var(--spacing-4);
+    gap: var(--spacing-4); 
+  }
 
-    button {
-      font-size: var(--spacing-3);
-      padding: var(--spacing-2) var(--spacing-3);
-    }
+  form button {
+    font-size: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-3);
+  }
 
-    button:hover {
-      cursor: pointer;
-      color: var(--color-blue);
-    }
+  form button:hover {
+    cursor: pointer;
+    color: var(--color-blue);
   }
 
   .form-section {
     gap: var(--spacing-2);
+  }
 
-    label {
-      font-size: var(--spacing-3);
-    }
+  .form-section label {
+    font-size: var(--spacing-3);
+  }
 
-    input,
-    select,
-    textarea {
-      font-size: var(--spacing-2);
-      padding: var(--spacing-2) var(--spacing-3);
-    }
+  .form-section input,
+  .form-section select,
+  .form-section textarea {
+    font-size: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-3);
+  }
 
-    textarea {
-      min-height: var(--spacing-8);
-    }
+  .form-section textarea {
+    min-height: var(--spacing-8);
   }
 }
