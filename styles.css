@@ -510,6 +510,7 @@ ul {
 
 .text-review-container {
   display: flex;
+  justify-content: center;
   align-items: center;
   width: 100%;
   position: relative;
@@ -611,6 +612,7 @@ ul {
   width: var(--spacing-2);
   height: var(--spacing-2);
   fill: var(--color-black);
+  transition: 0.3s ease;
 }
 
 .review-text {
@@ -1210,6 +1212,18 @@ form button {
     gap: var(--spacing-1);
     padding: 0 var(--spacing-4);
   }
+
+  .review-item a {
+    gap: var(--spacing-5);
+  }
+
+  .review-item a:hover {
+    cursor: pointer;
+  }
+
+  .review-item a:hover svg {
+    fill: var(--color-blue);
+}
 
   .review-open-icon {
     width: var(--spacing-4);
