@@ -1,5 +1,5 @@
 import { getSelectedLanguage, getTranslation } from "./translation.js";
-import { appendTextReviews } from "./press.js";
+import { appendTextReviews, appendAllReviews } from "./press.js";
 
 const biographyTexts = {
     en: {
@@ -22,6 +22,7 @@ export default async function initBiography(barbaContainer) {
     const texts = Array.from(barbaContainer.querySelectorAll('[data-biography]'));
     displayBiographyTexts(texts);
     appendTextReviews(barbaContainer);
+    appendAllReviews(barbaContainer);
 }
 
 export function displayBiographyTexts(texts) {
@@ -43,7 +44,8 @@ export function initBiographyAnimations(container) {
     clearBiographyAnimations();
     document.fonts.ready.then(() => {
         initTextAnim(container);
-        initReviewsAnim(container);
+        initTextReviewsAnim(container);
+        initReviewsListListener(container);
     });
 }
 
@@ -91,7 +93,7 @@ export async function initTextAnim(container) {
     });
 }
 
-export async function initReviewsAnim(container) {
+export async function initTextReviewsAnim(container) {
     const textReviews = container.querySelectorAll('.review-content');
 
     textReviews.forEach(text => {
@@ -122,4 +124,75 @@ export async function initReviewsAnim(container) {
                 stagger: 0.05
             }, 0.3)
     });
+}
+
+let isReviewsListDisplayed = false;
+
+function initReviewsListListener(container) {
+    isReviewsListDisplayed = false;
+    const buttonIcon = container.querySelector('#reviews-button-icon');
+    buttonIcon.addEventListener('click', handleDisplayReviewsList);
+}
+
+function handleDisplayReviewsList() {
+    if (isReviewsListDisplayed) hideReviewsList();
+    else showReviewsList();
+
+    isReviewsListDisplayed = !isReviewsListDisplayed;
+}
+
+function hideReviewsList() {
+    const reviewsContainer = document.getElementById('reviews-container');
+    const buttonIcon = reviewsContainer.querySelector('#reviews-button-icon');
+    const list = reviewsContainer.querySelector('#reviews-list');
+    const items = reviewsContainer.querySelectorAll('.review-item');
+
+    const hideTimeline = gsap.timeline();
+    hideTimeline
+        .to(buttonIcon, { duration: 2, ease: "elastic.out(1.1,0.4)", rotation: "+=180" })
+        .to(items, {
+            stagger: {
+                each: 0.03,
+                from: 'end',
+                ease: 'power1.out'
+            },
+            opacity: 0,
+        }, 0)
+        .to(list, { duration: 0.5, height: 0 }, 1)
+        .to(reviewsContainer, { duration: 0.8, backgroundColor: 'transparent', color: 'var(--color-white)' }, '>')
+
+
+}
+
+function showReviewsList() {
+    const reviewsContainer = document.getElementById('reviews-container');
+    const buttonIcon = reviewsContainer.querySelector('#reviews-button-icon');
+    const list = reviewsContainer.querySelector('#reviews-list');
+    const items = reviewsContainer.querySelectorAll('.review-item');
+
+    const listHeight = getReviewsListHeight(list);
+
+    const showTimeline = gsap.timeline();
+    showTimeline
+        .to(buttonIcon, { duration: 2, ease: "elastic.out(1.2,0.7)", rotation: "-=180" })
+        .to(reviewsContainer, { duration: 0.3, backgroundColor: 'var(--color-white)', color: 'var(--color-black)' }, 0)
+        .to(list, { duration: 1, ease: 'power2.out', height: listHeight }, 0.5)
+        .to(items, {
+            stagger: {
+                each: 0.03,
+                from: 'start',
+                ease: 'power2.out'
+            }
+            , opacity: 1
+        }, 1)
+}
+
+function getReviewsListHeight(list) {
+    let listHeight = 0;
+
+    list.style.height = 'auto';
+    listHeight = list.getBoundingClientRect().height;
+    list.style.height = 0;
+
+    return listHeight;
 }

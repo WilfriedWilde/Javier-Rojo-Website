@@ -1,4 +1,4 @@
-import { getReviewText } from "./press.js";
+import { getReviewText, getReviewTranslatedType } from "./press.js";
 import { displayNoNewsMessage, getTimeAgo } from "./news.js";
 import { displayNoConcertsMessage, translateMonthName, getTicketTranslation, getTranslationEmptyConcertsListMessage } from "./concerts.js";
 import { displayBiographyTexts } from "./biography.js";
@@ -119,6 +119,15 @@ export function translateTextsInPage(textContainers, page) {
         if (reviewContainers.length !== 0) {
             reviewContainers.forEach(container => container.innerText = getReviewText(container.dataset.reviewId));
         } else return;
+
+        const reviewItems = Array.from(document.querySelectorAll('.review-item'));
+        if (reviewItems.length !== 0) {
+            reviewItems.forEach(item => {
+                const itemId = item.dataset.id;
+                const type = item.querySelector('.review-type');
+                type.innerText = getReviewTranslatedType(itemId);
+            })
+        }
     } else if (page === 'concerts') {
         const noConcertsMessage = document.getElementById('no-concerts-message');
         if (noConcertsMessage.innerText) displayNoConcertsMessage();

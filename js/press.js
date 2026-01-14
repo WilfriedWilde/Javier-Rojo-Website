@@ -20,16 +20,16 @@ const rawReviews = [
     { source: 'Jazz Rozhlas (CZ)', type: { en: 'recommendation', es: 'recomendación' }, link: 'https://jazz.rozhlas.cz/uloveno-na-siti-dny-se-prodluzuji-jazzu-pribyva-9406376' },
     { source: 'Salt-peanuts (DK)', type: { en: 'review', es: 'crítica' }, link: 'https://salt-peanuts.eu/record/javier-rojo/' },
     { source: 'Goldmine Magazine (US)', type: { en: 'review', es: 'crítica' }, link: 'https://www.goldminemag.com/columns/noel-okimoto-javier-rojo-erik-jekabson-terry-waldo-and-bill-oconnell-know-no-genre/' },
-    { source: 'Radio Bemowo (PL)', type: { en: 'airplay', es: 'airplay' }, link: 'https://www.facebook.com/marek.j.smietanski/posts/pfbid02wUXY8xNDSHDwB4iYMd2e4eYLnQbrtiAJMa1zkdyzV7VgrKtdz7RKggX5PZMVcN2hl' },
+    { source: 'Radio Bemowo (PL)', type: { en: 'airplay', es: 'emisión' }, link: 'https://www.facebook.com/marek.j.smietanski/posts/pfbid02wUXY8xNDSHDwB4iYMd2e4eYLnQbrtiAJMa1zkdyzV7VgrKtdz7RKggX5PZMVcN2hl' },
     { source: '15 Questions (DE)', type: { en: 'interview', es: 'entrevista' }, link: 'https://15questions.net/interview/javier-rojo-about-improvisation/page-1/' },
     { source: 'La Habitacion Del Jazz (ES)', type: { en: 'review', es: 'crítica' }, link: 'https://lahabitaciondeljazz.blogspot.com/2025/01/javier-rojo-cd-musica-para-amansar.html' },
     { source: 'Radio France - Au Coeur du Jazz (FR)', type: { en: 'review', es: 'crítica' }, link: 'https://www.radiofrance.fr/francemusique/podcasts/au-coeur-du-jazz/javier-rojo-le-miroir-de-ses-emotions-9749039' },
     { source: 'Jazzreporter (DE)', type: { en: 'interview', es: 'entrevista' }, link: 'https://www.jazzreporter.com/2025/01/12/javier-rojo-interview/' },
-    { source: 'Future Jazz on Jazz FM (UK)', type: { en: 'airplay', es: 'airplay' }, link: 'https://www.mixcloud.com/RuthieNotesandTones/future-jazz-on-jazz-fm-6-january-2025/' },
-    { source: 'Radio RDC (PL)', type: { en: 'airplay', es: 'airplay' }, link: 'https://www.facebook.com/alejazz.marek.romanski/posts/pfbid0H7LGwBh66og6g7GGFgBkskJajzkB8SPUB5Vb7Z6v873WYKBpUsU52QmPcSj5rX3zl' }
+    { source: 'Future Jazz on Jazz FM (UK)', type: { en: 'airplay', es: 'emisión' }, link: 'https://www.mixcloud.com/RuthieNotesandTones/future-jazz-on-jazz-fm-6-january-2025/' },
+    { source: 'Radio RDC (PL)', type: { en: 'airplay', es: 'emisión' }, link: 'https://www.facebook.com/alejazz.marek.romanski/posts/pfbid0H7LGwBh66og6g7GGFgBkskJajzkB8SPUB5Vb7Z6v873WYKBpUsU52QmPcSj5rX3zl' }
 ];
 
-let reviewContainers = [];
+let reviewContainers = [], reviewsList;
 
 function generateReviewID(review, index) {
     const reviewText = review.source.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -47,7 +47,7 @@ export function appendTextReviews(container) {
     const shuffledReviews = shuffle(reviews);
     const textReviews = shuffledReviews.filter(review => 'review' in review).slice(0, 2);
 
-    textReviews.forEach((review, index) => appendReview(review, index));
+    textReviews.forEach((review, index) => appendTextReview(review, index));
 }
 
 function shuffle(array) {
@@ -59,7 +59,7 @@ function shuffle(array) {
     return arr;
 }
 
-function appendReview(pressReview, index) {
+function appendTextReview(pressReview, index) {
     const { id, source, link } = pressReview;
     const reviewText = getReviewText(id);
     const template = `
@@ -84,4 +84,38 @@ function getTranslatedReview(id) {
     const currentReview = reviews.find(review => review.id === id);
 
     return currentReview.review[language];
+}
+
+export function appendAllReviews(container) {
+    reviewsList = container.querySelector('#reviews-list');
+
+    const shuffledReviews = shuffle(reviews);
+    shuffledReviews.forEach(review => appendReview(review));
+}
+
+function appendReview(review) {
+    const { source, link, id } = review;
+    const translatedType = getReviewTranslatedType(id);
+    const template = `
+        <a href="${link}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class='review-open-icon'>
+                <path
+                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h240q17 0 28.5 11.5T480-800q0 17-11.5 28.5T440-760H200v560h560v-240q0-17 11.5-28.5T800-480q17 0 28.5 11.5T840-440v240q0 33-23.5 56.5T760-120H200Zm560-584L416-360q-11 11-28 11t-28-11q-11-11-11-28t11-28l344-344H600q-17 0-28.5-11.5T560-800q0-17 11.5-28.5T600-840h200q17 0 28.5 11.5T840-800v200q0 17-11.5 28.5T800-560q-17 0-28.5-11.5T760-600v-104Z" />
+            </svg>
+            <p class="review-text">${source}</p>
+            <p class="review-type">${translatedType}</p>
+        </a>
+    `;
+
+    const reviewItem = document.createElement('li');
+    reviewItem.classList.add('review-item');
+    reviewItem.dataset.id = id;
+    reviewItem.innerHTML = template;
+
+    reviewsList.appendChild(reviewItem);
+}
+
+export function getReviewTranslatedType(id) {
+    const language = getSelectedLanguage();
+    return reviews.find(review => review.id === id).type[language];
 }
