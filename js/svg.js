@@ -1,4 +1,4 @@
-const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title', 'biography', 'contact'];
+const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title', 'biography'];
 export const colorPalette = [
     getComputedStyle(document.documentElement).getPropertyValue('--color-blue'),
     getComputedStyle(document.documentElement).getPropertyValue('--color-light-orange'),
@@ -47,14 +47,13 @@ async function removeExistingSelectors() {
 
 async function appendSelector(selector, target) {
     const targetWidth = target.getBoundingClientRect().width;
-    const selectorWidthRatio = selector === 'contact' ? 1 : 1.5;
+    const selectorWidthRatio = 1.5;
     const container = target.parentNode;
     const selectorContainer = document.createElement('div');
     const svg = await fetchSVG(svgInfos.selectorsURLs[selector]);
 
     selectorContainer.innerHTML = svg;
     selectorContainer.classList.add('selector-container');
-    if (selector === 'contact') selectorContainer.classList.add('selector-container-contact');
     selectorContainer.style.width = `${targetWidth * selectorWidthRatio}px`;
 
     if (['static', ''].includes(getComputedStyle(container).position))
@@ -163,17 +162,16 @@ export async function drawSelectors(isTransition) {
         const isSectionTitle = target.classList.contains('section-title');
         const isHomeTitle = target.classList.contains('home-title');
         const isBiography = target.dataset.selector === 'biography';
-        const isContact = target.dataset.selector === 'contact';
         const isLanguageOption = target.dataset.language !== undefined;
         
-        if (isLanguageOption && !isSelectedLanguage && !isSectionTitle && !isHomeTitle && !isBiography && !isContact) return;
+        if (isLanguageOption && !isSelectedLanguage && !isSectionTitle && !isHomeTitle && !isBiography) return;
 
         if (isSectionTitle) {
             if (!isTransition) {
                 gsap.set(selector, { opacity: 1 });
                 gsap.from(path, { drawSVG: 0, duration: 0.5 });
             }
-        } else if (!isSelectedPage && !isSelectedLanguage && !isHomeTitle && !isBiography && !isContact) {
+        } else if (!isSelectedPage && !isSelectedLanguage && !isHomeTitle && !isBiography) {
             const draw = gsap.timeline({ paused: true });
             draw.set(selector, { opacity: 1 })
                 .from(path, { drawSVG: 0, duration: 0.5 });
@@ -183,10 +181,6 @@ export async function drawSelectors(isTransition) {
 
         } else if (isBiography ) {
             gsap.set(selector, { opacity: 1 });
-            return;
-        } else if (isContact) {
-            const selectorContact = target.parentNode.querySelector('.selector-contact');
-            gsap.set(selectorContact, { opacity: 1 });
             return;
         } else {
             gsap.set(selector, { opacity: 1 });

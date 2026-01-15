@@ -110,10 +110,12 @@ ul {
 
 .selector-container-contact {
   position: absolute;
-  inset: 0;
+  inset: 2% 0 0 0;
+  height: 100%;
+  width: 100%;
   margin-inline: auto;
-  z-index: -1;
   transform: none;
+  z-index: -1;
 }
 
 .selector {
@@ -138,6 +140,7 @@ ul {
   height: 100%;
   inset: -8% 0 0 0;
   transform: none;
+  opacity: 1;
 }
 
 #transition-icon-container {
@@ -581,6 +584,10 @@ ul {
   transform: rotate(90deg);
 }
 
+#reviews-button-icon:hover {
+  cursor: pointer;
+}
+
 #reviews-list {
   display: flex;
   flex-direction: column;
@@ -879,20 +886,22 @@ ul {
   font-family: var(--font-header);
 }
 
-#form-header:nth-child(1) {
+#form-header > :nth-child(1) {
   font-weight: 400;
   font-size: var(--spacing-3);
   color: var(--color-white);
   text-align: center;
 }
 
-#form-header:nth-child(2) {
+#form-header > :nth-child(2) {
   font-weight: 700;
   font-size: var(--spacing-4);
   color: var(--color-yellow);
   text-transform: uppercase;
   text-align: center;
   line-height: 1;
+  opacity: 0;
+  padding: 0 var(--spacing-3);
 }
 
 #svg-start {
@@ -930,12 +939,13 @@ form button {
   font-family: var(--font-main);
   font-size: var(--spacing-2);
   font-weight: 400;
-  color: var(--color-white);
-  background-color: var(--color-light-orange);
-  border-radius: var(--spacing-4);
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border-radius: var(--spacing-1);
   padding: var(--spacing-1) var(--spacing-2);
   text-transform: uppercase;
-  border: none;
+  border: 8px solid transparent;
+  transition: 0.3s ease;
 }
 
 .form-section {
@@ -966,12 +976,20 @@ form button {
   border-radius: var(--spacing-1);
 }
 
+.form-section select > :nth-child(1) {
+  color: var(--color-black-transparent);
+  font-style: italic;
+  font-weight: 100;
+}
+
 .form-section textarea {
   min-height: var(--spacing-8);
 }
 
 /* ===> FOOTER <=== */
 #footer {
+  position: relative;
+  z-index: 100;
   background: var(--color-white);
   display: none;
   flex-direction: column;
@@ -1315,12 +1333,12 @@ form button {
     gap: calc(var(--spacing-8) * 1.618);
   }
 
-  #form-header:nth-child(1) {
+  #form-header > :nth-child(1) {
       font-weight: 400;
       font-size: var(--spacing-4);
     }
 
-  #form-header:nth-child(2) {
+  #form-header > :nth-child(2) {
     font-weight: 700;
     font-size: var(--spacing-5);
   }
@@ -1344,6 +1362,7 @@ form button {
   form button {
     font-size: var(--spacing-3);
     padding: var(--spacing-2) var(--spacing-3);
+    border: var(--spacing-1) solid var(--color-blue);
   }
 
   form button:hover {

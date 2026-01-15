@@ -17,23 +17,25 @@ const platformParsers = {
         regex: /\/album\/(\d+)/
     },
     bandcamp: {
-        template: `<iframe class="media-bandcamp" seamless></iframe>`,
+        template: `<iframe style="border: 0; width: 350px; height: 786px; border-radius: 5px" seamless></iframe>`,
         regex: /album=[0-9]+/g
     }
 };
 
 let sheetDataName;
-let audioList, videoList;
+let audioList, videoList, imageList;
 
 export default async function initMedias(barbaContainer) {
     sheetDataName = barbaContainer.dataset.namespace;
     audioList = barbaContainer.querySelector('[data-medias="audio"]');
     videoList = barbaContainer.querySelector('[data-medias="video"]');
+    imageList = barbaContainer.querySelector('[data-medias="image"]');
 
     audioList.innerHTML = '';
     videoList.innerHTML = '';
+    imageList.innerHTML = '';
 
-    const mediasData = await getMediasdata();
+    const mediasData = await getMediasdata(); console.log(mediasData)
     await populateMediasLists(mediasData);
 }
 
@@ -61,13 +63,26 @@ async function populateMediasLists(mediasData) {
 
 function appendMedia(data) {
     const mediaElement = getMediaElement(data);
-    if (data.platform === 'youtube') videoList.appendChild(mediaElement)
-    else audioList.appendChild(mediaElement);
+
+    if (data.media === 'audio') audioList.appendChild(mediaElement)
+    else if (data.media === 'video') videoList.appendChild(mediaElement);
+    else if (data.media === 'image') imageList.appendChild(mediaElement);
 }
 
 function getMediaElement(data) {
-    const { platform, link } = data;
+    if (data.media === 'image') getImageElement(data.link)
+    else getIframe(data);
+}
+
+function getImageElement(link) {
+    // TODO
+}
+
+function getIframe(data) {
+    const { media, link } = data;
+    const platform = getPlatform(media);
     const template = platformParsers[platform].template;
+
     let mediaSrc;
 
     if (platform === 'youtube') {
@@ -75,7 +90,7 @@ function getMediaElement(data) {
     } else if (platform === 'tidal') {
         mediaSrc = `https://embed.tidal.com/albums/${link.match(platformParsers[platform].regex)[1]}`;
     } else if (platform === 'bandcamp') {
-        mediaSrc = `https://bandcamp.com/EmbeddedPlayer/${link.match(platformParsers[platform].regex)[0]}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`;
+        mediaSrc = `https://bandcamp.com/EmbeddedPlayer/${link.match(platformParsers[platform].regex)[0]}/size=large/bgcol=ffffff/linkcol=0687f5/transparent=true/`;
     }
 
     const parser = new DOMParser();
@@ -87,4 +102,8 @@ function getMediaElement(data) {
     iframe.src = mediaSrc;
 
     return iframe;
+}
+
+function getPlatform(media) {
+    // TODO
 }

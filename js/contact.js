@@ -21,11 +21,6 @@ const contactTexts = {
             five: 'Press',
             six: 'Other'
         },
-        placeholder: {
-            one: "What's your name?",
-            two: "What's your email?",
-            three: 'What would you like to share?'
-        },
         button: 'send'
     },
     es: {
@@ -46,11 +41,6 @@ const contactTexts = {
             four: 'Colaboración',
             five: 'Prensa',
             six: 'Otro'
-        },
-        placeholder: {
-            one: '¿Cómo te llamas?',
-            two: '¿Cuál es tu correo electrónico?',
-            three: '¿Qué te gustaría compartir?'
         },
         button: 'enviar'
     }
@@ -96,7 +86,46 @@ export function clearContactAnimations() {
 }
 
 function initHeaderAnim(container) {
-
+    const headerText = Array.from(
+        container.querySelectorAll('[data-contact]')
+    ).find(el => el.dataset.contact === 'header-two');
+    
+    const split = SplitText.create(headerText, {
+        type: "words"
+    });
+    
+    let chars = [];
+    split.words.forEach(word => {
+        const charSplit = SplitText.create(word, { type: "chars" });
+        chars.push(...charSplit.chars);
+    });
+    
+    gsap.set(split.words, { whiteSpace: "nowrap" });
+    gsap.set(headerText, { opacity: 1 });
+    
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: headerText,
+            start: "top 70%",
+            once: true
+        }
+    });
+    
+    const sentence = chars.slice(0, chars.length - 1);
+    const dot = chars[chars.length - 1];
+    
+    tl
+      .from(sentence, {
+          duration: 1,
+          opacity: 0,
+          stagger: {
+              each: 0.03
+          }
+      })
+      .from(dot, {
+          duration: 0.7,
+          opacity: 0
+      }, "-=0.4");
 }
 
 export async function initSVGAnim(container) {
@@ -104,6 +133,7 @@ export async function initSVGAnim(container) {
     const start = container.querySelector('#svg-start');
     const end = Array.from(container.querySelectorAll('[data-contact]')).find(el => el.dataset.contact === 'button');
     const distance = end.getBoundingClientRect().bottom - start.getBoundingClientRect().top;
+    const button = container.querySelector('button');
 
     gsap.set(path, { drawSVG: 0, strokeWidth: 2 });
     gsap.to(path, {
@@ -112,7 +142,19 @@ export async function initSVGAnim(container) {
             trigger: start,
             start: "top center",
             end: '+=' + distance + 50,
-            scrub: 1
+            scrub: 1,
+            onLeave: () => {
+                gsap.to(button, {
+                    duration: 0.3,
+                    border: '8px solid var(--color-blue)'
+                })
+            },
+            onEnterBack: () => {
+                gsap.to(button, {
+                    duration: 0.3,
+                    border: '8px solid transparent'
+                })
+            }
         }
     });
 }

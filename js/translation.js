@@ -2,7 +2,7 @@ import { getReviewText, getReviewTranslatedType } from "./press.js";
 import { displayNoNewsMessage, getTimeAgo } from "./news.js";
 import { displayNoConcertsMessage, translateMonthName, getTicketTranslation, getTranslationEmptyConcertsListMessage } from "./concerts.js";
 import { displayBiographyTexts } from "./biography.js";
-import { displayContactTexts } from "./contact.js";
+import { displayContactTexts, initContactAnimations } from "./contact.js";
 
 // Object storing all the translations. It follows the structure 'language' => 'page' => 'section'.
 const translations = {
@@ -144,7 +144,7 @@ export function translateTextsInPage(textContainers, page) {
         const contactTexts = Array.from(document.querySelectorAll('[data-contact]'));
         if (contactTexts.some(text => text.innerText !== '')) {
             displayContactTexts(contactTexts);
-            ScrollTrigger.refresh();
+            initContactAnimations(document.querySelector('.main'));
         }
     }
 }
