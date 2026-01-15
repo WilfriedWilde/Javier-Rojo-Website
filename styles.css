@@ -110,7 +110,6 @@ ul {
 
 .selector-container-contact {
   position: absolute;
-  inset: 2% 0 0 0;
   height: 100%;
   width: 100%;
   margin-inline: auto;
@@ -138,7 +137,7 @@ ul {
 
 .selector-contact {
   height: 100%;
-  inset: -8% 0 0 0;
+  inset: -5% 0 0 0;
   transform: none;
   opacity: 1;
 }
