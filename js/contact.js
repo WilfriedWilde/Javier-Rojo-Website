@@ -89,20 +89,20 @@ function initHeaderAnim(container) {
     const headerText = Array.from(
         container.querySelectorAll('[data-contact]')
     ).find(el => el.dataset.contact === 'header-two');
-    
+
     const split = SplitText.create(headerText, {
         type: "words"
     });
-    
+
     let chars = [];
     split.words.forEach(word => {
         const charSplit = SplitText.create(word, { type: "chars" });
         chars.push(...charSplit.chars);
     });
-    
+
     gsap.set(split.words, { whiteSpace: "nowrap" });
     gsap.set(headerText, { opacity: 1 });
-    
+
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: headerText,
@@ -110,22 +110,22 @@ function initHeaderAnim(container) {
             once: true
         }
     });
-    
+
     const sentence = chars.slice(0, chars.length - 1);
     const dot = chars[chars.length - 1];
-    
+
     tl
-      .from(sentence, {
-          duration: 1,
-          opacity: 0,
-          stagger: {
-              each: 0.03
-          }
-      })
-      .from(dot, {
-          duration: 0.7,
-          opacity: 0
-      }, "-=0.4");
+        .from(sentence, {
+            duration: 1,
+            opacity: 0,
+            stagger: {
+                each: 0.03
+            }
+        })
+        .from(dot, {
+            duration: 0.7,
+            opacity: 0
+        }, "-=0.4");
 }
 
 export async function initSVGAnim(container) {
@@ -135,25 +135,26 @@ export async function initSVGAnim(container) {
     const distance = end.getBoundingClientRect().bottom - start.getBoundingClientRect().top;
     const button = container.querySelector('button');
 
+    const borderTween = gsap.to(button, {
+        borderColor: 'var(--color-blue)',
+        duration: 0.1,
+        paused: true
+    });
+
     gsap.set(path, { drawSVG: 0, strokeWidth: 2 });
     gsap.to(path, {
         drawSVG: "100%",
         scrollTrigger: {
             trigger: start,
             start: "top center",
-            end: '+=' + distance + 50,
+            end: '+=' + distance,
             scrub: 1,
-            onLeave: () => {
-                gsap.to(button, {
-                    duration: 0.3,
-                    border: '8px solid var(--color-blue)'
-                })
-            },
-            onEnterBack: () => {
-                gsap.to(button, {
-                    duration: 0.3,
-                    border: '8px solid transparent'
-                })
+            onUpdate: self => {
+                if (self.progress > 0.85) {
+                    borderTween.play()
+                } else {
+                    borderTween.reverse()
+                }
             }
         }
     });

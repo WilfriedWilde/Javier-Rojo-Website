@@ -1,6 +1,10 @@
 import { fetchSheetsData } from "./home.js";
 
 export const mediasSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=129671728&single=true&output=csv';
+const mediaTypes = {
+    audio: ['tidal', 'bandcamp'],
+    video: ['youtu.be']
+};
 const platformParsers = {
     youtube: {
         template: `<iframe class="media-youtube" 
@@ -70,17 +74,21 @@ function appendMedia(data) {
 }
 
 function getMediaElement(data) {
-    if (data.media === 'image') getImageElement(data.link)
-    else getIframe(data);
+    if (data.media === 'image') return getImageElement(data.link)
+    else return getIframe(data);
 }
 
 function getImageElement(link) {
-    // TODO
+    const image = document.createElement('img');
+    image.src = link;
+    image.classList.add('media-image');
+
+    return image;
 }
 
 function getIframe(data) {
-    const { media, link } = data;
-    const platform = getPlatform(media);
+    const { link } = data;
+    const platform = getPlatform(data);
     const template = platformParsers[platform].template;
 
     let mediaSrc;
@@ -92,7 +100,7 @@ function getIframe(data) {
     } else if (platform === 'bandcamp') {
         mediaSrc = `https://bandcamp.com/EmbeddedPlayer/${link.match(platformParsers[platform].regex)[0]}/size=large/bgcol=ffffff/linkcol=0687f5/transparent=true/`;
     }
-
+    
     const parser = new DOMParser();
     const doc = parser.parseFromString(template, 'text/html');
     const iframe = doc.querySelector('iframe');
@@ -104,6 +112,12 @@ function getIframe(data) {
     return iframe;
 }
 
-function getPlatform(media) {
-    // TODO
+function getPlatform(data) {
+    const { media, link } = data;
+
+    for (const type of mediaTypes[media]) {
+        if (link.includes(type)) return type.replace('.', '');
+    }
+
+    return '';
 }
