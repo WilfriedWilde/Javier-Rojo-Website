@@ -3,7 +3,7 @@ import { fetchSheetsData } from "./home.js";
 export const mediaSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=129671728&single=true&output=csv';
 const mediaTypes = {
     audio: ['tidal', 'bandcamp'],
-    video: ['youtu.be']
+    video: ['youtu.be', 'youtube']
 };
 const platformParsers = {
     youtube: {
