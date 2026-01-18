@@ -20,7 +20,7 @@ const translations = {
         biography: {
             title: ['biografía']
         },
-        medias: {
+        media: {
             title: ['medios']
         },
         concerts: {
@@ -33,7 +33,7 @@ const translations = {
     },
     en: {
         all: {
-            navbar: ['news', 'biography', 'medias', 'concerts', 'contact'],
+            navbar: ['news', 'biography', 'media', 'concerts', 'contact'],
             footer: ['Webdesign by', 'Photography by', 'Privacy policy', 'All rights reserved.']
         },
         home: {
@@ -45,8 +45,8 @@ const translations = {
         biography: {
             title: ['biography']
         },
-        medias: {
-            title: ['medias']
+        media: {
+            title: ['media']
         },
         concerts: {
             title: ['concerts'],

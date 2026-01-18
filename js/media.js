@@ -1,6 +1,6 @@
 import { fetchSheetsData } from "./home.js";
 
-export const mediasSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=129671728&single=true&output=csv';
+export const mediaSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5KRWUtYBv62ZMIt9JBbiE4jykThuTOZN68BEzM48HSDjxqutLLy8aGURisHvVdiXnRjQ3UA1nqpJE/pub?gid=129671728&single=true&output=csv';
 const mediaTypes = {
     audio: ['tidal', 'bandcamp'],
     video: ['youtu.be']
@@ -29,26 +29,26 @@ const platformParsers = {
 let sheetDataName;
 let audioList, videoList, imageList;
 
-export default async function initMedias(barbaContainer) {
+export default async function initMedia(barbaContainer) {
     sheetDataName = barbaContainer.dataset.namespace;
-    audioList = barbaContainer.querySelector('[data-medias="audio"]');
-    videoList = barbaContainer.querySelector('[data-medias="video"]');
-    imageList = barbaContainer.querySelector('[data-medias="image"]');
+    audioList = barbaContainer.querySelector('[data-media="audio"]');
+    videoList = barbaContainer.querySelector('[data-media="video"]');
+    imageList = barbaContainer.querySelector('[data-media="image"]');
 
     audioList.innerHTML = '';
     videoList.innerHTML = '';
     imageList.innerHTML = '';
 
-    const mediasData = await getMediasdata(); console.log(mediasData)
-    await populateMediasLists(mediasData);
+    const mediaData = await getMediadata(); console.log(mediaData)
+    await populateMediaLists(mediaData);
 }
 
-async function getMediasdata() {
+async function getMediadata() {
     const cacheKeys = {
         cachedData: `cache_${sheetDataName}`,
         cachedTime: `cache_time_${sheetDataName}}`
     };
-    const data = await fetchSheetsData(mediasSheetURL, cacheKeys);
+    const data = await fetchSheetsData(mediaSheetURL, cacheKeys);
 
     if (!data || data.length === 0) {
         return [];
@@ -57,10 +57,10 @@ async function getMediasdata() {
     return data;
 }
 
-async function populateMediasLists(mediasData) {
-    if (!mediasData) return;
+async function populateMediaLists(mediaData) {
+    if (!mediaData) return;
 
-    for (const data of mediasData) {
+    for (const data of mediaData) {
         appendMedia(data);
     }
 }

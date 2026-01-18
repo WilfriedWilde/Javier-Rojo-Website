@@ -16,10 +16,10 @@ const svgInfos = {
     ),
 
     socialMedias: [
-        { url: './logos/social_medias/instagram.svg', id: 'instagram', href: 'https://www.instagram.com/javiersrojo/' },
-        { url: './logos/social_medias/spotify.svg', id: 'spotify', href: 'https://open.spotify.com/intl-fr/artist/4Mg2B60aGou7zXTRlbAmeH?si=yEht4fvUSbi2bO2alAGLng' },
-        { url: './logos/social_medias/apple.svg', id: 'apple', href: 'https://music.apple.com/es/artist/javier-rojo/1478744089' },
-        { url: './logos/social_medias/tidal.svg', id: 'tidal', href: 'https://tidal.com/artist/16729922/' }
+        { url: './logos/social_media/instagram.svg', id: 'instagram', href: 'https://www.instagram.com/javiersrojo/' },
+        { url: './logos/social_media/spotify.svg', id: 'spotify', href: 'https://open.spotify.com/intl-fr/artist/4Mg2B60aGou7zXTRlbAmeH?si=yEht4fvUSbi2bO2alAGLng' },
+        { url: './logos/social_media/apple.svg', id: 'apple', href: 'https://music.apple.com/es/artist/javier-rojo/1478744089' },
+        { url: './logos/social_media/tidal.svg', id: 'tidal', href: 'https://tidal.com/artist/16729922/' }
     ]
 };
 
@@ -90,7 +90,7 @@ function rotateRandomlySelector(container) {
 
 // social media icons
 export async function appendSocialMediaIcons() {
-    const socialMediaList = document.getElementById('list-social-medias');
+    const socialMediaList = document.getElementById('list-social-media');
     for (let i = 0; i < svgInfos.socialMedias.length; i++) {
         await appendLink(i, socialMediaList);
     }

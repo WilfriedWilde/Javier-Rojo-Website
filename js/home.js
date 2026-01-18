@@ -1,10 +1,10 @@
 import { newsSheetsURL, addGoogleDocsData } from './news.js';
-import { mediasSheetURL } from './medias.js';
+import { mediaSheetURL } from './media.js';
 import { concertsSheetURL } from './concerts.js';
 
 export const TIMER = 5 * 60 * 1000;
-const sheetDataNames = ['news', 'medias', 'concerts'];
-const sheetUrls = { news: newsSheetsURL, medias: mediasSheetURL, concerts: concertsSheetURL };
+const sheetDataNames = ['news', 'media', 'concerts'];
+const sheetUrls = { news: newsSheetsURL, media: mediaSheetURL, concerts: concertsSheetURL };
 
 export default async function initHome(barbaContainer) {
     fetchAllData();

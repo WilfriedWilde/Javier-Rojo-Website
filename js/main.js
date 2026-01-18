@@ -2,7 +2,7 @@ import initNavbar from "./navbar.js";
 import initHome, { introHomeAnimation, clearHomeAnimations } from "./home.js";
 import initNews from "./news.js";
 import initBiography, { initBiographyAnimations } from "./biography.js";
-import initMedias from "./medias.js";
+import initMedia from "./media.js";
 import initConcerts from "./concerts.js";
 import initContact, { initContactAnimations, initSVGAnim } from "./contact.js";
 import { getSelectedLanguage, handleLanguageSelection, translateTextsInPage } from "./translation.js";
@@ -17,7 +17,7 @@ const pageInits = {
     index: initHome,
     news: initNews,
     biography: initBiography,
-    medias: initMedias,
+    media: initMedia,
     concerts: initConcerts,
     contact: initContact
 }
@@ -159,7 +159,7 @@ function initFooter(page) {
         footer.style.display = "flex";
     }
 
-    if (!document.getElementById("list-social-medias").hasChildNodes()) {
+    if (!document.getElementById("list-social-media").hasChildNodes()) {
         setSocialMediaIcons();
         setCopyrightText();
     }
