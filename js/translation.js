@@ -2,6 +2,7 @@ import { getReviewText, getReviewTranslatedType } from "./press.js";
 import { displayNoNewsMessage, getTimeAgo } from "./news.js";
 import { displayNoConcertsMessage, translateMonthName, getTicketTranslation, getTranslationEmptyConcertsListMessage } from "./concerts.js";
 import { displayBiographyTexts } from "./biography.js";
+import { displayMediaTexts } from "./media.js";
 import { displayContactTexts, initContactAnimations } from "./contact.js";
 
 // Object storing all the translations. It follows the structure 'language' => 'page' => 'section'.
@@ -127,6 +128,11 @@ export function translateTextsInPage(textContainers, page) {
                 const type = item.querySelector('.review-type');
                 type.innerText = getReviewTranslatedType(itemId);
             })
+        }
+    } else if (page === 'media') {
+        const mediaTexts = Array.from(document.querySelectorAll('[data-media]'));
+        if (mediaTexts.some(text => text.innerText !== '')) {
+            displayMediaTexts(mediaTexts);
         }
     } else if (page === 'concerts') {
         const noConcertsMessage = document.getElementById('no-concerts-message');

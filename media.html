@@ -25,10 +25,32 @@
                     <p data-selector="title" data-translation="title" class="section-title"></p>
                 </div>
             </div>
-            <div id="media-container">
-                <div class="media-list" data-media="audio"></div>
-                <div class="media-list" data-media="video"></div>
-                <div class="media-list" data-media="image"></div>
+            <div id="media-wrapper">
+                <div class="media-container">
+                    <div class="media-subheader">
+                        <p data-media="subheader-one"></p>
+                        <div class="line-horizontal"></div>
+                    </div>
+                    <div class="media-list" id="audio-list"></div>
+                </div>
+                <div class="media-container">
+                    <div class="media-subheader">
+                        <p data-media="subheader-two"></p>
+                        <div class="line-horizontal"></div>
+                    </div>
+                    <div class="media-list" id="video-list"></div>
+                </div>
+                <div class="media-container">
+                    <div class="media-subheader">
+                        <p data-media="subheader-three"></p>
+                        <div class="line-horizontal"></div>
+                    </div>
+                    <div class="media-list" id="image-list">
+                        <div class="image-column"></div>
+                        <div class="image-column"></div>
+                        <div class="image-column"></div>
+                    </div>
+                </div>    
             </div>
         </main>
     </div>
