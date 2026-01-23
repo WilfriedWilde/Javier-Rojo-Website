@@ -1,4 +1,4 @@
-const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title'];
+const svgSelectors = ['home-title', 'circle', 'line', 'background'];
 const svgInfos = {
     selectorsURLs: Object.fromEntries(
         svgSelectors.map(selector => {
@@ -125,22 +125,16 @@ export async function drawSelectors(isTransition) {
 
         const isSelectedLanguage = target.classList.contains('selected-language');
         const isSelectedPage = target.classList.contains('selected-page');
-        const isSectionTitle = target.classList.contains('section-title');
         const isHomeTitle = target.classList.contains('home-title');
         const isLanguageOption = target.dataset.language !== undefined;
-        
-        if (isLanguageOption && !isSelectedLanguage && !isSectionTitle && !isHomeTitle) return;
 
-        if (isSectionTitle) {
-            if (!isTransition) {
-                gsap.set(selector, { opacity: 1 });
-                gsap.from(path, { drawSVG: 0, duration: 0.5 });
-            }
-        } else if (!isSelectedPage && !isSelectedLanguage && !isHomeTitle) {
+        if (isLanguageOption && !isSelectedLanguage && !isHomeTitle) return;
+
+        if (!isSelectedPage && !isSelectedLanguage && !isHomeTitle) {
             const draw = gsap.timeline({ paused: true });
             draw.set(selector, { opacity: 1 })
                 .from(path, { drawSVG: 0, duration: 0.5 });
-                
+
             target.addEventListener('mouseenter', () => draw.play());
             target.addEventListener('mouseleave', () => draw.reverse());
 

@@ -144,7 +144,7 @@ ul {
 }
 
 .selector-line {
-  stroke: var(--color-light-orange);
+  stroke: var(--color-dark-orange);
   stroke-width: 15px;
   stroke-linecap: round;
   fill: none;
@@ -906,7 +906,7 @@ ul {
 }
 
 .arrow {
-  stroke: var(--color-light-orange);
+  stroke: var(--color-blue);
   stroke-width: 1px;
   stroke-linecap: round;
 }

@@ -46,8 +46,7 @@ const platformParsers = {
 };
 const svgArrow = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
-        <path class="arrow"
-            d="M14,38c6.11,9.8,7.75,20,4.83,30,10.1-2.85,15.57-7.46,19.67-12,2.21-2.45,4.66-5.17,10.66-6.39,2.21,2.87,9.41,4.87,17,5.65s15.62.58,23.47.38q79.29-2.07,158.75-2.8c13.4-.12,27.91-.08,38.62,3" />
+        <path class="arrow" d="M31,55.78l2.63,2.79c4.24-1.07,8.66-1.1,13-1.13Q158,56.83,269.36,59.05" />
     </svg>
 `;
 
@@ -245,7 +244,7 @@ function initSubheaderAnim(container) {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: text,
-                start: "top 70%",
+                start: "top 90%",
                 once: true
             }
         });
@@ -255,7 +254,7 @@ function initSubheaderAnim(container) {
                 duration: 0.5,
                 ease: 'power2.out',
                 opacity: 0,
-                x: -50,
+                xPercent: -35,
             })
             .to(arrow, {
                 duration: 1,
@@ -267,12 +266,12 @@ function initSubheaderAnim(container) {
 
 function initMediaItemsAnim(container) {
     const items = container.querySelectorAll('.media');
-    
+
     items.forEach(item => {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: item,
-                start: 'top 70%',
+                start: 'top 90%',
                 once: true
             }
         });
@@ -280,7 +279,7 @@ function initMediaItemsAnim(container) {
         tl.from(item, {
             duration: 0.6,
             ease: 'power2.out',
-            y: 50
+            yPercent: 35
         })
         tl.to(item, {
             duration: 0.6,
