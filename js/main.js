@@ -62,7 +62,7 @@ barba.init({
             await drawSelectors();
             await initPage(page, container);
 
-            if (page === 'index') introHomeAnimation();
+            if (page === 'index') introHomeAnimation()
             else if (page === 'contact') initSVGAnim(container);
         },
 

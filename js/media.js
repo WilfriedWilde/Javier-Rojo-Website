@@ -19,7 +19,6 @@ const mediaTexts = {
         }
     }
 }
-
 const mediaTypes = {
     audio: ['tidal', 'bandcamp'],
     video: ['youtu.be', 'youtube']
