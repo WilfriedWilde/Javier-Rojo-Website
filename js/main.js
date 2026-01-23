@@ -2,7 +2,7 @@ import initNavbar from "./navbar.js";
 import initHome, { introHomeAnimation, clearHomeAnimations } from "./home.js";
 import initNews from "./news.js";
 import initBiography, { initBiographyAnimations } from "./biography.js";
-import initMedia from "./media.js";
+import initMedia, { initMediaAnimations } from "./media.js";
 import initConcerts from "./concerts.js";
 import initContact, { initContactAnimations, initSVGAnim } from "./contact.js";
 import { getSelectedLanguage, handleLanguageSelection, translateTextsInPage } from "./translation.js";
@@ -46,6 +46,7 @@ barba.init({
     views: [{
         afterEnter({ next }) {
             if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
+            else if (next.container.dataset.namespace === 'media') initMediaAnimations(next.container);
             else if (next.container.dataset.namespace === 'contact') initContactAnimations(next.container);
         }
     }],
@@ -99,6 +100,7 @@ barba.init({
             gsap.set(next.container, { xPercent: 0, position: 'relative', clearProps: 'all' });
 
             if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
+            else if (next.container.dataset.namespace === 'media') initMediaAnimations(next.container);
             else if (next.container.dataset.namespace === 'contact') initContactAnimations(next.container);
         }
     }]
