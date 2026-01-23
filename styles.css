@@ -91,14 +91,6 @@ ul {
   opacity: 0;
 }
 
-.svg-stroke-dark {
-  stroke: var(--color-dark-orange);
-}
-
-.svg-stroke-light {
-  stroke: var(--color-light-orange);
-}
-
 .selector-container {
   position: absolute;
   height: 100%;
@@ -134,6 +126,35 @@ ul {
 
 .selector-home-title path {
   stroke-width: calc(var(--spacing-4) / var(--golden-ratio));
+  fill: none;
+}
+
+.selector-circle {
+  stroke: var(--color-yellow);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.selector-background {
+  stroke: var(--color-blue);
+  stroke-width: 70px;
+  stroke-linecap: butt;
+  fill: none;
+}
+
+.selector-line {
+  stroke: var(--color-light-orange);
+  stroke-width: 15px;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.selector-title {
+  stroke: var(--color-blue);
+  stroke-width: 5;
+  stroke-linecap: round;
+  fill: none;  
 }
 
 .selector-contact {
@@ -141,6 +162,7 @@ ul {
   inset: -5% 0 0 0;
   transform: none;
   opacity: 1;
+  fill: none;
 }
 
 #transition-icon-container {
@@ -186,7 +208,7 @@ ul {
 
 .section-title {
   font-family: var(--font-header);
-  font-weight: 300;
+  font-weight: 600;
   font-size: var(--spacing-3);
   color: var(--color-white);
   text-transform: uppercase;

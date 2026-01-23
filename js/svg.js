@@ -1,13 +1,4 @@
-const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title', 'biography'];
-export const colorPalette = [
-    getComputedStyle(document.documentElement).getPropertyValue('--color-blue'),
-    getComputedStyle(document.documentElement).getPropertyValue('--color-light-orange'),
-    getComputedStyle(document.documentElement).getPropertyValue('--color-dark-orange')
-];
-
-let isStrokeColorLight = false;
-let bioSelectorColorIndex = 0;
-
+const svgSelectors = ['home-title', 'circle', 'line', 'background', 'title'];
 const svgInfos = {
     selectorsURLs: Object.fromEntries(
         svgSelectors.map(selector => {
@@ -60,32 +51,6 @@ async function appendSelector(selector, target) {
         container.style.position = 'relative';
 
     container.appendChild(selectorContainer);
-
-    if (['home-title', 'circle'].includes(selector)) assignSelectorOrangeColor(selectorContainer);
-    if (['biography'].includes(selector)) initBiographySelectors(selectorContainer, target);
-}
-
-function initBiographySelectors(container, target) {
-    assignBiographySelectorColor(container);
-    rotateRandomlySelector(container, target);
-}
-
-function assignSelectorOrangeColor(container) {
-    const svgPath = container.querySelector('path');
-    const color = isStrokeColorLight ? 'light' : 'dark';
-    svgPath.classList.add(`svg-stroke-${color}`);
-    isStrokeColorLight = !isStrokeColorLight;
-}
-
-function assignBiographySelectorColor(container) {
-    const svgPath = container.querySelector('path');
-    const color = colorPalette[bioSelectorColorIndex];
-    svgPath.style.stroke = color;
-    bioSelectorColorIndex = (bioSelectorColorIndex + 1) % colorPalette.length;
-}
-
-function rotateRandomlySelector(container) {
-        container.style.transform = `translate(-50%, -50%) rotate(${Math.floor(Math.random() * 360)}deg)`;
 }
 
 // social media icons
@@ -150,6 +115,7 @@ function handleColorTransition(animNumber, instagramColors) {
     }
 }
 
+// draw selectors
 export async function drawSelectors(isTransition) {
     const targets = Array.from(document.querySelectorAll('[data-selector]'));
 
@@ -161,17 +127,16 @@ export async function drawSelectors(isTransition) {
         const isSelectedPage = target.classList.contains('selected-page');
         const isSectionTitle = target.classList.contains('section-title');
         const isHomeTitle = target.classList.contains('home-title');
-        const isBiography = target.dataset.selector === 'biography';
         const isLanguageOption = target.dataset.language !== undefined;
         
-        if (isLanguageOption && !isSelectedLanguage && !isSectionTitle && !isHomeTitle && !isBiography) return;
+        if (isLanguageOption && !isSelectedLanguage && !isSectionTitle && !isHomeTitle) return;
 
         if (isSectionTitle) {
             if (!isTransition) {
                 gsap.set(selector, { opacity: 1 });
                 gsap.from(path, { drawSVG: 0, duration: 0.5 });
             }
-        } else if (!isSelectedPage && !isSelectedLanguage && !isHomeTitle && !isBiography) {
+        } else if (!isSelectedPage && !isSelectedLanguage && !isHomeTitle) {
             const draw = gsap.timeline({ paused: true });
             draw.set(selector, { opacity: 1 })
                 .from(path, { drawSVG: 0, duration: 0.5 });
@@ -179,12 +144,9 @@ export async function drawSelectors(isTransition) {
             target.addEventListener('mouseenter', () => draw.play());
             target.addEventListener('mouseleave', () => draw.reverse());
 
-        } else if (isBiography ) {
-            gsap.set(selector, { opacity: 1 });
-            return;
         } else {
             gsap.set(selector, { opacity: 1 });
-            if (!isTransition && !isHomeTitle && !isBiography) {
+            if (!isHomeTitle) {
                 let drawDuration = 1;
                 if (isSelectedLanguage) drawDuration = 0.5;
                 else if (isSelectedPage) drawDuration = 0.3;

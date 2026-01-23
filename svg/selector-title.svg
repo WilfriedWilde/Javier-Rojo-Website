@@ -1,4 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="selector">
-    <path fill="none" class="svg-stroke-dark" stroke-width="3" stroke-linecap="round"
-        d="M20.09,60q24.85.15,49.67,2c4.29.32,9.1.51,12.33-2.34" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100" class="selector">
+    <path class="selector-title" d="M131.05,60.53c47.65-5.42,95.83,2.34,143.76.5" />
 </svg>
