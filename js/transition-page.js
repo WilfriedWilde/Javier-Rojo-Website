@@ -1,24 +1,39 @@
+import { moveArrow } from "./home.js";
+
 export default function transitionPage(next) {
     window.scrollTo(0, 0);
 
     if (next.container.dataset.namespace === 'index') {
-        const titleJavier = next.container.querySelector("#title-javier");
-        const titleRojo = next.container.querySelector("#title-rojo");
+        console.log('index')
+        const homeImages = next.container.querySelectorAll('.home-image'); console.log('images:', homeImages)
+        const homeTitles = next.container.querySelectorAll('.home-title');
+        const clickSVG = next.container.querySelector('.click');
+        const path = next.container.querySelector('.click path');
+        const clickText = next.container.querySelector('#click-text');
+        const overlay = next.container.querySelector('#home-image-overlay');
+
+        const split = SplitText.create(clickText, { type: 'words, chars', mask: 'chars' });
+
+        gsap.set(path, { drawSVG: 0 });
+        gsap.set(clickText, { opacity: 1 });
 
         return gsap.timeline()
-            .to(titleRojo, { rotate: 0, duration: 0, transformOrigin: '0% 100%' })
-            .to(titleJavier, { yPercent: 600, duration: 1, ease: 'elastic.out(1, 0.6)' }, 0.3)
-            .to(titleRojo, { yPercent: 600, duration: 1, ease: 'elastic.out(1, 0.5)' }, '<0.1')
-            .to('#home-image-foreground', { opacity: 1, duration: 1 }, '<0.2')
-            .to(titleRojo, { rotate: 8, duration: 2, ease: 'elastic.out(1, 0.15)' }, '<0')
-            .from(titleJavier.querySelector('path'), { drawSVG: 0, duration: 0.5, ease: 'power1.inOut' }, '<0')
-            .from(titleRojo.querySelector('path'), { drawSVG: 0, duration: 0.5, ease: 'power1.inOut' }, '<0')
-            .to('#home-image-background', { opacity: 1, duration: 1 }, '<0')
+            .to(next.container, { opacity: 0, duration: 0 })
+            .to(homeImages, { opacity: 0, duration: 0 }, 0)
+            .to(next.container, { opacity: 1, duration: 0 })
+            .to(homeImages, { opacity: 1, duration: 1 })
+            .to(overlay, { backdropFilter: "blur(5px) brightness(0.1)", duration: 1 }, 0.5)
+            .to(homeTitles, { opacity: 1, duration: 1 })
+            .to(clickSVG, { opacity: 1, duration: 0 })
+            .to(path, { drawSVG: '100%', duration: 0.5 })
+            .fromTo(split.chars, { opacity: 0, xPercent: -50 }, {
+                opacity: 1,
+                xPercent: 0,
+                duration: 1,
+                stagger: { each: 0.07 }
+            });
     } else {
         const title = next.container.querySelector('.section-title');
-        const path = title.parentNode.querySelector('path');
-        const selector = title.parentNode.querySelector('.selector');
-
         const split = SplitText.create(title, {
             type: 'chars',
             mask: 'chars'
@@ -34,7 +49,5 @@ export default function transitionPage(next) {
                 },
                 ease: 'back.out(2)'
             })
-            .set(selector, { opacity: 1 }, '-=0.3')
-            .from(path, { drawSVG: 0, duration: 0.5 }, '-=0.3');
     }
 }

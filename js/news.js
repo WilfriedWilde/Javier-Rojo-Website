@@ -198,12 +198,12 @@ export function formatDate(date, format) {
     }
 }
 
-async function fetchCalendarSVG() {
+export async function fetchCalendarSVG() {
     const svg = await fetch('./icons/calendar.svg');
     return svg.text();
 }
 
-async function handleNewsContentDisplay(content, index) {
+export async function handleNewsContentDisplay(content, index) {
     formatContent(content, index);
     return getContentHTML(content);
 }
