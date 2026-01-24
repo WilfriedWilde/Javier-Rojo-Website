@@ -62,23 +62,18 @@ barba.init({
             await drawSelectors();
             await initPage(page, container);
 
-            if (page === 'index') introHomeAnimation()
+            if (page === 'index') introHomeAnimation();
             else if (page === 'contact') initSVGAnim(container);
         },
 
         leave({ current }) {
             ScrollTrigger.getAll().forEach(st => st.kill());
 
-            let tl = gsap.timeline();
-
-            if (current.container.dataset.namespace === 'index') {
-                tl.to(current.container.querySelectorAll('.home-image'), {
+            return gsap.timeline()
+                .to(current.container, {
                     opacity: 0,
                     duration: 0.3
                 });
-            }
-
-            return tl;
         },
 
         async beforeEnter({ next }) {
