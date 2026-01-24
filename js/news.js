@@ -12,7 +12,7 @@ export default async function initNews(barbaContainer) {
 
     newsList.innerHTML = '';
 
-    const newsData = await getNewsData();
+    const newsData = await getNewsData();console.log(newsData)
     await populateNewsList(getReverseChronologicallySortedData(newsData));
 }
 
@@ -21,7 +21,7 @@ async function getNewsData() {
         cachedData: `cache_${sheetDataName}`,
         cachedTime: `cache_time_${sheetDataName}`
     };
-    const data = await fetchSheetsData(newsSheetsURL, cacheKeys);
+    const data = await fetchSheetsData(newsSheetsURL, cacheKeys);console.log(data)
     if (!data || data.length === 0) {
         displayNoNewsMessage();
         return [];

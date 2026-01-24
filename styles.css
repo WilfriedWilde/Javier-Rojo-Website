@@ -1270,6 +1270,21 @@ form button {
   #home-title-container {
     font-size: var(--spacing-6);
     top: 0;
+    gap: var(--spacing-2);
+  }
+
+  #home-title-wrapper {
+    flex-direction: row;
+    gap: var(--spacing-4);
+    font-size: var(--spacing-6);
+  }
+
+  #home-click-wrapper {
+    width: 30%;
+  }
+
+  #click-text {
+    font-size: var(--spacing-3);
   }
 
   .section-title-container {
