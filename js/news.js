@@ -12,7 +12,7 @@ export default async function initNews(barbaContainer) {
 
     newsList.innerHTML = '';
 
-    const newsData = await getNewsData();console.log(newsData)
+    const newsData = await getNewsData();
     await populateNewsList(getReverseChronologicallySortedData(newsData));
 }
 
@@ -21,7 +21,7 @@ async function getNewsData() {
         cachedData: `cache_${sheetDataName}`,
         cachedTime: `cache_time_${sheetDataName}`
     };
-    const data = await fetchSheetsData(newsSheetsURL, cacheKeys);console.log(data)
+    const data = await fetchSheetsData(newsSheetsURL, cacheKeys);
     if (!data || data.length === 0) {
         displayNoNewsMessage();
         return [];
@@ -77,7 +77,7 @@ async function fetchDocsData(url) {
 
         if (!content) {
             console.error('No #contents found in Google Doc!');
-            return;
+            return '';
         }
 
         sessionStorage.setItem(cachedData, content.innerHTML);
@@ -204,6 +204,8 @@ export async function fetchCalendarSVG() {
 }
 
 export async function handleNewsContentDisplay(content, index) {
+    if (content === '') return content;
+
     formatContent(content, index);
     return getContentHTML(content);
 }
@@ -252,4 +254,34 @@ function namespaceDocsCSS(css, index) {
 
 function getContentHTML(content) {
     return content.innerHTML;
+}
+
+export function initNewsAnimations(container) {
+    clearNewsAnimations();
+    document.fonts.ready.then(() => {
+        initNewsAnim(container);
+    });
+}
+
+export function clearNewsAnimations() {
+    ScrollTrigger.getAll().forEach(st => st.kill());
+}
+
+function initNewsAnim(container) {
+    const news = container.querySelectorAll('.news') || null;
+    if (news === null) return;
+
+    news.forEach(news => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: news,
+                start: "top 80%",
+                once: true
+            }
+        })
+
+        gsap.set(news, { opacity: 1 })
+
+        tl.from(news, { opacity: 0, yPercent: 10, duration: 1, ease: 'power2.out' })
+    })
 }

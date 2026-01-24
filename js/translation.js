@@ -12,8 +12,8 @@ const translations = {
             navbar: ['novedades', 'biografía', 'medios', 'conciertos', 'contacto'],
             footer: ['Diseño web por', 'Fotografía por', 'Política de privacidad', 'Todos los derechos reservados']
         },
-        home: {
-
+        index: {
+            news: ['última novedad']
         },
         news: {
             title: ['novedades']
@@ -37,8 +37,8 @@ const translations = {
             navbar: ['news', 'biography', 'media', 'concerts', 'contact'],
             footer: ['Webdesign by', 'Photography by', 'Privacy policy', 'All rights reserved.']
         },
-        home: {
-
+        index: {
+            news: ['last news']
         },
         news: {
             title: ['news']
@@ -95,7 +95,7 @@ export function translateTextsInPage(textContainers, page) {
             current.index = 0;
         }
 
-        const keys = [language, page, section];
+        const keys = [language, page, section];console.log(keys)
         const result = getTranslation(translations, keys);
         if (!result) return;
 

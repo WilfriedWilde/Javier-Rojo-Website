@@ -11,9 +11,10 @@ let newsContainer = '';
 export default async function initHome(barbaContainer) {
     newsContainer = barbaContainer.querySelector('#last-news-container');
 
-    await fetchAllData();
     initHomeAnimations(barbaContainer);
-    appendLastNews();
+    fetchAllData().then(() => {
+        appendLastNews();
+    });
 }
 
 async function fetchAllData() {
@@ -74,6 +75,11 @@ function initHomeAnimations(container) {
     const foreground = container.querySelectorAll('#home-image-foreground');
     const navbar = document.getElementById('navbar');
     const lastNews = container.querySelector('#last-news-container');
+    const svg = container.querySelector('.last-news-svg');
+    const path = svg.querySelector('path');
+
+    gsap.set(svg, { opacity: 1 });
+    gsap.set(path, { drawSVG: 0 });
 
     let isHomeDisplayed = false;
     const homeTimeline = gsap.timeline({ paused: true });
@@ -81,13 +87,14 @@ function initHomeAnimations(container) {
         .to(homeTitleContainer, { opacity: 0, duration: 1 })
         .to(homeTitleContainer, { zIndex: -1, opacity: 0, duration: 0 })
         .to(foreground, { opacity: 0, duration: 1 }, 0.5)
-        .to(navbar, { opacity: 1, stagger: { amount: 0.2 } }, 1)
+        .to(navbar, { opacity: 1, backdropFilter: "blur(4px)", duration: 1 }, 1)
         .to(homeTitleContainer, { yPercent: -100, duration: 0 })
-        .to(lastNews, { zIndex: 3, duration: 0})
+        .to(lastNews, { zIndex: 3, duration: 0 })
         .fromTo(lastNews,
-            { opacity: 0, yPercent: 30 },
-            { opacity: 1, yPercent: 0, duration: 0.8, ease: 'power2.in' }
+            { opacity: 0, yPercent: 10 },
+            { opacity: 1, yPercent: 0, duration: 0.8, ease: 'power2.out' }
         )
+        .to(path, { drawSVG: '100%', duration: 1, ease: 'power2.inOut' })
 
     homeClickHandler = (event) => {
         if (event.target.closest('li') || !isIntroCompleted) return;
@@ -123,6 +130,7 @@ export function clearHomeAnimations() {
 }
 
 export function introHomeAnimation() {
+    const homeImages = document.querySelectorAll('.home-image');
     const homeTitles = document.querySelectorAll('.home-title');
     const clickSVG = document.querySelector('.click');
     const path = document.querySelector('.click path');
@@ -135,6 +143,7 @@ export function introHomeAnimation() {
 
     const introTimeline = gsap.timeline();
     introTimeline
+        .to(homeImages, { opacity: 1, duration: 0.3 })
         .to('#home-image-overlay', { backdropFilter: "blur(5px) brightness(0.1)", duration: 1 }, 1)
         .to(homeTitles, { opacity: 1, stagger: 1, duration: 2 }, '>')
         .to(clickSVG, { opacity: 1, duration: 0 }, 0)
@@ -199,7 +208,7 @@ async function appendLastNews() {
     `;
 
     const news = document.createElement('li');
-    news.classList.add('news');
+    news.classList.add('news-home');
     news.id = `lastNews`;
     news.innerHTML = newsTemplate;
 

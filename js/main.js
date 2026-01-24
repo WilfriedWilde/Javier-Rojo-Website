@@ -1,6 +1,6 @@
 import initNavbar from "./navbar.js";
 import initHome, { introHomeAnimation, clearHomeAnimations } from "./home.js";
-import initNews from "./news.js";
+import initNews, { initNewsAnimations } from "./news.js";
 import initBiography, { initBiographyAnimations } from "./biography.js";
 import initMedia, { initMediaAnimations } from "./media.js";
 import initConcerts from "./concerts.js";
@@ -29,23 +29,12 @@ async function initPage(page, container) {
 /* ---------------------------------------------------------
    BARBA TRANSITIONS
 --------------------------------------------------------- */
-document.addEventListener("click", (e) => {
-    const link = e.target.closest("a[href]");
-    if (!link) return;
-
-    const currentUrl = window.location.pathname;
-    const targetUrl = new URL(link.href).pathname;
-
-    if (currentUrl === targetUrl) {
-        e.preventDefault();
-    }
-});
-
 barba.init({
     preventRunning: true,
     views: [{
         afterEnter({ next }) {
-            if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
+            if (next.container.dataset.namespace === 'news') initNewsAnimations(next.container);
+            else if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
             else if (next.container.dataset.namespace === 'media') initMediaAnimations(next.container);
             else if (next.container.dataset.namespace === 'contact') initContactAnimations(next.container);
         }
@@ -63,6 +52,9 @@ barba.init({
             await initPage(page, container);
 
             if (page === 'index') introHomeAnimation();
+            else if (page === 'news') initNewsAnimations(container);
+            else if (page === 'media') initMediaAnimations(container);
+            else if (page === 'biography') initBiographyAnimations(container);
             else if (page === 'contact') initSVGAnim(container);
         },
 
@@ -83,7 +75,8 @@ barba.init({
             await drawSelectors(true);
             await initPage(page, next.container);
 
-            if (page !== 'index') return gsap.set(next.container, { xPercent: 100, position: 'absolute', top: 0, left: 0, width: '100%' });
+            gsap.set(next.container, { xPercent: 100, position: 'absolute', top: 0, left: 0, width: '100%' });
+            if (next.container.dataset.namespace === 'index') gsap.set(next.container.querySelectorAll('.home-image'), { opacity: 0 });
         },
 
         enter({ current, next }) {
@@ -94,7 +87,8 @@ barba.init({
         afterEnter({ next }) {
             gsap.set(next.container, { xPercent: 0, position: 'relative', clearProps: 'all' });
 
-            if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
+            if (next.container.dataset.namespace === 'news') initNewsAnimations(next.container);
+            else if (next.container.dataset.namespace === 'biography') initBiographyAnimations(next.container);
             else if (next.container.dataset.namespace === 'media') initMediaAnimations(next.container);
             else if (next.container.dataset.namespace === 'contact') initContactAnimations(next.container);
         }

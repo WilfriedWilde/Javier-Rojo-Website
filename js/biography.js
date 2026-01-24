@@ -45,6 +45,7 @@ export function initBiographyAnimations(container) {
     document.fonts.ready.then(() => {
         initTextAnim(container);
         initTextReviewsAnim(container);
+        initImagesAnim(container);
         initReviewsListListener(container);
     });
 }
@@ -124,6 +125,24 @@ export async function initTextReviewsAnim(container) {
                 stagger: 0.05
             }, 0.3)
     });
+}
+
+function initImagesAnim(container) {
+    const images = container.querySelectorAll('img');
+
+    images.forEach(image => {
+        gsap.set(image, { opacity: 1 });
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: image,
+                start: "top bottom",
+                once: true,
+            }
+        });
+
+        tl.from(image, { opacity: 0, yPercent: 10, duration: 1, ease: 'power2.out' })
+    })
 }
 
 let isReviewsListDisplayed = false;
