@@ -756,12 +756,15 @@ ul {
   padding: var(--spacing-6) 0;
 }
 
+#no-concerts-message {
+  display: none;
+}
+
 #concerts-menu {
   position: relative;
-  display: grid;
+  display: flex;
   width: 100%;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
+  justify-content: center;
   font-family: var(--font-subheader);
   font-size: var(--spacing-2);
   color: var(--color-white);
@@ -772,12 +775,13 @@ ul {
 
 #concerts-list-option-selector {
   position: absolute;
-  width: 10%;
-  height: 3px;
-  top: 100%;
-  background-color: var(--color-yellow);
-  transition: 0.3s var(--easing-hover);
-  border-radius: var(--spacing-1);
+  width: 50%;
+  height: 200%;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--color-blue);
+  border: 5px solid var(--color-black);
+  border-radius: 5px;
   z-index: -1;
   opacity: 0;
 }
@@ -792,15 +796,16 @@ ul {
   font-weight: 100;
   transition: 0.3s var(--easing-hover);
   z-index: 1;
+  opacity: 0.6;
 }
 
 .concerts-list-option:hover {
   cursor: pointer;
-  font-weight: 500;
+  opacity: 1;
 }
 
 .selected-concerts-list-option {
-  font-weight: 500;
+  opacity: 1;
 }
 
 .concerts-list {
@@ -1284,6 +1289,7 @@ form button {
   #navbar {
     flex-direction: row;
     justify-content: space-between;
+    padding: 0 var(--spacing-4);
   }
 
   #navbar-title-container {
@@ -1294,7 +1300,6 @@ form button {
 
   #navbar-title {
     font-size: var(--spacing-3);
-    font-weight: 600;
     text-transform: uppercase;
     width: max-content;
   }
@@ -1305,7 +1310,7 @@ form button {
 
   #navbar-list-sections {
     justify-content: center;
-    gap: var(--spacing-2);
+    gap: var(--spacing-4);
     font-size: var(--spacing-2);
   }
 
@@ -1466,6 +1471,15 @@ form button {
 
   .concerts-list {
     gap: var(--spacing-6);
+  }
+
+  #concerts-list-option-selector {
+    border: 5px solid var(--color-black);
+    border-radius: var(--spacing-1);
+  }
+  
+  .concerts-list-empty-message {
+    font-size: var(--spacing-3);
   }
 
   .concert {

@@ -17,7 +17,7 @@ export default function transitionPage(next) {
             .to(homeTitleContainer, { opacity: 0, duration: 1 })
             .to(homeTitleContainer, { zIndex: -1, opacity: 0, duration: 0 })
             .to(foreground, { opacity: 0, duration: 1 }, 0.5)
-            .to(navbar, { opacity: 1, stagger: { amount: 0.2 } }, 1)
+            .to(navbar, { opacity: 1, backdropFilter: "blur(4px)", duration: 1 }, 1)
             .to(homeTitleContainer, { yPercent: -100, duration: 0 })
             .to(lastNews, { zIndex: 3, duration: 0 })
             .fromTo(lastNews,

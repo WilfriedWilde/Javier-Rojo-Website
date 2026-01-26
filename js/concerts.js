@@ -17,7 +17,7 @@ export default async function initConcerts(barbaContainer) {
     pastConcertsList.innerHTML = '';
     upcomingConcertsData = [];
     pastConcertsData = [];
-    
+
     const concertsData = await getConcertsData();
     await populateConcertsLists(concertsData);
 
@@ -55,6 +55,7 @@ function translateNoConcertsMessageIn(language) {
 function appendNoConcertsMessage(message) {
     const messageContainer = document.getElementById('no-concerts-message');
     messageContainer.textContent = message;
+    messageContainer.style.display = 'block';
 }
 
 async function populateConcertsLists(data) {
@@ -67,12 +68,12 @@ async function populateConcertsLists(data) {
 
     upcomingConcertsData = getChronologicallySortedData(upcomingConcertsData);
     pastConcertsData = getChronologicallyReversedSortedData(pastConcertsData);
-    
+
     for (let i = 0; i < upcomingConcertsData.length; i++) {
         await appendUpcomingConcert(upcomingConcertsData, i);
     }
 
-    for(let i = 0; i < pastConcertsData.length; i++) {
+    for (let i = 0; i < pastConcertsData.length; i++) {
         await appendPastConcert(pastConcertsData, i);
     }
 }
@@ -248,7 +249,7 @@ function displaySelectedConcertsLists() {
 
 function initConcertsListSelector() {
     const upcomingOption = Array.from(concertsMenu.children).find(child => child.id.includes('upcoming')).getBoundingClientRect();
-    gsap.set(concertsListSelector, { x: `-=${upcomingOption.width}`, opacity: 1 });
+    gsap.set(concertsListSelector, { left: `${upcomingOption.left}`, opacity: 1 });
 }
 
 function attachConcertsMenuListeners() {
@@ -283,22 +284,50 @@ function animateConcertsListSelector(selectedOption) {
     const selectedOptionRects = selectedOption.getBoundingClientRect();
     const screenCenter = window.innerWidth / 2;
     const operator = getOperator(selectedOptionRects);
-    const distance = getDistance(selectorRects, selectedOptionRects);
-
+    console.log(operator)
     if (((selectorRects.x + (selectorRects.width / 2)) > screenCenter && operator === '+')
-            || 
-        ((selectorRects.x + (selectorRects.width / 2)) < screenCenter && operator === '-'))
-        return;
+        ||
+        ((selectorRects.x + (selectorRects.width / 2)) < screenCenter && operator === '-')){
+            console.log('fuck')
+            return;
+        }
+        
+        console.log('after fuck')
+    const tl = gsap.timeline();
 
-    gsap.to(concertsListSelector, {
-        x: `${operator}=${distance}`,
-        duration: 0.3
-    })
+    if (operator === '+') {
+        tl
+            .to(concertsListSelector, {
+                width: '100%',
+                right: selectedOptionRects.right,
+                duration: 0.3,
+                ease: 'power2.in'
+            })
+            .to(concertsListSelector, {
+                left: selectedOptionRects.left,
+                width: '50%',
+                duration: 0.3,
+                ease: "elastic.out(1,0.9)",
+            })
+    } else {
+        tl
+            .to(concertsListSelector, {
+                width: '100%',
+                left: selectedOptionRects.left,
+                duration: 0.3,
+                ease: 'power2.in'
+            })
+            .to(concertsListSelector, {
+                width: '50%',
+                duration: 0.3,
+                ease: "elastic.out(1,0.9)",
+            })
+    }
 }
 
 function getOperator(rects) {
-    const screenCenter = window.innerWidth / 2;
-    if (rects.left > screenCenter) return '+';
+    const screenCenter = window.innerWidth / 2;console.log(screenCenter, rects.left)
+    if (rects.left >= screenCenter) return '+';
     else return '-';
 }
 
@@ -310,5 +339,17 @@ function getDistance(selectorRects, selectedOptionRects) {
 
 function animateConcertsList(selectedOption) {
     const selectedList = selectedOption.id.includes('upcoming') ? upcomingConcertsList : pastConcertsList;
-    gsap.from(selectedList, { opacity: 0, duration: 0.6, ease: 'power1.inOut' })
+    const concerts = selectedList.querySelectorAll('.concert');
+
+    gsap.from(selectedList, { opacity: 0, duration: 0.7, ease: 'power2.out' });
+
+    concerts.forEach(concert => {
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: concert,
+                start: 'top bottom',
+                once: true
+            }
+        }).from(concert, { opacity: 0, yPercent: 50, duration: 0.4, ease: 'power2.out' })
+    })
 }

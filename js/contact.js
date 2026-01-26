@@ -141,7 +141,7 @@ export async function initSVGAnim(container) {
         paused: true
     });
 
-    gsap.set(path, { drawSVG: 0, strokeWidth: 2 });
+    gsap.set(path, { drawSVG: 0, strokeWidth: 1 });
     gsap.to(path, {
         drawSVG: "100%",
         scrollTrigger: {
