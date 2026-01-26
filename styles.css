@@ -211,8 +211,9 @@ ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: var(--spacing-1);
   font-family: var(--font-header);
-  padding: var(--spacing-3);
+  padding: 0 var(--spacing-1);
   color: var(--color-white);
   height: var(--spacing-6);
   opacity: 0;
@@ -220,7 +221,7 @@ ul {
 
 #navbar-title {
   font-size: var(--spacing-3);
-  font-weight: 600;
+  font-weight: 300;
   text-transform: uppercase;
 }
 
@@ -246,6 +247,10 @@ ul {
   justify-content: space-between;
   padding: 0 var(--spacing-2);
   font-size: var(--spacing-1);
+}
+
+#navbar-list-sections span {
+  display: none;
 }
 
 #navbar-list-languages {
@@ -380,7 +385,7 @@ ul {
   opacity: 0;
   position: relative;
   z-index: -2;
-  padding: var(--spacing-6) 0 var(--spacing-4) 0;
+  padding: var(--spacing-7) 0 var(--spacing-4) 0;
 }
 
 #last-news-title-wrapper {
@@ -397,6 +402,7 @@ ul {
   color: var(--color-white);
   text-transform: capitalize;
   line-height: 0;
+  letter-spacing: 3px;
 }
 
 .last-news-svg {
@@ -488,7 +494,7 @@ ul {
 }
 
 .news-date {
-  font-family: var(--font-header);
+  font-family: var(--font-main);
   font-size: var(--spacing-2);
   font-weight: 400;
   color: var(--color-white);
@@ -757,10 +763,11 @@ ul {
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   font-family: var(--font-subheader);
-  font-size: var(--spacing-1);
+  font-size: var(--spacing-2);
   color: var(--color-white);
   font-weight: 100;
   margin-bottom: var(--spacing-5);
+  text-transform: capitalize;
 }
 
 #concerts-list-option-selector {
@@ -1338,7 +1345,7 @@ form button {
     gap: var(--spacing-1);
     padding: var(--spacing-7) 0 var(--spacing-5) 0;
   }
-  
+
   #last-news-title {
     font-size: var(--spacing-4);
   }

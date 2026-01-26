@@ -95,7 +95,7 @@ export function translateTextsInPage(textContainers, page) {
             current.index = 0;
         }
 
-        const keys = [language, page, section];console.log(keys)
+        const keys = [language, page, section];
         const result = getTranslation(translations, keys);
         if (!result) return;
 
