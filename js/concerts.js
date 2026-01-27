@@ -284,15 +284,13 @@ function animateConcertsListSelector(selectedOption) {
     const selectedOptionRects = selectedOption.getBoundingClientRect();
     const screenCenter = window.innerWidth / 2;
     const operator = getOperator(selectedOptionRects);
-    console.log(operator)
+
     if (((selectorRects.x + (selectorRects.width / 2)) > screenCenter && operator === '+')
         ||
         ((selectorRects.x + (selectorRects.width / 2)) < screenCenter && operator === '-')){
-            console.log('fuck')
             return;
         }
         
-        console.log('after fuck')
     const tl = gsap.timeline();
 
     if (operator === '+') {
@@ -326,7 +324,7 @@ function animateConcertsListSelector(selectedOption) {
 }
 
 function getOperator(rects) {
-    const screenCenter = window.innerWidth / 2;console.log(screenCenter, rects.left)
+    const screenCenter = window.innerWidth / 2;
     if (rects.left >= screenCenter) return '+';
     else return '-';
 }
