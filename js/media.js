@@ -270,7 +270,7 @@ function initMediaItemsAnim(container) {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: item,
-                start: 'top 90%',
+                start: 'top bottom',
                 once: true
             }
         });

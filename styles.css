@@ -235,7 +235,7 @@ ul {
 
 .navbar-list li a {
   transition: 0.4s var(--easing-hover);
-  z-index: 1;
+  letter-spacing: 1px;
 }
 
 .navbar-list li a:hover {
@@ -794,6 +794,7 @@ ul {
 .concerts-list-option {
   position: relative;
   font-weight: 100;
+  letter-spacing: 3px;
   transition: 0.3s var(--easing-hover);
   z-index: 1;
   opacity: 0.6;
@@ -981,6 +982,7 @@ ul {
   color: var(--color-white);
   opacity: 0;
   text-transform: capitalize;
+  letter-spacing: 3px;
 }
 
 .media-subheader .arrow-container {
