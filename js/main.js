@@ -9,6 +9,7 @@ import { getSelectedLanguage, handleLanguageSelection, translateTextsInPage } fr
 import { appendAllSelectors, drawSelectors, appendSocialMediaIcons, handleInstagramHover } from "./svg.js";
 import { injectHTML } from "./inject_html.js";
 import transitionPage from "./transition-page.js";
+import initPrivacy from "./privacy.js";
 
 /* ---------------------------------------------------------
    INIT PAGE
@@ -19,7 +20,8 @@ const pageInits = {
     biography: initBiography,
     media: initMedia,
     concerts: initConcerts,
-    contact: initContact
+    contact: initContact,
+    privacy: initPrivacy
 }
 
 async function initPage(page, container) {

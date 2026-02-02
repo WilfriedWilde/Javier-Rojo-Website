@@ -67,6 +67,10 @@ ul {
   list-style: none;
 }
 
+.bold {
+  font-weight: 500;
+}
+
 [data-barba="container"] {
   position: relative;
   z-index: 1;
@@ -1167,6 +1171,60 @@ form button {
 
 .form-section textarea {
   min-height: var(--spacing-8);
+}
+
+/* ===> PRIVACY <=== */
+#main-privacy {
+  color: var(--color-black);
+  background-color: var(--color-white);
+  padding-top: var(--spacing-4);
+}
+
+#privacy-title {
+  color: var(--color-black);
+}
+
+#privacy-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  width: 100%;
+  padding: var(--spacing-4) var(--spacing-2);
+  font-family: var(--font-main);
+  font-size: var(--spacing-2);
+  font-weight: 200;
+  line-height: 1;
+}
+
+.privacy-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.privacy-section-title {
+  display: flex;
+  gap: 0.3rem;
+  font-family: var(--font-subheader);
+  font-weight: 800;
+  font-size: var(--spacing-2);
+  text-transform: capitalize;
+}
+
+.privacy-section-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.privacy-section-paragraph ul {
+  list-style: inside;
+  padding: var(--spacing-1) 0;
+}
+
+.privacy-section-paragraph ul li::marker {
+  color: var(--color-dark-orange);
+  font-size: 0.5rem;
 }
 
 /* ===> FOOTER <=== */

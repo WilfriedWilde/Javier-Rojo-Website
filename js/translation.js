@@ -4,6 +4,7 @@ import { displayNoConcertsMessage, translateMonthName, getTicketTranslation, get
 import { displayBiographyTexts } from "./biography.js";
 import { displayMediaTexts } from "./media.js";
 import { displayContactTexts, initContactAnimations } from "./contact.js";
+import { displayPrivacyTexts } from "./privacy.js";
 
 // Object storing all the translations. It follows the structure 'language' => 'page' => 'section'.
 const translations = {
@@ -30,6 +31,10 @@ const translations = {
         },
         contact: {
             title: ['contacto']
+        },
+        privacy: {
+            title: ['política de privacidad'],
+            subtitle: ['general information', 'personal data', 'formulario de contacto', 'contenido incrustado', 'cookies', 'sus derechos', 'contacto']
         }
     },
     en: {
@@ -55,6 +60,10 @@ const translations = {
         },
         contact: {
             title: ['contact']
+        },
+        privacy: {
+            title: ['privacy policy'],
+            subtitle: ['información general', 'datos personales', 'contact form', 'embedded content', 'cookies', 'your rights', 'contact']
         }
     }
 }
@@ -151,6 +160,11 @@ export function translateTextsInPage(textContainers, page) {
         if (contactTexts.some(text => text.innerText !== '')) {
             displayContactTexts(contactTexts);
             initContactAnimations(document.querySelector('.main'));
+        }
+    } else if (page === 'privacy') {
+        const privacyTexts = Array.from(document.querySelectorAll('[data-privacy]'));
+        if (privacyTexts.some(text => text.innerText !== '')) {
+            displayPrivacyTexts(privacyTexts);
         }
     }
 }
