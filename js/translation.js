@@ -34,7 +34,7 @@ const translations = {
         },
         privacy: {
             title: ['política de privacidad'],
-            subtitle: ['general information', 'personal data', 'formulario de contacto', 'contenido incrustado', 'cookies', 'sus derechos', 'contacto']
+            subtitle: ['información general', 'datos personales', 'formulario de contacto', 'contenido incrustado', 'cookies', 'sus derechos', 'contacto']
         }
     },
     en: {
@@ -63,7 +63,7 @@ const translations = {
         },
         privacy: {
             title: ['privacy policy'],
-            subtitle: ['información general', 'datos personales', 'contact form', 'embedded content', 'cookies', 'your rights', 'contact']
+            subtitle: ['general information', 'personal data', 'contact form', 'embedded content', 'cookies', 'your rights', 'contact']
         }
     }
 }
